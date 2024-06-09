@@ -3,7 +3,9 @@ import React from 'react'
 
 const Messages = () => {
   return (
-    <div>Messages</div>
+    <div className='mesages' style={{ position: "absolute", left: "16%" }}>
+      Messages
+    </div>
   )
 }
 

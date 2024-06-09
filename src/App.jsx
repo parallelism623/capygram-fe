@@ -10,45 +10,55 @@ import Reel from './pages/reel/Reel';
 import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
+import Menu from './components/Menu/Menu';
+import LayoutMenu from './layouts/LayoutMenu';
 
 const App = () => {
   const routes = useRoutes([
-    {
-      path: '/',
-      element: <Home />
-    },
     {
       path: '/login',
       element: <Login />
     },
     {
-      path: '/register',
-      element: <Register />
-    },
-    {
-      path: '/messages',
-      element: <Messages />
-    },
-    {
-      path: '/notifications',
-      element: <Notifications />
-    },
-    {
-      path: '/profile',
-      element: <Profile />
-    },
-    {
-      path: '/reel',
-      element: <Reel />
-    },
-    {
-      path: '/threads',
-      element: <Threads />
+      path: '/',
+      element: <LayoutMenu />,
+      children: [
+        {
+          path: '/',
+          element: <Home />
+        },
+
+        {
+          path: '/register',
+          element: <Register />
+        },
+        {
+          path: '/messages',
+          element: <Messages />
+        },
+        {
+          path: '/notifications',
+          element: <Notifications />
+        },
+        {
+          path: '/profile',
+          element: <Profile />
+        },
+        {
+          path: '/reel',
+          element: <Reel />
+        },
+        {
+          path: '/threads',
+          element: <Threads />
+        },
+      ]
     },
     {
       path: '/*',
       element: <div>Not Found</div>
     }
+
   ]);
 
   return routes;

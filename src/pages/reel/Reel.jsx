@@ -3,7 +3,9 @@ import React from 'react'
 
 const Reel = () => {
   return (
-    <div>Reel</div>
+    <div className='reel' style={{ position: "absolute", left: "16%" }}>
+      Reels
+    </div>
   )
 }
 
