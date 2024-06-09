@@ -8,12 +8,22 @@ import Notifications from './pages/notifications/Notifications';
 import Profile from './pages/profile/Profile';
 import Reel from './pages/reel/Reel';
 import Threads from './pages/threads/Threads';
+import Login from './pages/login/Login';
+import Register from './pages/register/Register';
 
 const App = () => {
   const routes = useRoutes([
     {
       path: '/',
       element: <Home />
+    },
+    {
+      path: '/login',
+      element: <Login />
+    },
+    {
+      path: '/register',
+      element: <Register />
     },
     {
       path: '/messages',
