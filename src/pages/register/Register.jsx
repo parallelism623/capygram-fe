@@ -11,7 +11,7 @@ import "./Register.scss";
 
 const Register = () => {
   const initValue = {
-    phoneOrEmail: '',
+    Email: '',
     fullname: '',
     username: '',
     password: ''
@@ -33,13 +33,13 @@ const Register = () => {
                 <p className='sub-title'> Đăng ký để xem ảnh và video từ bạn bè.</p>
 
                 <div className='form-field'>
-                  <Field className='form-input' name='phoneOrEmail' type='text' placeholder=" " />
-                  <span className='placeholder'>Số di động hoặc email</span>
-                  <ErrorMessage className='form-error' name='phoneOrEmail' component='div' />
-                  {touched.phoneOrEmail && !errors.phoneOrEmail && (
+                  <Field className='form-input' name='Email' type='text' placeholder=" " />
+                  <span className='placeholder'>Email</span>
+                  <ErrorMessage className='form-error' name='Email' component='div' />
+                  {touched.Email && !errors.Email && (
                     <span className="valid-icon">✔</span>
                   )}
-                  {touched.phoneOrEmail && errors.phoneOrEmail && (
+                  {touched.Email && errors.Email && (
                     <span className="invalid-icon">✘</span>
                   )}
                   <br />
@@ -92,7 +92,7 @@ const Register = () => {
           </Formik>
         </div>
         <div className='div-link-register'>
-          <p>Bạn đã có tài khoản? <Link className='link-register' to='/register'>Đăng Nhập</Link></p>
+          <p>Bạn đã có tài khoản? <Link className='link-register' to='/login'>Đăng Nhập</Link></p>
         </div>
       </div>
     </div>
