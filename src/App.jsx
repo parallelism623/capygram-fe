@@ -20,17 +20,16 @@ const App = () => {
       element: <Login />
     },
     {
+      path: '/register',
+      element: <Register />
+    },
+    {
       path: '/',
       element: <LayoutMenu />,
       children: [
         {
           path: '/',
           element: <Home />
-        },
-
-        {
-          path: '/register',
-          element: <Register />
         },
         {
           path: '/messages',
