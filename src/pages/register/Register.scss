@@ -1,0 +1,160 @@
+.div-body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .div-login{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-top: 20px;
+
+    .div-form{
+      border: 1px solid rgb(221, 219, 219);
+      min-height: 500px;
+      padding: 50px;
+
+      .logo-capygram{
+        width: 100%;
+        height: 200px;
+        margin-top: -50px;
+      }
+
+      .sub-title{
+        color: rgb(141, 139, 139);
+        font-size: 18px;
+        text-align: center;
+        margin-top: -30px;
+      }
+
+      .form-field{
+        position: relative;
+        margin-top: 30px;
+
+        .form-input{
+          position: relative;
+          width: 100%;
+          height: 40px;
+          padding-left: 20px !important;
+          border: 1px solid rgb(221, 219, 219);
+          background-color: rgb(255, 252, 252);
+          border-radius: 4px;
+
+          &:focus{
+            outline: none;
+            border-color: #007bff;
+          }
+
+          &::placeholder{
+            transition: all 0.2s ease;
+          }
+
+          &:placeholder-shown:not(:focus) + .placeholder{
+            font-size: 14px;
+            top: 15px;
+            transform: translateY(-50%);
+          }
+
+          &:not(:placeholder-shown), &:focus + .placeholder{
+            font-size: 12px;
+            top: -15px;
+            padding: 0 5px;
+          }
+        }
+
+        .placeholder{
+          position: absolute;
+          left: 15px;
+          top: -15px;
+          padding: 0 5px;
+          transition: all 0.2s ease;
+          font-size: 12px;
+          color: #888;
+        }
+
+        .form-error{
+          position: absolute;
+          color: red;
+          font-size: 12px;
+        }
+
+        .valid-icon, .invalid-icon {
+          position: absolute;
+          right: 30px;
+          top: 5px;
+          transform: translateY(-50%);
+          font-size: 18px;
+          display: none;
+        }
+
+        .valid-icon {
+          color: green;
+        }
+
+        .invalid-icon {
+          color: red;
+        }
+
+        .form-input:valid ~ .valid-icon {
+          display: inline;
+        }
+
+        .form-input:invalid ~ .invalid-icon {
+          display: inline;
+        }
+
+         .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+          }
+
+          .eye-icon:hover {
+            color: #007bff;
+          }
+      }
+      
+
+      .rules{
+        width: 100%;
+        margin-top: 20px;
+        text-align: center;
+        font-size: 15px;
+        color: rgb(110, 110, 110);
+
+        .link{
+          color: rgb(0, 0, 0);
+          text-decoration: none;
+        
+        }
+      }
+
+      .form-button{
+        margin-top: 20px;
+        width: 100%;
+        height: 35px;
+        border-radius: 8px;
+        border: none;
+        background-color: rgb(98, 164, 239);
+        color: aliceblue;
+        font-size: 16px;
+      }
+    }
+    .div-link-register{
+      margin-top: 10px;
+      border: 1px solid rgb(221, 219, 219);
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .link-register{
+        color: rgb(98, 164, 239);
+        text-decoration: none;
+        font-size: 16px;
+      }
+    }
+  }
+}
