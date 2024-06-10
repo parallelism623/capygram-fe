@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 
@@ -10,6 +10,12 @@ import logoCapyGram from "../../../public/images/logoCapyGram.png";
 import "./Register.scss";
 
 const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
+
   const initValue = {
     Email: '',
     fullname: '',
@@ -72,8 +78,9 @@ const Register = () => {
                 </div>
 
                 <div className='form-field'>
-                  <Field className='form-input' name='password' type='password' placeholder=" " />
+                  <Field className='form-input' name='password' type={showPassword ? 'text' : 'password'} placeholder=" " />
                   <span className='placeholder'>Mật khẩu</span>
+                  <i className={`eye-icon ${showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}`} onClick={togglePasswordVisibility}></i>
                   <ErrorMessage className='form-error' name='password' component='div' />
                   {touched.password && !errors.password && (
                     <span className="valid-icon">✔</span>

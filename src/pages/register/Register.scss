@@ -50,13 +50,13 @@
 
           &:placeholder-shown:not(:focus) + .placeholder{
             font-size: 14px;
-            top: 50%;
+            top: 15px;
             transform: translateY(-50%);
           }
 
           &:not(:placeholder-shown), &:focus + .placeholder{
             font-size: 12px;
-            top: -10px;
+            top: -15px;
             padding: 0 5px;
           }
         }
@@ -79,8 +79,8 @@
 
         .valid-icon, .invalid-icon {
           position: absolute;
-          right: 10px;
-          top: 15px;
+          right: 30px;
+          top: 5px;
           transform: translateY(-50%);
           font-size: 18px;
           display: none;
@@ -101,6 +101,19 @@
         .form-input:invalid ~ .invalid-icon {
           display: inline;
         }
+
+         .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
+          }
+
+          .eye-icon:hover {
+            color: #007bff;
+          }
       }
       
 
