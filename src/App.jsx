@@ -9,10 +9,10 @@ import Profile from './pages/profile/Profile';
 import Reel from './pages/reel/Reel';
 import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
-import Menu from './components/Menu/Menu';
 import LayoutMenu from './layouts/LayoutMenu';
 import RegisterInFo from './pages/register/information/RegisterInFo';
 import RegisterBirthday from './pages/register/birthday/RegisterBirthday';
+import RegisterOTP from './pages/register/otp/RegisterOTP';
 
 const App = () => {
   const routes = useRoutes([
@@ -27,6 +27,10 @@ const App = () => {
     {
       path: '/register-birthday',
       element: <RegisterBirthday />
+    },
+    {
+      path: '/register-OTP',
+      element: <RegisterOTP/>
     },
     {
       path: '/',

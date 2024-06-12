@@ -17,7 +17,7 @@ const RegisterBirthday = () => {
               <div className='img-birthday-register'>
                 <img className='img' src={birthday_cake} />
               </div>
-                <p className='title-form'>Thêm ngày sinh</p>
+              <p className='title-form'><b>Thêm ngày sinh</b></p>
                 <p className='p1'>Thông tin này sẽ không hiển thị trên trang cá nhân công khai của bạn</p>
 
                 <div className='form-birthday'>

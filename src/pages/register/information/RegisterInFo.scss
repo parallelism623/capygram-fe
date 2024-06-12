@@ -12,6 +12,7 @@
       border: 1px solid rgb(221, 219, 219);
       min-height: 500px;
       padding: 50px;
+      border-radius: 4px;
 
       .logo-capygram{
         width: 100%;
@@ -140,6 +141,11 @@
         background-color: rgb(98, 164, 239);
         color: aliceblue;
         font-size: 16px;
+
+        &:hover{
+          background-color: rgb(0, 123, 255);
+          transform: scale(1.05);
+        }
       }
     }
     .div-link-login{
@@ -149,11 +155,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      border-radius: 4px;
 
       .link-login{
         color: rgb(98, 164, 239);
         text-decoration: none;
         font-size: 16px;
+
+        &:hover{
+          color: rgb(4, 17, 59);
+        }
       }
     }
   }
