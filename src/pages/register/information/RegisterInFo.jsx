@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 
-import { loginValidation } from '../../utils/validation/loginValidation';
+import { registerValidation } from "../../../utils/validation/registerValidation";
 
-import logoCapyGram from "../../assets/images/logoCapyGram.png";
+import logoCapyGram from "../../../../public/images/logoCapyGram.png";
 
-import "./Register.scss";
+import "./RegisterInFo.scss";
 
-const Register = () => {
+const RegisterInFo = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -24,11 +24,11 @@ const Register = () => {
   }
   return (
     <div className='div-body'>
-      <div className='div-login'>
+      <div className='div-register'>
         <div className='div-form'>
           <Formik
             initialValues={initValue}
-            validationSchema={loginValidation}
+            validationSchema={registerValidation}
             onSubmit={async (values) => {
               console.log(values);
             }}
@@ -98,12 +98,12 @@ const Register = () => {
             )}
           </Formik>
         </div>
-        <div className='div-link-register'>
-          <p>Bạn đã có tài khoản? <Link className='link-register' to='/ft/login'>Đăng Nhập</Link></p>
+        <div className='div-link-login'>
+          <p>Bạn đã có tài khoản? <Link className='link-login' to='/login'>Đăng Nhập</Link></p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Register;
+export default RegisterInFo;
