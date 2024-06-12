@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const loginValidation = Yup.object().shape({
+export const registerValidation = Yup.object().shape({
   Email: Yup.string()
     .email('Email không hợp lệ!')
     .required('Số điện thoại hoặc email không được để trống!'),

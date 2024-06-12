@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .div-login{
+  .div-register{
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -142,7 +142,7 @@
         font-size: 16px;
       }
     }
-    .div-link-register{
+    .div-link-login{
       margin-top: 10px;
       border: 1px solid rgb(221, 219, 219);
       min-height: 50px;
@@ -150,7 +150,7 @@
       justify-content: center;
       align-items: center;
 
-      .link-register{
+      .link-login{
         color: rgb(98, 164, 239);
         text-decoration: none;
         font-size: 16px;

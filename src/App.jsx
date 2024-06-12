@@ -12,6 +12,7 @@ import Login from './pages/login/Login';
 import Menu from './components/Menu/Menu';
 import LayoutMenu from './layouts/LayoutMenu';
 import RegisterInFo from './pages/register/information/RegisterInFo';
+import RegisterBirthday from './pages/register/birthday/RegisterBirthday';
 
 const App = () => {
   const routes = useRoutes([
@@ -22,6 +23,10 @@ const App = () => {
     {
       path: '/register-information',
       element: <RegisterInFo />
+    },
+    {
+      path: '/register-birthday',
+      element: <RegisterBirthday />
     },
     {
       path: '/',
