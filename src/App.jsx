@@ -12,17 +12,25 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Menu from './components/Menu/Menu';
 import LayoutMenu from './layouts/LayoutMenu';
+import LayoutFooter from './layouts/LayoutFooter';
 
 const App = () => {
   const routes = useRoutes([
     {
-      path: '/login',
-      element: <Login />
+      path: '/ft',
+      element: <LayoutFooter />,
+      children: [
+        {
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'register',
+          element: <Register />
+        },
+      ]
     },
-    {
-      path: '/register',
-      element: <Register />
-    },
+
     {
       path: '/',
       element: <LayoutMenu />,

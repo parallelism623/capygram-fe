@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { loginValidation } from '../../utils/validation/loginValidation';
 
-import logoCapyGram from "../../../public/images/logoCapyGram.png";
+import logoCapyGram from "../../assets/images/logoCapyGram.png";
 
 import "./Register.scss";
 
@@ -99,7 +99,7 @@ const Register = () => {
           </Formik>
         </div>
         <div className='div-link-register'>
-          <p>Bạn đã có tài khoản? <Link className='link-register' to='/login'>Đăng Nhập</Link></p>
+          <p>Bạn đã có tài khoản? <Link className='link-register' to='/ft/login'>Đăng Nhập</Link></p>
         </div>
       </div>
     </div>
