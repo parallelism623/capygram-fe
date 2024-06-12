@@ -42,6 +42,10 @@ const App = () => {
     },
 
     {
+      path: '/register-birthday',
+      element: <RegisterBirthday />
+    },
+    {
       path: '/',
       element: <LayoutMenu />,
       children: [
