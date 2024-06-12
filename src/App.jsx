@@ -9,9 +9,9 @@ import Profile from './pages/profile/Profile';
 import Reel from './pages/reel/Reel';
 import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
-import Register from './pages/register/Register';
 import Menu from './components/Menu/Menu';
 import LayoutMenu from './layouts/LayoutMenu';
+import RegisterInFo from './pages/register/information/RegisterInFo';
 
 const App = () => {
   const routes = useRoutes([
@@ -20,8 +20,8 @@ const App = () => {
       element: <Login />
     },
     {
-      path: '/register',
-      element: <Register />
+      path: '/register-information',
+      element: <RegisterInFo />
     },
     {
       path: '/',

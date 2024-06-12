@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 
-import { loginValidation } from '../../utils/validation/loginValidation';
+import { loginValidation } from "../../../utils/validation/loginValidation";
 
-import logoCapyGram from "../../../public/images/logoCapyGram.png";
+import logoCapyGram from "../../../../public/images/logoCapyGram.png";
 
-import "./Register.scss";
+import "./RegisterInFo.scss";
 
-const Register = () => {
+const RegisterInFo = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -106,4 +106,4 @@ const Register = () => {
   )
 }
 
-export default Register;
+export default RegisterInFo;
