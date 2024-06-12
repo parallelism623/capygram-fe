@@ -26,15 +26,15 @@ const App = () => {
           element: <Login />
         },
         {
-          path: '/register-information',
+          path: 'register-information',
           element: <RegisterInFo />
         },
         {
-          path: '/register-birthday',
+          path: 'register-birthday',
           element: <RegisterBirthday />
         },
         {
-          path: '/register-OTP',
+          path: 'register-OTP',
           element: <RegisterOTP/>
         }
 
