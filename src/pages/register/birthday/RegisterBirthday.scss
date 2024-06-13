@@ -60,6 +60,13 @@
             border-color: #007bff;
           }
         }
+
+      }
+
+      .form-error{
+          color: red;
+          font-size: 12px;
+          margin-top: 10px
       }
 
       .p2{
@@ -94,10 +101,14 @@
         margin-top: 20px;
         text-align: center;
 
-        .link-p4{
+       
           text-decoration: none;
           color: rgb(98, 164, 239);
-        }
+
+          &:hover{
+            color: rgb(4, 17, 59);
+          }
+        
       }
     }
 

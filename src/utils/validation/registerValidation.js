@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
-export const registerValidation = Yup.object().shape({
-  Email: Yup.string()
+export const registerInformationValidation = Yup.object().shape({
+  email: Yup.string()
     .email('Email không hợp lệ!')
     .required('Số điện thoại hoặc email không được để trống!'),
   fullname: Yup.string()
@@ -19,4 +19,19 @@ export const registerValidation = Yup.object().shape({
     .matches(/\d/, 'Mật khẩu phải chứa ít nhất một số')
     .matches(/[A-Za-z].*[A-Za-z]/, 'Mật khẩu phải chứa ít nhất hai chữ cái')
     .required('Mật khẩu không được để trống!')
+});
+
+export const registerBirthdayValidation = Yup.object().shape({
+  day: Yup.string()
+    .required('Bạn cần nhập đầy đủ ngày sinh của mình!'),
+  month: Yup.string()
+    .required('Bạn cần nhập đầy đủ ngày sinh của mình!'),
+  year: Yup.string()
+    .required('Bạn cần nhập đầy đủ ngày sinh của mình!')
+});
+
+export const registerOTPValidation = Yup.object().shape({
+  otp: Yup.string()
+    .matches(/^\d{6}$/, 'Mã OTP phải có 6 chữ số!')
+    .required('Mã OTP không được để trống!')
 });
