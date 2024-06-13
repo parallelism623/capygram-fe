@@ -1,0 +1,18 @@
+{
+  "title": "Sign up to see photos and videos from your friends.",
+  "input1": "Email",
+  "input2": "Fullname",
+  "input3": "Username",
+  "input4": "Password",
+  "des1": "People who use our service may have uploaded your contact information to Capygram.",
+  "des2": "Learn more.",
+  "des3": "By signing up, you agree to ",
+  "des4": "our Termse",
+  "des5": "Privacy Policy",
+  "des6": " and ",
+  "des7": "Cookies Policy",
+  "des8": " ours.",
+  "button": "Sign up",
+  "haveAccount": "Have an account ?",
+  "login": " Log in"
+}

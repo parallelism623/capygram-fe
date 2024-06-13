@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import "@/i18n";
 
 import checkEmail from "@/assets/images/checkEmail.gif";
 import { setUser, submitForm } from '@/store/formSlice';
@@ -11,6 +13,7 @@ import { registerOTPValidation } from '@/utils/validation/registerValidation';
 import './RegisterOTP.scss';
 
 const RegisterOTP = () => {
+  const { t } = useTranslation('step3Register');
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.form.user);
@@ -37,24 +40,24 @@ const RegisterOTP = () => {
                 <div className='img-otp'>
                   <img src={checkEmail} />
                 </div>
-                <p className='sub-tittle'><b>Chỉ một bước nữa thôi</b></p>
-                <p className='p1'>Hãy nhập mã gồm 6 chữ số mà chúng tôi đã gửi đến gmail: {gmail}</p>
+                <p className='sub-tittle'><b>{ t('title1')}</b></p>
+                <p className='p1'>{t('title2')} {gmail}</p>
 
                 <div className='input-OTP'>
                   <Field className='form-input' name='otp' placeholder='# # # # # #' type='text'></Field>
                   <ErrorMessage className='form-error' name='otp' component='div' />
                 </div>
 
-                <button className='btn-submit' type='submit'>Xác nhận</button>
+                <button className='btn-submit' type='submit'>{t('button')}</button>
 
-                <p className='p2'>Gửi lại mã</p>
+                <p className='p2'>{t('link')}</p>
               </Form>
             )}
           </Formik>
 
         </div>
         <div className='div-link-login'>
-          <p>Bạn đã có tài khoản? <Link className='link-login' to='/ft/login'>Đăng Nhập</Link></p>
+          <p>{t('haveAccount')} <Link className='link-login' to='/ft/login'>{t('login')}</Link></p>
         </div>
       </div>
     </div>
