@@ -31,6 +31,10 @@ const App = () => {
       ]
     },
     {
+      path: '/register-OTP',
+      element: <RegisterOTP/>
+    },
+    {
       path: '/',
       element: <LayoutMenu />,
       children: [
