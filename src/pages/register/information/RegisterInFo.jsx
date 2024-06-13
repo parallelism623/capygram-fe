@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import "@/i18n";
 
 import { registerInformationValidation } from "@/utils/validation/registerValidation";
 import { nextStep, setUser } from '@/store/formSlice';
@@ -12,6 +14,7 @@ import logoCapyGram from "@/assets/images/logoCapyGram.png";
 import "./RegisterInFo.scss";
 
 const RegisterInFo = () => {
+  const { t } = useTranslation('step1Register');
 
   const user = useSelector((state) => state.form.user);
   const dispatch = useDispatch();
@@ -39,11 +42,11 @@ const RegisterInFo = () => {
             {({ handleSubmit, isSubmitting, touched, errors }) => (
               <Form onSubmit={handleSubmit}>
                 <img className='logo-capygram' src={logoCapyGram} />
-                <p className='sub-title'> Đăng ký để xem ảnh và video từ bạn bè.</p>
+                <p className='sub-title'> {t('title')}</p>
 
                 <div className='form-field'>
                   <Field className='form-input' name='email' type='text' placeholder=" " />
-                  <span className='placeholder'>Email</span>
+                  <span className='placeholder'>{t('input1') }</span>
                   <ErrorMessage className='form-error' name='email' component='div' />
                   {touched.email && !errors.email && (
                     <span className="valid-icon">✔</span>
@@ -56,7 +59,7 @@ const RegisterInFo = () => {
 
                 <div className='form-field'>
                   <Field className='form-input' name='fullname' type='text' placeholder=" " />
-                  <span className='placeholder'>Tên đầy đủ</span>
+                  <span className='placeholder'>{t('input2')}</span>
                   <ErrorMessage className='form-error' name='fullname' component='div' />
                   {touched.fullname && !errors.fullname && (
                     <span className="valid-icon">✔</span>
@@ -69,7 +72,7 @@ const RegisterInFo = () => {
 
                 <div className='form-field'>
                   <Field className='form-input' name='username' type='text' placeholder=" " />
-                  <span className='placeholder'>Tên người dùng</span>
+                  <span className='placeholder'>{t('input3')}</span>
                   <ErrorMessage className='form-error' name='username' component='div' />
                   {touched.username && !errors.username && (
                     <span className="valid-icon">✔</span>
@@ -82,7 +85,7 @@ const RegisterInFo = () => {
 
                 <div className='form-field'>
                   <Field className='form-input' name='password' type={showPassword ? 'text' : 'password'} placeholder=" " />
-                  <span className='placeholder'>Mật khẩu</span>
+                  <span className='placeholder'>{t('input4')}</span>
                   <i className={`eye-icon ${showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}`} onClick={togglePasswordVisibility}></i>
                   <ErrorMessage className='form-error' name='password' component='div' />
                   {touched.password && !errors.password && (
@@ -93,16 +96,16 @@ const RegisterInFo = () => {
                   )}
                 </div>
 
-                <p className='rules'>Những người dùng dịch vụ của chúng tôi có thể đã tải thông tin liên hệ của bạn lên Instagram. <Link className='link' to="https://web.facebook.com/help/instagram/261704639352628?_rdc=1&_rdr">Tìm hiểu thêm</Link></p>
-                <p className='rules'>Bằng cách đăng ký, bạn đồng ý với <Link className='link' to="https://help.instagram.com/581066165581870/?locale=vi_VN">Điều khoản</Link>, <Link className='link' to='https://free.facebook.com/privacy/policy/#'>Chính sách quyền riêng tư</Link> và <Link className='link' to="https://privacycenter.instagram.com/policies/cookies/">Chính sách cookie</Link> của chúng tôi.</p>
+                <p className='rules'>{t('des1')}<Link className='link' to="https://web.facebook.com/help/instagram/261704639352628?_rdc=1&_rdr">{t('des2')}</Link></p>
+                <p className='rules'>{t('des3')}<Link className='link' to="https://help.instagram.com/581066165581870/?locale=vi_VN">{t('des4')}</Link>, <Link className='link' to='https://free.facebook.com/privacy/policy/#'>{t('des5')}</Link>{t('des6')}<Link className='link' to="https://privacycenter.instagram.com/policies/cookies/">{t('des7')}</Link></p>
 
-                <button className='form-button' type='submit'><b>Đăng ký</b></button>
+                <button className='form-button' type='submit'><b>{t('button')}</b></button>
               </Form>
             )}
           </Formik>
         </div>
         <div className='div-link-login'>
-          <p>Bạn đã có tài khoản? <Link className='link-login' to='/login'>Đăng Nhập</Link></p>
+          <p>{t('haveAccount')}<Link className='link-login' to='/login'>{t('login')}</Link></p>
         </div>
       </div>
     </div>
