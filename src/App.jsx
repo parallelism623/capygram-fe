@@ -11,8 +11,9 @@ import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
 import LayoutMenu from './layouts/LayoutMenu';
 import LayoutFooter from './layouts/LayoutFooter';
-import Register from './pages/register/Register';
-
+import RegisterOTP from './pages/register/otp/RegisterOTP';
+import RegisterInFo from './pages/register/information/RegisterInFo';
+import RegisterBirthday from './pages/register/birthday/RegisterBirthday';
 const App = () => {
   const routes = useRoutes([
     {
@@ -24,16 +25,21 @@ const App = () => {
           element: <Login />
         },
         {
-          path: 'register',
-          element: <Register/>
+          path: 'register-information',
+          element: <RegisterInFo />
+        },
+        {
+          path: 'register-OTP',
+          element: <RegisterOTP />
+        },
+        {
+          path: 'register-birthday',
+          element: < RegisterBirthday />
         }
 
       ]
     },
-    {
-      path: '/register-OTP',
-      element: <RegisterOTP/>
-    },
+
     {
       path: '/',
       element: <LayoutMenu />,

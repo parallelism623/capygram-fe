@@ -54,7 +54,7 @@ const RegisterOTP = () => {
 
         </div>
         <div className='div-link-login'>
-          <p>Bạn đã có tài khoản? <Link className='link-login' to='/login'>Đăng Nhập</Link></p>
+          <p>Bạn đã có tài khoản? <Link className='link-login' to='/ft/login'>Đăng Nhập</Link></p>
         </div>
       </div>
     </div>
