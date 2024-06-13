@@ -2,36 +2,39 @@
 import React, { useState } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { registerValidation } from "../../../utils/validation/registerValidation";
+import { registerInformationValidation } from "@/utils/validation/registerValidation";
+import { nextStep, setUser } from '@/store/formSlice';
 
-import logoCapyGram from "../../../../public/images/logoCapyGram.png";
+import logoCapyGram from "@/assets/images/logoCapyGram.png";
 
 import "./RegisterInFo.scss";
 
 const RegisterInFo = () => {
+
+  const user = useSelector((state) => state.form.user);
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  }
+  };
 
-  const initValue = {
-    Email: '',
-    fullname: '',
-    username: '',
-    password: ''
-  }
+  const handleSubmit = (values) => {
+    dispatch(setUser(values));
+    dispatch(nextStep());
+  };
+
   return (
     <div className='div-body'>
       <div className='div-register'>
         <div className='div-form'>
           <Formik
-            initialValues={initValue}
-            validationSchema={registerValidation}
-            onSubmit={async (values) => {
-              console.log(values);
-            }}
+            initialValues={user}
+            validationSchema={registerInformationValidation}
+            onSubmit={handleSubmit}
           >
             {({ handleSubmit, isSubmitting, touched, errors }) => (
               <Form onSubmit={handleSubmit}>
@@ -39,13 +42,13 @@ const RegisterInFo = () => {
                 <p className='sub-title'> Đăng ký để xem ảnh và video từ bạn bè.</p>
 
                 <div className='form-field'>
-                  <Field className='form-input' name='Email' type='text' placeholder=" " />
+                  <Field className='form-input' name='email' type='text' placeholder=" " />
                   <span className='placeholder'>Email</span>
-                  <ErrorMessage className='form-error' name='Email' component='div' />
-                  {touched.Email && !errors.Email && (
+                  <ErrorMessage className='form-error' name='email' component='div' />
+                  {touched.email && !errors.email && (
                     <span className="valid-icon">✔</span>
                   )}
-                  {touched.Email && errors.Email && (
+                  {touched.email && errors.email && (
                     <span className="invalid-icon">✘</span>
                   )}
                   <br />
