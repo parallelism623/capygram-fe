@@ -9,17 +9,47 @@
         display: flex;
         margin-top: 40px;
         justify-content: center;
+        align-items: center;
+        position: relative;
 
-        .content-img {
+        .image {
             margin-right: 32px;
 
-            img {
-                width: 400px;
+
+            .slide {
+
+                list-style: none;
+
+                li {
+                    position: absolute;
+                    top: 0;
+
+                    opacity: 0;
+                    transition: opacity 1s ease-in-out;
+                    z-index: 0;
+
+                    &.active {
+                        opacity: 1;
+                        z-index: 1;
+                    }
+
+                    .content-img {
+                        width: 400px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
             }
         }
 
-        .content-form {
 
+
+        .content-form {
+            margin-left: 30%;
 
             .form {
                 margin-bottom: 30px;
