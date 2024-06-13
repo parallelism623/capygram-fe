@@ -14,6 +14,8 @@ import LayoutFooter from './layouts/LayoutFooter';
 import RegisterOTP from './pages/register/otp/RegisterOTP';
 import RegisterInFo from './pages/register/information/RegisterInFo';
 import RegisterBirthday from './pages/register/birthday/RegisterBirthday';
+import ResetPassword from './pages/resetPassword/ResetPassword';
+import Register from './pages/register/Register';
 const App = () => {
   const routes = useRoutes([
     {
@@ -25,18 +27,13 @@ const App = () => {
           element: <Login />
         },
         {
-          path: 'register-information',
-          element: <RegisterInFo />
+          path: 'register',
+          element: <Register />
         },
         {
-          path: 'register-OTP',
-          element: <RegisterOTP />
-        },
-        {
-          path: 'register-birthday',
-          element: < RegisterBirthday />
+          path: 'reset-password',
+          element: < ResetPassword />
         }
-
       ]
     },
 
