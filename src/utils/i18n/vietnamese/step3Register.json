@@ -1,1 +1,8 @@
-{}
+{
+  "title1": "Chỉ một bước nữa thôi",
+  "title2": "Hãy nhập mã gồm 6 chữ số mà chúng tôi đã gửi đến gmail:",
+  "button": "Xác nhận",
+  "link": "Gửi lại mã",
+  "haveAccount": "Bạn đã có tài khoản ?",
+  "login": "Đăng nhập"
+}

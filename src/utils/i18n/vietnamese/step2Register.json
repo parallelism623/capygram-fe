@@ -1,1 +1,13 @@
-{}
+{
+  "addYourBirthday": "Thêm ngày sinh",
+  "subTitle": "Thông tin này sẽ không hiển thị trên trang cá nhân công khai của bạn",
+  "input1": "Tháng",
+  "input2": "Ngày",
+  "input3": "Năm",
+  "title2": "Bạn cần nhập ngày sinh của mình",
+  "title3": "Hãy thêm ngày sinh của chính bạn, dù đây là tài khoản dành cho doanh nghiệp, thú cưng hay bất cứ điều gì khác",
+  "button": "Tiếp",
+  "link": "Quay lại",
+  "haveAccount": "Bạn đã có tài khoản ?",
+  "login": "Đăng nhập"
+}

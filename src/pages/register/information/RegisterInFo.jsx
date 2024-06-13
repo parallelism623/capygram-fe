@@ -105,7 +105,7 @@ const RegisterInFo = () => {
           </Formik>
         </div>
         <div className='div-link-login'>
-          <p>{t('haveAccount')}<Link className='link-login' to='/login'>{t('login')}</Link></p>
+          <p>{t('haveAccount')}<Link className='link-login' to='/ft/login'>{t('login')}</Link></p>
         </div>
       </div>
     </div>
