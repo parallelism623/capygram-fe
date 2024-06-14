@@ -20,7 +20,7 @@ const VerifyAccount = () => {
 
                 <div className="va-header">
                     <div className="va-header-content">
-                        <p className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
+                        <p style={{ cursor: "pointer" }} className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
                         <p style={{ cursor: "pointer" }} onClick={handleOtherLogin}>Đăng nhập bằng tài khoản khác</p>
                     </div>
                 </div>

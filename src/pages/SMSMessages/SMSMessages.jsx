@@ -16,7 +16,7 @@ const SMSMessages = () => {
             <div className="SMSMessages-container">
                 <div className="sms-header">
                     <div className="sms-header-content">
-                        <p className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
+                        <p style={{ cursor: "pointer" }} className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
                         <p style={{ cursor: "pointer" }} onClick={handleOtherLogin}>Đăng nhập bằng tài khoản khác</p>
                     </div>
                 </div>
@@ -33,6 +33,23 @@ const SMSMessages = () => {
                     </div>
                 </div>
             </div>
+            {showLogout && (
+                <div className="Logout">
+                    <div className="Logout-container">
+                        <div className="Logout-container-header">
+                            <h3>Đăng xuất?</h3>
+                            <p>Bạn có chắc chắn muốn đăng xuất tài khoản không?</p>
+                        </div>
+                        <div className="Logout-button">
+                            <p onClick={() => navigate("/ft/login")}>Đăng xuất</p>
+                        </div>
+                        <div className="Logout-button1">
+                            <p onClick={handleCancelLogout}>Hủy</p>
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
