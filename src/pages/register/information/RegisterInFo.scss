@@ -1,37 +1,38 @@
-.div-body{
+.div-body {
   display: flex;
   justify-content: center;
   align-items: center;
-  .div-register{
+
+  .div-register {
     display: flex;
     flex-direction: column;
     width: 400px;
     margin-top: 20px;
 
-    .div-form{
+    .div-form {
       border: 1px solid rgb(221, 219, 219);
       min-height: 500px;
       padding: 50px;
       border-radius: 4px;
 
-      .logo-capygram{
+      .logo-capygram {
         width: 100%;
         height: 200px;
         margin-top: -50px;
       }
 
-      .sub-title{
+      .sub-title {
         color: rgb(141, 139, 139);
         font-size: 18px;
         text-align: center;
         margin-top: -30px;
       }
 
-      .form-field{
+      .form-field {
         position: relative;
         margin-top: 30px;
 
-        .form-input{
+        .form-input {
           position: relative;
           width: 100%;
           height: 40px;
@@ -40,29 +41,30 @@
           background-color: rgb(255, 252, 252);
           border-radius: 4px;
 
-          &:focus{
+          &:focus {
             outline: none;
             border-color: #007bff;
           }
 
-          &::placeholder{
+          &::placeholder {
             transition: all 0.2s ease;
           }
 
-          &:placeholder-shown:not(:focus) + .placeholder{
+          &:placeholder-shown:not(:focus)+.placeholder {
             font-size: 14px;
             top: 15px;
             transform: translateY(-50%);
           }
 
-          &:not(:placeholder-shown), &:focus + .placeholder{
+          &:not(:placeholder-shown),
+          &:focus+.placeholder {
             font-size: 12px;
             top: -15px;
             padding: 0 5px;
           }
         }
 
-        .placeholder{
+        .placeholder {
           position: absolute;
           left: 15px;
           top: -15px;
@@ -72,13 +74,14 @@
           color: #888;
         }
 
-        .form-error{
+        .form-error {
           position: absolute;
           color: red;
           font-size: 12px;
         }
 
-        .valid-icon, .invalid-icon {
+        .valid-icon,
+        .invalid-icon {
           position: absolute;
           right: 30px;
           top: 5px;
@@ -95,44 +98,44 @@
           color: red;
         }
 
-        .form-input:valid ~ .valid-icon {
+        .form-input:valid~.valid-icon {
           display: inline;
         }
 
-        .form-input:invalid ~ .invalid-icon {
+        .form-input:invalid~.invalid-icon {
           display: inline;
         }
 
-         .eye-icon {
-            position: absolute;
-            right: 10px;
-            top: 20%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #888;
-          }
+        .eye-icon {
+          position: absolute;
+          right: 10px;
+          top: 20%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          color: #888;
+        }
 
-          .eye-icon:hover {
-            color: #007bff;
-          }
+        .eye-icon:hover {
+          color: #007bff;
+        }
       }
-      
 
-      .rules{
+
+      .rules {
         width: 100%;
         margin-top: 20px;
         text-align: center;
         font-size: 15px;
         color: rgb(110, 110, 110);
 
-        .link{
+        .link {
           color: rgb(0, 0, 0);
           text-decoration: none;
-        
+
         }
       }
 
-      .form-button{
+      .form-button {
         margin-top: 20px;
         width: 100%;
         height: 35px;
@@ -141,14 +144,16 @@
         background-color: rgb(98, 164, 239);
         color: aliceblue;
         font-size: 16px;
+        cursor: pointer;
 
-        &:hover{
+        &:hover {
           background-color: rgb(0, 123, 255);
           transform: scale(1.05);
         }
       }
     }
-    .div-link-login{
+
+    .div-link-login {
       margin-top: 10px;
       border: 1px solid rgb(221, 219, 219);
       min-height: 50px;
@@ -157,12 +162,12 @@
       align-items: center;
       border-radius: 4px;
 
-      .link-login{
+      .link-login {
         color: rgb(98, 164, 239);
         text-decoration: none;
         font-size: 16px;
 
-        &:hover{
+        &:hover {
           color: rgb(4, 17, 59);
         }
       }

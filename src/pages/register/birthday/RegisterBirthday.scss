@@ -1,15 +1,15 @@
-.body-birthday-register{
+.body-birthday-register {
   display: flex;
   justify-content: center;
   align-items: center;
 
 
-  .body-form{
+  .body-form {
     display: flex;
     flex-direction: column;
     width: 400px;
 
-    .form-birthday-register{
+    .form-birthday-register {
       width: 100%;
       border: 1px solid rgb(221, 219, 219);
       border-radius: 4px;
@@ -18,44 +18,46 @@
       margin-top: 20px;
 
 
-      .img-birthday-register{
+      .img-birthday-register {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-top: -35px;
 
-        .img{
+        .img {
           width: 50%;
           height: 150px;
         }
       }
 
-      .title-form{
+      .title-form {
         text-align: center;
       }
 
-      .p1{
+      .p1 {
         text-align: center;
         margin-top: 15px;
         color: rgb(44, 43, 43);
       }
 
-      .form-birthday{
+      .form-birthday {
         margin-top: 20px;
         width: 100%;
         height: 40px;
         display: flex;
         justify-content: space-between;
 
-        .form-input{
+
+        .form-input {
           height: 100%;
           width: 90px;
           border: 1px solid rgb(221, 219, 219);
           border-radius: 4px;
           text-align: center;
+          cursor: pointer;
 
-          &:focus{
+          &:focus {
             outline: none;
             border-color: #007bff;
           }
@@ -63,25 +65,25 @@
 
       }
 
-      .form-error{
-          color: red;
-          font-size: 12px;
-          margin-top: 10px
+      .form-error {
+        color: red;
+        font-size: 12px;
+        margin-top: 10px
       }
 
-      .p2{
+      .p2 {
         margin-top: 20px;
         text-align: center;
         color: rgb(158, 157, 157);
       }
 
-      .p3{
+      .p3 {
         margin-top: 20px;
         text-align: center;
         color: rgb(158, 157, 157);
       }
 
-      .btn-next{
+      .btn-next {
         margin-top: 20px;
         width: 100%;
         height: 40px;
@@ -90,29 +92,30 @@
         border-radius: 8px;
         font-size: 16px;
         color: white;
+        cursor: pointer;
 
-         &:hover{
+        &:hover {
           background-color: rgb(0, 123, 255);
           transform: scale(1.05);
         }
       }
 
-      .p4{
+      .p4 {
         margin-top: 20px;
         text-align: center;
+        cursor: pointer;
 
-       
-          text-decoration: none;
-          color: rgb(98, 164, 239);
+        text-decoration: none;
+        color: rgb(98, 164, 239);
 
-          &:hover{
-            color: rgb(4, 17, 59);
-          }
-        
+        &:hover {
+          color: rgb(4, 17, 59);
+        }
+
       }
     }
 
-    .div-link-login{
+    .div-link-login {
       margin-top: 10px;
       border: 1px solid rgb(221, 219, 219);
       min-height: 50px;
@@ -121,12 +124,12 @@
       align-items: center;
       border-radius: 4px;
 
-      .link-login{
+      .link-login {
         color: rgb(98, 164, 239);
         text-decoration: none;
         font-size: 16px;
 
-        &:hover{
+        &:hover {
           color: rgb(4, 17, 59);
         }
       }

@@ -60,7 +60,7 @@
                 // text-align: center;
 
                 color: rgb(var(--ig-primary-text));
-                min-width: 400px;
+                width: 400px;
                 text-align: center;
 
                 .Form {
@@ -143,5 +143,27 @@
                 }
             }
         }
+    }
+
+    @media screen and (max-width:1238px) {
+        .image {
+            display: none;
+        }
+
+        .content-form {
+            margin-right: 30%;
+
+
+            .form {
+                max-width: 300px;
+            }
+
+            .register {
+                max-width: 300px;
+            }
+
+
+        }
+
     }
 }
