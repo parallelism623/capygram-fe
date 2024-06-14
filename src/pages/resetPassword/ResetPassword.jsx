@@ -21,7 +21,7 @@ const ResetPassword = () => {
       <div className="reset-password-container">
         <div className="rsp-header">
           <div className="rsp-header-content">
-            <p>Capygram</p>
+            <p style={{ cursor: "pointer" }} onClick={() => navigate("/ft/login")}>Capygram</p>
           </div>
         </div>
         <div className="rsp-content">
@@ -45,7 +45,7 @@ const ResetPassword = () => {
                     <div className="form-input">
                       <Field className="field" name="email" type='text' value={inputValue} onChange={handleInputChange} placeholder="Số điện thoại, tên người dùng hoặc email " />
                     </div>
-                    <button className='form-button' type='submit' disabled={!inputValue} onClick={() => navigate("/verify-account")}>Gửi liên kết đăng nhập</button>
+                    <button className={`${inputValue ? "form-button" : "form-button2"}`} type='submit' disabled={!inputValue} onClick={() => navigate("/verify-account")}>Gửi liên kết đăng nhập</button>
                     <a href="">Bạn không thể đặt lại mật khẩu? </a>
                     <div className="divider">
                       <span className='divider-text'>HOẶC</span>

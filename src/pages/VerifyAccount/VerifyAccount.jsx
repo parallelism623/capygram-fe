@@ -1,13 +1,27 @@
+import { useNavigate } from "react-router-dom"
 import "./VerifyAccount.scss"
+import { useState } from "react";
 
 const VerifyAccount = () => {
+    const navigate = useNavigate();
+    const [showLogout, setShowLogout] = useState(false);
+
+    const handleOtherLogin = () => {
+        setShowLogout(true);
+    }
+    const handleCancelLogout = () => {
+        setShowLogout(false);
+    };
+
     return (
         <div className="verify-account">
+
             <div className="verify-account-container">
+
                 <div className="va-header">
                     <div className="va-header-content">
-                        <p>Capygram</p>
-                        <p>Đăng nhập bằng tài khoản khác</p>
+                        <p className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
+                        <p style={{ cursor: "pointer" }} onClick={handleOtherLogin}>Đăng nhập bằng tài khoản khác</p>
                     </div>
                 </div>
                 <div className="va-content">
@@ -34,6 +48,23 @@ const VerifyAccount = () => {
 
                 </div>
             </div>
+            {showLogout && (
+                <div className="Logout">
+                    <div className="Logout-container">
+                        <div className="Logout-container-header">
+                            <h3>Đăng xuất?</h3>
+                            <p>Bạn có chắc chắn muốn đăng xuất tài khoản không?</p>
+                        </div>
+                        <div className="Logout-button">
+                            <p onClick={() => navigate("/ft/login")}>Đăng xuất</p>
+                        </div>
+                        <div className="Logout-button1">
+                            <p onClick={handleCancelLogout}>Hủy</p>
+                        </div>
+
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
