@@ -62,13 +62,13 @@ const Login = () => {
                     <i className={`eye-icon ${showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}`} onClick={togglePasswordVisibility}></i>
                   </div>
                   <button className='form-button' type='submit'><b>Đăng nhập</b></button>
-                  <p onClick={() => navigate("/ft/resetpassword")}>Quên mật khẩu?</p>
+                  <p onClick={() => navigate("/ft/reset-password")}>Quên mật khẩu?</p>
                 </Form>
               )}
             </Formik>
           </div>
           <div className="register">
-            <p onClick={() => navigate("/ft/register-information")}>Tạo tài khoản mới</p>
+            <p onClick={() => navigate("/ft/register")}>Tạo tài khoản mới</p>
           </div>
         </div>
       </div>
