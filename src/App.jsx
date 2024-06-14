@@ -11,10 +11,7 @@ import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
 import LayoutMenu from './layouts/LayoutMenu';
 import LayoutFooter from './layouts/LayoutFooter';
-<<<<<<< HEAD
-=======
 import ResetPassword from './pages/resetPassword/ResetPassword';
->>>>>>> 95a5b478cfc88ac32bed38ba960abfac209abce5
 import Register from './pages/register/Register';
 const App = () => {
   const routes = useRoutes([
