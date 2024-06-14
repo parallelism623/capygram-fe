@@ -13,6 +13,7 @@ import LayoutMenu from './layouts/LayoutMenu';
 import LayoutFooter from './layouts/LayoutFooter';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import Register from './pages/register/Register';
+import VerifyAccount from './pages/VerifyAccount/VerifyAccount';
 const App = () => {
   const routes = useRoutes([
     {
@@ -32,6 +33,10 @@ const App = () => {
           element: < ResetPassword />
         }
       ]
+    },
+    {
+      path: '/verify-account',
+      element: <VerifyAccount />
     },
 
     {
