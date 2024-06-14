@@ -14,6 +14,7 @@ import LayoutFooter from './layouts/LayoutFooter';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import Register from './pages/register/Register';
 import VerifyAccount from './pages/VerifyAccount/VerifyAccount';
+import SMSMessages from './pages/SMSMessages/SMSMessages';
 const App = () => {
   const routes = useRoutes([
     {
@@ -38,6 +39,11 @@ const App = () => {
       path: '/verify-account',
       element: <VerifyAccount />
     },
+    {
+      path: '/sms-messages',
+      element: <SMSMessages />
+    },
+
 
     {
       path: '/',
