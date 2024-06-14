@@ -41,7 +41,7 @@ const VerifyAccount = () => {
                                     reCAPTCHA Enterprise thu thập thông tin về phần cứng <br /> và phần mềm, chẳng hạn như dữ liệu thiết bị và ứng <br /> dụng, rồi gửi cho Google để cung cấp, duy trì và cải <br /> thiện reCAPTCHA Enterprise cũng như phục vụ các mục <br /> đích bảo mật chung. Google không dùng thông tin này <br /> để cá nhân hóa quảng cáo.</p>
                             </div>
                             <div className="countinue">
-                                <button>Tiếp tục</button>
+                                <button onClick={() => navigate('/sms-messages')}>Tiếp tục</button>
                             </div>
                         </div>
                     </div>
