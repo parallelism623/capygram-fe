@@ -56,7 +56,7 @@ const App = () => {
           element: <Notifications />
         },
         {
-          path: '/profile',
+          path: 'profile',
           element: <Profile />
         },
         {
