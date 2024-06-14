@@ -1,0 +1,137 @@
+.body-profile{
+  margin-left: 32%;
+  margin-top: 100px;
+  width: 50%;
+
+  .content-top{
+    display: flex;
+    justify-content: start;
+    gap: 100px;
+    .group-avata{
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+
+      .avata{
+        img{
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+        }
+
+        .note{
+          min-width: 50px;
+          max-width: 100px;
+          .content-note{
+            width: 100%;
+            word-wrap: break-word;
+            background-color: rgb(240, 236, 236);
+            min-height: 35px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+
+            margin-top: -200px;
+            margin-left: 10px;
+          }
+
+          .cham-to{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgb(240, 236, 236);
+            margin-left: 20px;
+            margin-top: -3px;
+          }
+
+          .cham-nho{
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: rgb(240, 236, 236);
+            margin-left: 30px;
+            margin-top: 1px;
+          }
+        }
+      }
+
+      .other-name{
+        margin-top: 140px;
+        width: 150px;
+        text-align: center;
+      }
+
+      .add-post{
+        width: 50px;
+
+        p{
+          text-align: center;
+        }
+      }
+    }
+
+    .right{
+      .action{
+        display: flex;
+        justify-content: start;
+        gap: 20px;
+
+        .name{
+          font-size: 30px;
+        }
+
+        img{
+          width: 30px;
+          height: 30px;
+        }
+
+        .btn-action{
+          width: 170px;
+          height: 35px;
+          border: none;
+          border-radius: 12px;
+        }
+      }
+
+      .data{
+        margin-top: 40px;
+        display: flex;
+        justify-content: start;
+        gap: 25px;
+      }
+
+    }
+
+
+  }
+
+  .content-bottom{
+    margin-top: 100px;
+    border-top: 1px solid rgb(181, 178, 178);
+    .menu-profile{
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      .menu-item{
+        height: 50px;
+        width: 130px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        color: rgb(154, 153, 153) ;
+        cursor: pointer;
+
+        img{
+          width: 20px;
+          height: 20px;
+        }
+
+        &.active{
+          color: black;
+          border-top: 2px solid  rgb(3, 3, 3);
+        }
+      }
+    }
+  }
+}
