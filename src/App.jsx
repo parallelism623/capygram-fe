@@ -11,6 +11,7 @@ import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
 import LayoutMenu from './layouts/LayoutMenu';
 import LayoutFooter from './layouts/LayoutFooter';
+import ResetPassword from './pages/resetPassword/ResetPassword';
 import Register from './pages/register/Register';
 const App = () => {
   const routes = useRoutes([
@@ -24,9 +25,12 @@ const App = () => {
         },
         {
           path: 'register',
-          element: <Register/>
+          element: <Register />
+        },
+        {
+          path: 'reset-password',
+          element: < ResetPassword />
         }
-
       ]
     },
 
