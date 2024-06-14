@@ -11,9 +11,6 @@ import Threads from './pages/threads/Threads';
 import Login from './pages/login/Login';
 import LayoutMenu from './layouts/LayoutMenu';
 import LayoutFooter from './layouts/LayoutFooter';
-import RegisterOTP from './pages/register/otp/RegisterOTP';
-import RegisterInFo from './pages/register/information/RegisterInFo';
-import RegisterBirthday from './pages/register/birthday/RegisterBirthday';
 import ResetPassword from './pages/resetPassword/ResetPassword';
 import Register from './pages/register/Register';
 const App = () => {
