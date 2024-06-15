@@ -13,18 +13,24 @@ import step3Register_vi from '@/utils/i18n/vietnamese/step3Register.json';
 
 import profile_en from '@/utils/i18n/english/profile.json';
 import profile_vi from '@/utils/i18n/vietnamese/profile.json';
+
+import note_profile_en from '@/utils/i18n/english/note_profile.json';
+import note_profile_vi from '@/utils/i18n/vietnamese/note_profile.json';
+
 const resources = {
   en: {
     step1Register: step1Register_en,
     step2Register: step2Register_en,
     step3Register: step3Register_en,
     profile: profile_en,
+    note_profile: note_profile_en,
   },
   vi: {
     step1Register: step1Register_vi,
     step2Register: step2Register_vi,
     step3Register: step3Register_vi,
     profile: profile_vi,
+    note_profile: note_profile_vi,
   }
 };
 

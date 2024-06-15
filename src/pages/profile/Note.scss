@@ -1,0 +1,112 @@
+.note-form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .body-note{
+  width: 550px;
+  height: 550px;
+  background-color: white;
+  padding: 20px;
+
+  .top-note{
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(221, 219, 219);
+
+    img{
+      width: 20px;
+      height: 20px;
+    }
+
+    .newNote{
+      font-size: 20px;
+    }
+
+    .share{
+      color: rgb(26, 26, 252);
+      font-size: 20px;
+    }
+
+    .notShare{
+      color: rgb(177, 177, 249);
+      font-size: 20px;
+    }
+  }
+
+  .center-note{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+
+    .avata{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+    }
+
+      .note-input{
+        border: none;
+        min-width: 50px;
+        max-width: 150px;
+        word-wrap: break-word;
+        background-color: rgb(240, 236, 236);
+        min-height: 35px;
+        text-align: center;
+        padding: 10px;
+        border-radius: 12px;
+
+        margin-top:-200px ;
+        margin-left: 20px;
+
+      }
+    
+      .cham-to{
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgb(240, 236, 236);
+        margin-left: -90px;
+        margin-top: -3px;
+      }
+
+      .cham-nho{
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: rgb(240, 236, 236);
+        margin-left: -70px;
+        margin-top: 1px;
+      }
+
+    .icon{
+      margin-top: 160px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .bottom-note{
+    margin-top: 150px;
+    display: flex;
+    gap: 5px;
+    height: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+
+    .people{
+      width: 20px;
+      height: 20px;
+    }
+
+    .select{
+      border: none;
+      font-size: 15px;
+    }
+  }
+}
+}
