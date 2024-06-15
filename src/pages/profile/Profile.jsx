@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
 
 import avataxinh from '@/assets/images/avataxinh.jpg'
 import setting from '@/assets/images/setting.png';
@@ -9,12 +10,20 @@ import post from '@/assets/images/post.png';
 import saved from '@/assets/images/saved.png';
 import tagged from '@/assets/images/tagged.png';
 
+import LayoutFooter from '@/layouts/LayoutFooter';
+
 import '@/i18n';
 import './Profile.scss';
-import LayoutFooter from '@/layouts/LayoutFooter';
+import Note from './Note';
+
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
+  const [showNoteForm, setShowNoteForm] = useState(false);
+
+  const handleCancel = () => {
+    setShowNoteForm(false);
+  }
 
   const handleClick = (item) => {
     setActiveItem(item);
@@ -31,7 +40,7 @@ const Profile = () => {
           <div className='avata'>
             <img src={avataxinh} alt='avata' />
             <div className='note'>
-              <div className='content-note'>{t('note')}</div>
+              <div className='content-note' onClick={() => setShowNoteForm(true)}>{t('note')}</div>
               <div className='cham-to'></div>
               <div className='cham-nho'></div>
             </div>
@@ -80,6 +89,20 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {showNoteForm && (
+        <div className='overlay' onClick={handleCancel}>
+          <motion.div
+            className='note-container'
+            onClick={(e) => e.stopPropagation()}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Note onCancel={handleCancel} />
+          </motion.div>
+        </div>
+      )}
       <LayoutFooter />
     </div>
 
