@@ -23,6 +23,16 @@ import login_vi from '@/utils/i18n/vietnamese/login.json';
 import edit_profile_en from '@/utils/i18n/english/edit_profile.json';
 import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
 
+import reset_password_en from '@/utils/i18n/english/reset_password.json';
+import reset_password_vi from '@/utils/i18n/vietnamese/reset_password.json';
+
+import verify_account_en from '@/utils/i18n/english/verify_account.json';
+import verify_account_vi from '@/utils/i18n/vietnamese/verify_account.json';
+
+import sms_messages_en from '@/utils/i18n/english/sms_messages.json';
+import sms_messages_vi from '@/utils/i18n/vietnamese/sms_messages.json';
+
+
 const resources = {
   en: {
     step1Register: step1Register_en,
@@ -32,6 +42,9 @@ const resources = {
     note_profile: note_profile_en,
     login: login_en,
     edit_profile: edit_profile_en,
+    reset_password: reset_password_en,
+    verify_account: verify_account_en,
+    sms_messages: sms_messages_en
   },
   vi: {
     step1Register: step1Register_vi,
@@ -41,6 +54,9 @@ const resources = {
     note_profile: note_profile_vi,
     login: login_vi,
     edit_profile: edit_profile_vi,
+    reset_password: reset_password_vi,
+    verify_account: verify_account_vi,
+    sms_messages: sms_messages_vi
   }
 };
 

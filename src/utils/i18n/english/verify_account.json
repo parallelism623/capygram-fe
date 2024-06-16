@@ -1,0 +1,12 @@
+{
+    "text1": "Log into another account",
+    "h1": "Confirm it's you to login",
+    "text2": "We noticed unusual activity from your account\n so we've logged you out.",
+    "text3": "Follow the next steps within 1 day so we can\n try to get you back into your account before\n it's disabled.",
+    "text4": "This helps us to combat harmful conduct, detect and\n prevent spam and maintain the integrity of our Products.\n\n We’ve used Google's reCAPTCHA Enterprise product to\n provide this security check. Your use of reCAPTCHA\n Enterprise is subject to Google’s Privacy Policy and\n Terms of Use.\n\n reCAPTCHA Enterprise collects hardware and software\n information, such as device and application data, and\n sends it to Google to provide, maintain, and improve\n reCAPTCHA Enterprise and for general security\n purposes. This information is not used by Google for\n personalized advertising.",
+    "button": "Next",
+    "h3": "Log out?",
+    "text5": "Are you sure you want to log out of your account?",
+    "text6": "Log out",
+    "text7": "Cancel"
+}

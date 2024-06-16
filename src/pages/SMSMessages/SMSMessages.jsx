@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./SMSMessages.scss"
+import "./SMSMessages.scss";
+import '@/i18n';
+import { useTranslation } from 'react-i18next';
 
 const SMSMessages = () => {
     const navigate = useNavigate();
@@ -11,21 +13,23 @@ const SMSMessages = () => {
     const handleCancelLogout = () => {
         setShowLogout(false);
     };
+    const { t } = useTranslation('sms_messages');
+
     return (
         <div className="SMSMessages">
             <div className="SMSMessages-container">
                 <div className="sms-header">
                     <div className="sms-header-content">
                         <p style={{ cursor: "pointer" }} className="p-login" onClick={() => navigate("/ft/login")}>Capygram</p>
-                        <p style={{ cursor: "pointer" }} onClick={handleOtherLogin}>Đăng nhập bằng tài khoản khác</p>
+                        <p style={{ cursor: "pointer" }} onClick={handleOtherLogin}>{t('text1')}</p>
                     </div>
                 </div>
                 <div className="sms-content">
                     <div className="sms-form">
                         <div className="sms-form-content">
                             <div className="Form">
-                                <h3>Đã gửi SMS</h3>
-                                <p>Chúng tôi đã gửi SMS đến số +84 ** *** ** <br /> 60 kèm theo liên kết để đăng nhập lại <br /> tài khoản của bạn.</p>
+                                <h3>{t('h3-1')}</h3>
+                                <p style={{ whiteSpace: "pre-line" }}>{t('text2')}</p>
                                 <p className="ok" onClick={() => navigate("/ft/reset-password")}>OK</p>
                             </div>
                         </div>
@@ -37,14 +41,14 @@ const SMSMessages = () => {
                 <div className="Logout">
                     <div className="Logout-container">
                         <div className="Logout-container-header">
-                            <h3>Đăng xuất?</h3>
-                            <p>Bạn có chắc chắn muốn đăng xuất tài khoản không?</p>
+                            <h3>{t('h3')}</h3>
+                            <p>{t('text3')}</p>
                         </div>
                         <div className="Logout-button">
-                            <p onClick={() => navigate("/ft/login")}>Đăng xuất</p>
+                            <p onClick={() => navigate("/ft/login")}>{t('text4')}</p>
                         </div>
                         <div className="Logout-button1">
-                            <p onClick={handleCancelLogout}>Hủy</p>
+                            <p onClick={handleCancelLogout}>{t('text5')}</p>
                         </div>
 
                     </div>

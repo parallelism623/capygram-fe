@@ -58,10 +58,10 @@ const Login = () => {
                 <Form onSubmit={handleSubmit} className='Form' >
                   <img src={logoCapyGram} alt="" />
                   <div className="form-input">
-                    <Field className='field' name='email' type='text' placeholder="Số điện thoại, tên người dùng hoặc email " />
+                    <Field className='field' name='email' type='text' placeholder={t("placeholder")} />
                   </div>
                   <div className="form-input">
-                    <Field className='field' name='password' type={showPassword ? 'text' : 'password'} placeholder="Mật khẩu" />
+                    <Field className='field' name='password' type={showPassword ? 'text' : 'password'} placeholder={t("password")} />
                     <i className={`eye-icon ${showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}`} onClick={togglePasswordVisibility}></i>
                   </div>
                   <button className='form-button' type='submit'><b>{t('login')}</b></button>
@@ -71,7 +71,7 @@ const Login = () => {
             </Formik>
           </div>
           <div className="register">
-            <p onClick={() => navigate("/ft/register")}>Tạo tài khoản mới</p>
+            <p onClick={() => navigate("/ft/register")}>{t('register')}</p>
           </div>
         </div>
       </div>
