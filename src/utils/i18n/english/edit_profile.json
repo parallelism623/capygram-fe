@@ -1,0 +1,12 @@
+{
+  "title": "Edit profile",
+  "btn1": "Change photo",
+  "web": "Website",
+  "story": "Bio",
+  "sex": "Gender",
+  "male": "Male",
+  "female": "Female",
+  "other": "Prefer not to say",
+  "display": "Show account suggestions on profiles",
+  "submit": "Submit"
+}

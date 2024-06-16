@@ -1,0 +1,146 @@
+.body-edit-profile{
+  margin-left: 32%;
+  width: 50%;
+
+  .edit-profile{
+    width: 100%;
+    margin-top: 50px;
+
+    .title{
+      font-size: 25px;
+    }
+
+    .group-profile{
+      width: 100%;
+      height: 100px;
+      background-color: rgb(226, 223, 223);
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      margin-top: 50px;
+      border-radius: 12px;
+
+      img{
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+      }
+
+      .name{
+        margin-left: 30px;
+      }
+
+      .edit-avata{
+        margin-left: 60%;
+        width: 150px;
+        height: 40px;
+        background-color: rgb(72, 136, 247);
+        color: white;
+        border: none;
+        border-radius: 12px;
+
+        &:hover{
+          background-color: rgb(14, 78, 189);
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    .group-1{
+      margin-top: 50px;
+      input{
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        border: 1px solid rgb(221, 219, 219);
+        padding: 30px;
+        border-radius: 12px;
+      }
+    }
+
+    .group-2{
+      margin-top: 50px;
+
+      select{
+        width: 100%;
+        height: 60px;
+        border: 1px solid rgb(221, 219, 219);
+        border-radius: 12px;
+        margin-top: 20px;
+      }
+    }
+
+    .group-3{
+      margin-top: 50px;
+      .div-toogle{
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        border: 1px solid rgb(221, 219, 219);
+        padding: 30px;
+        border-radius: 12px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .toogle{
+          button{
+            width: 70px;
+            height: 40px;
+            border-radius: 20px;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            border: none;
+
+            .circle{
+              width: 37px;
+              height: 37px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              top: 0;
+              background-color: white;
+            }
+          }
+
+          .ON{
+            background-color: rgb(33, 38, 43);
+
+            .circle{
+              transform: translateX(30px);
+            }
+          }
+
+          .OFF{
+            background-color: rgb(126, 131, 135);
+
+            .circle{
+              transform: translateX(2px);
+            }
+          }
+        }
+      }
+    }
+
+    .btn-submit{
+      margin-top: 50px;
+      margin-left: 76%;
+      width: 200px;
+      height: 40px;
+      border: none;
+      background-color: rgb(99, 154, 250);
+      border-radius: 12px;
+      color: white;
+      font-size: 18px;
+
+      &:hover{
+        background-color: rgb(14, 78, 189);
+        transform: scale(1.05);
+      }
+    }
+  }
+
+}
