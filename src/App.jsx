@@ -15,6 +15,7 @@ import ResetPassword from './pages/resetPassword/ResetPassword';
 import Register from './pages/register/Register';
 import VerifyAccount from './pages/VerifyAccount/VerifyAccount';
 import SMSMessages from './pages/SMSMessages/SMSMessages';
+import EditProfile from './pages/profile/EditProfile';
 const App = () => {
   const routes = useRoutes([
     {
@@ -43,8 +44,6 @@ const App = () => {
       path: '/sms-messages',
       element: <SMSMessages />
     },
-
-
     {
       path: '/',
       element: <LayoutMenu />,
@@ -66,6 +65,10 @@ const App = () => {
           element: <Profile />
         },
         {
+          path: 'edit-profile',
+          element: <EditProfile />
+        },
+        {
           path: '/reel',
           element: <Reel />
         },
@@ -79,7 +82,6 @@ const App = () => {
       path: '/*',
       element: <div>Not Found</div>
     }
-
   ]);
 
   return routes;
