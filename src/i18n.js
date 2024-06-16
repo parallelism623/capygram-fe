@@ -17,8 +17,7 @@ import profile_vi from '@/utils/i18n/vietnamese/profile.json';
 import note_profile_en from '@/utils/i18n/english/note_profile.json';
 import note_profile_vi from '@/utils/i18n/vietnamese/note_profile.json';
 
-import edit_profile_en from '@/utils/i18n/english/edit_profile.json';
-import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
+
 
 const resources = {
   en: {
@@ -27,15 +26,14 @@ const resources = {
     step3Register: step3Register_en,
     profile: profile_en,
     note_profile: note_profile_en,
-    edit_profile: edit_profile_en,
-  },
+
   vi: {
     step1Register: step1Register_vi,
     step2Register: step2Register_vi,
     step3Register: step3Register_vi,
     profile: profile_vi,
     note_profile: note_profile_vi,
-    edit_profile: edit_profile_vi,
+
   }
 };
 
