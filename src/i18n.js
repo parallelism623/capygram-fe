@@ -20,6 +20,9 @@ import note_profile_vi from '@/utils/i18n/vietnamese/note_profile.json';
 import edit_profile_en from '@/utils/i18n/english/edit_profile.json';
 import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
 
+import changePhoto_profile_en from '@/utils/i18n/english/changePhoto_profile.json';
+import changePhoto_profile_vi from '@/utils/i18n/vietnamese/changePhoto_profile.json';
+
 const resources = {
   en: {
     step1Register: step1Register_en,
@@ -28,6 +31,7 @@ const resources = {
     profile: profile_en,
     note_profile: note_profile_en,
     edit_profile: edit_profile_en,
+    changePhoto_profile: changePhoto_profile_en,
   },
   vi: {
     step1Register: step1Register_vi,
@@ -36,6 +40,7 @@ const resources = {
     profile: profile_vi,
     note_profile: note_profile_vi,
     edit_profile: edit_profile_vi,
+    changePhoto_profile: changePhoto_profile_vi,
   }
 };
 

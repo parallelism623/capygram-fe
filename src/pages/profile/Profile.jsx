@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 import avataxinh from '@/assets/images/avataxinh.jpg'
 import setting from '@/assets/images/setting.png';
@@ -15,7 +16,6 @@ import LayoutFooter from '@/layouts/LayoutFooter';
 import '@/i18n';
 import './Profile.scss';
 import Note from './Note';
-
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -31,6 +31,11 @@ const Profile = () => {
 
   const { t } = useTranslation('profile');
 
+  const navigate = useNavigate();
+
+  const handleEditProfile = () => {
+    navigate('/edit-profile');
+  };
 
   return (
 
@@ -57,7 +62,7 @@ const Profile = () => {
         <div className='right'>
           <div className='action'>
             <p className='name'><b>hanglazy4</b></p>
-            <button className='btn-action'><b>{t('editProfile')}</b></button>
+            <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
             <button className='btn-action'><b>{t('viewArchive')}</b></button>
             <img src={setting} alt='setting' />
           </div>
