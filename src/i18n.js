@@ -17,11 +17,23 @@ import profile_vi from '@/utils/i18n/vietnamese/profile.json';
 import note_profile_en from '@/utils/i18n/english/note_profile.json';
 import note_profile_vi from '@/utils/i18n/vietnamese/note_profile.json';
 
+import login_en from '@/utils/i18n/english/login.json';
+import login_vi from '@/utils/i18n/vietnamese/login.json';
+
 import edit_profile_en from '@/utils/i18n/english/edit_profile.json';
 import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
 
 import changePhoto_profile_en from '@/utils/i18n/english/changePhoto_profile.json';
 import changePhoto_profile_vi from '@/utils/i18n/vietnamese/changePhoto_profile.json';
+import reset_password_en from '@/utils/i18n/english/reset_password.json';
+import reset_password_vi from '@/utils/i18n/vietnamese/reset_password.json';
+
+import verify_account_en from '@/utils/i18n/english/verify_account.json';
+import verify_account_vi from '@/utils/i18n/vietnamese/verify_account.json';
+
+import sms_messages_en from '@/utils/i18n/english/sms_messages.json';
+import sms_messages_vi from '@/utils/i18n/vietnamese/sms_messages.json';
+
 
 const resources = {
   en: {
@@ -30,8 +42,12 @@ const resources = {
     step3Register: step3Register_en,
     profile: profile_en,
     note_profile: note_profile_en,
+    login: login_en,
     edit_profile: edit_profile_en,
     changePhoto_profile: changePhoto_profile_en,
+    reset_password: reset_password_en,
+    verify_account: verify_account_en,
+    sms_messages: sms_messages_en
   },
   vi: {
     step1Register: step1Register_vi,
@@ -39,8 +55,12 @@ const resources = {
     step3Register: step3Register_vi,
     profile: profile_vi,
     note_profile: note_profile_vi,
+    login: login_vi,
     edit_profile: edit_profile_vi,
     changePhoto_profile: changePhoto_profile_vi,
+    reset_password: reset_password_vi,
+    verify_account: verify_account_vi,
+    sms_messages: sms_messages_vi
   }
 };
 

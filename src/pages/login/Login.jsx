@@ -6,12 +6,15 @@ import logoCapyGram from "../../assets/images/logoCapyGram.png"
 import { useNavigate } from 'react-router-dom';
 import img2 from "../../assets/images/Screenshot 2024-06-13 164302.png"
 import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
+import '@/i18n';
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [img, img2, img3];
+  const { t } = useTranslation('login');
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -55,20 +58,20 @@ const Login = () => {
                 <Form onSubmit={handleSubmit} className='Form' >
                   <img src={logoCapyGram} alt="" />
                   <div className="form-input">
-                    <Field className='field' name='email' type='text' placeholder="Số điện thoại, tên người dùng hoặc email " />
+                    <Field className='field' name='email' type='text' placeholder={t("placeholder")} />
                   </div>
                   <div className="form-input">
-                    <Field className='field' name='password' type={showPassword ? 'text' : 'password'} placeholder="Mật khẩu" />
+                    <Field className='field' name='password' type={showPassword ? 'text' : 'password'} placeholder={t("password")} />
                     <i className={`eye-icon ${showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'}`} onClick={togglePasswordVisibility}></i>
                   </div>
-                  <button className='form-button' type='submit'><b>Đăng nhập</b></button>
-                  <p onClick={() => navigate("/ft/reset-password")}>Quên mật khẩu?</p>
+                  <button className='form-button' type='submit'><b>{t('login')}</b></button>
+                  <p onClick={() => navigate("/ft/reset-password")}>{t('resetpassword')}</p>
                 </Form>
               )}
             </Formik>
           </div>
           <div className="register">
-            <p onClick={() => navigate("/ft/register")}>Tạo tài khoản mới</p>
+            <p onClick={() => navigate("/ft/register")}>{t('register')}</p>
           </div>
         </div>
       </div>
