@@ -4,9 +4,14 @@ import { useState } from "react";
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
 
+
 const VerifyAccount = () => {
     const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
+    const [isChecked, setIschecked] = useState(false);
+    const handleCheckboxChange = (e) => {
+        setIschecked(e.target.checked);
+    }
 
     const handleOtherLogin = () => {
         setShowLogout(true);
@@ -14,6 +19,8 @@ const VerifyAccount = () => {
     const handleCancelLogout = () => {
         setShowLogout(false);
     };
+
+
     const { t } = useTranslation('verify_account');
 
     return (
@@ -35,12 +42,13 @@ const VerifyAccount = () => {
                                 <p style={{ whiteSpace: "pre-line" }} className="p">{t('text2')}</p>
                                 <p style={{ whiteSpace: "pre-line" }} className="p">{t('text3')}</p>
                                 <div className="capcha">
-                                    <input type="checkbox" />
+                                    <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
+                                    <p>Bạn hãy tích vào ô để xác nhận</p>
                                 </div>
                                 <p style={{ whiteSpace: "pre-line" }} className="p1">{t('text4')}</p>
                             </div>
                             <div className="countinue">
-                                <button onClick={() => navigate('/sms-messages')}>{t('button')}</button>
+                                <button className={`${isChecked ? "form-button" : "form-button2"}`} disabled={!isChecked} onClick={() => navigate('/sms-messages')}>{t('button')}</button>
                             </div>
                         </div>
                     </div>
