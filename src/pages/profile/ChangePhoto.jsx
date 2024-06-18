@@ -8,7 +8,7 @@ import { setProfile } from '@/store/formSlice';
 
 import './ChangePhoto.scss';
 
-const ChangePhoto = ({onCancel}) => {
+const ChangePhoto = ({ onCancel, handleRemovePhoto }) => {
   const { t } = useTranslation('changePhoto_profile');
 
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const ChangePhoto = ({onCancel}) => {
           <b>{t('p2')}</b>
           <input type='file' accept='image/*' onChange={handleFileChange} style={{ display: 'none' }} />
         </label>
-        <p className='p3'><b>{t('p3')}</b></p>
+        <p className='p3' onClick={handleRemovePhoto}><b>{t('p3')}</b></p>
         <p className='p4' onClick={onCancel}>{t('p4')}</p>
       </div>
     </div>

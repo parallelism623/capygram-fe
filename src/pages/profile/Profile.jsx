@@ -63,7 +63,7 @@ const Profile = () => {
           <div className='action'>
             <p className='name'><b>hanglazy4</b></p>
             <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
-            <button className='btn-action'><b>{t('viewArchive')}</b></button>
+            <button className='btn-action' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
             <img src={setting} alt='setting' />
           </div>
 
