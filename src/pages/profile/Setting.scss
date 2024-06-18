@@ -1,0 +1,19 @@
+.form-setting{
+  width: 300px;
+  min-width: 300px;
+  background-color: white;
+  border-radius: 12px;
+
+  .div-p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-bottom: 1px solid rgb(221, 219, 219);
+
+    p{
+      font-size: 14px;
+      color: rgb(108, 107, 107);
+    }
+  }
+}
