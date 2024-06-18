@@ -12,17 +12,24 @@ import saved from '@/assets/images/saved.png';
 import tagged from '@/assets/images/tagged.png';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
+import Note from './Note';
+import Setting from './Setting';
 
 import '@/i18n';
+
 import './Profile.scss';
-import Note from './Note';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(false);
+  const [showSetting, setShowSetting] = useState(false);
 
   const handleCancel = () => {
     setShowNoteForm(false);
+  }
+
+  const handleCancel2 = () => {
+    setShowSetting(false);
   }
 
   const handleClick = (item) => {
@@ -64,7 +71,7 @@ const Profile = () => {
             <p className='name'><b>hanglazy4</b></p>
             <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
             <button className='btn-action' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
-            <img src={setting} alt='setting' />
+            <img src={setting} alt='setting' onClick={() => setShowSetting(true)}/>
           </div>
 
           <div className='data'>
@@ -108,6 +115,22 @@ const Profile = () => {
           </motion.div>
         </div>
       )}
+
+      {showSetting && (
+        <div className='overlay' onClick={handleCancel2}>
+          <motion.div
+            className='note-container'
+            onClick={(e) => e.stopPropagation()}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Setting onCancel={handleCancel2} />
+          </motion.div>
+        </div>
+      )}
+
+
       <LayoutFooter />
     </div>
 
