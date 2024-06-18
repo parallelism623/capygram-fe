@@ -14,6 +14,7 @@ import tagged from '@/assets/images/tagged.png';
 import LayoutFooter from '@/layouts/LayoutFooter';
 import Note from './Note';
 import Setting from './Setting';
+import Step1_HotStory from './Step1_HotStory';
 
 import '@/i18n';
 
@@ -23,6 +24,7 @@ const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
+  const [showFormHotStory, setShowFormHotStory] = useState(false);
 
   const handleCancel = () => {
     setShowNoteForm(false);
@@ -31,6 +33,10 @@ const Profile = () => {
   const handleCancel2 = () => {
     setShowSetting(false);
   }
+
+  const handleCancelHotStory = () => {
+    setShowFormHotStory(false);
+  };
 
   const handleClick = (item) => {
     setActiveItem(item);
@@ -60,7 +66,7 @@ const Profile = () => {
 
           <div className='other-name'><b>Hanglazy</b></div>
 
-          <div className='add-post'>
+          <div className='add-post' onClick={() => setShowFormHotStory(true)}>
             <img src={Add} alt='add' />
             <p>{t('new')}</p>
           </div>
@@ -71,7 +77,7 @@ const Profile = () => {
             <p className='name'><b>hanglazy4</b></p>
             <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
             <button className='btn-action' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
-            <img src={setting} alt='setting' onClick={() => setShowSetting(true)}/>
+            <img src={setting} alt='setting' onClick={() => setShowSetting(true)} />
           </div>
 
           <div className='data'>
@@ -126,6 +132,20 @@ const Profile = () => {
             transition={{ duration: 0.3 }}
           >
             <Setting onCancel={handleCancel2} />
+          </motion.div>
+        </div>
+      )}
+
+      {showFormHotStory && (
+        <div className='overlay' onClick={handleCancelHotStory}>
+          <motion.div
+            className='note-container'
+            onClick={(e) => e.stopPropagation()}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Step1_HotStory onCancel={handleCancelHotStory} />
           </motion.div>
         </div>
       )}

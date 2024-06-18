@@ -25,6 +25,7 @@ import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
 
 import changePhoto_profile_en from '@/utils/i18n/english/changePhoto_profile.json';
 import changePhoto_profile_vi from '@/utils/i18n/vietnamese/changePhoto_profile.json';
+
 import reset_password_en from '@/utils/i18n/english/reset_password.json';
 import reset_password_vi from '@/utils/i18n/vietnamese/reset_password.json';
 
