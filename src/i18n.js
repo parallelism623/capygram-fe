@@ -25,6 +25,7 @@ import edit_profile_vi from '@/utils/i18n/vietnamese/edit_profile.json';
 
 import changePhoto_profile_en from '@/utils/i18n/english/changePhoto_profile.json';
 import changePhoto_profile_vi from '@/utils/i18n/vietnamese/changePhoto_profile.json';
+
 import reset_password_en from '@/utils/i18n/english/reset_password.json';
 import reset_password_vi from '@/utils/i18n/vietnamese/reset_password.json';
 
@@ -39,6 +40,9 @@ import archive_profile_vi from '@/utils/i18n/vietnamese/archive_profile.json';
 
 import setting_en from '@/utils/i18n/english/setting.json';
 import setting_vi from '@/utils/i18n/vietnamese/setting.json';
+
+import hotStory_en from '@/utils/i18n/english/hotStory.json';
+import hotStory_vi from '@/utils/i18n/vietnamese/hotStory.json';
 
 const resources = {
   en: {
@@ -55,6 +59,7 @@ const resources = {
     sms_messages: sms_messages_en,
     archive_profile: archive_profile_en,
     setting: setting_en,
+    hotStory: hotStory_en,
   },
   vi: {
     step1Register: step1Register_vi,
@@ -70,6 +75,7 @@ const resources = {
     sms_messages: sms_messages_vi,
     archive_profile: archive_profile_vi,
     setting: setting_vi,
+    hotStory: hotStory_vi,
   }
 };
 
