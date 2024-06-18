@@ -11,6 +11,13 @@ const initialState = {
     day: '',
     year: '',
     otp: '',
+  },
+  profile: {
+    avata: '',
+    website: '',
+    bio: '',
+    sex: '',
+    isShow: true,
   }
 }
 
@@ -33,8 +40,14 @@ const formSlice = createSlice({
         ...action.payload
       }
     },
+    setProfile: (state, action) => {
+      state.profile = {
+        ...state.profile,
+        ...action.payload
+      }
+    },
   }
 });
 
-export const { nextStep, prevStep, setStep, setUser, submitForm } = formSlice.actions;
+export const { nextStep, prevStep, setStep, setUser, setProfile } = formSlice.actions;
 export default formSlice.reducer;

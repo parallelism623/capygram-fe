@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import "@/i18n";
 
 import checkEmail from "@/assets/images/checkEmail.gif";
-import { setUser, submitForm } from '@/store/formSlice';
+import { setUser } from '@/store/formSlice';
 import { registerOTPValidation } from '@/utils/validation/registerValidation';
 
 import './RegisterOTP.scss';
