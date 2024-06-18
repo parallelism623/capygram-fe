@@ -16,6 +16,8 @@ import Register from './pages/register/Register';
 import VerifyAccount from './pages/VerifyAccount/VerifyAccount';
 import SMSMessages from './pages/SMSMessages/SMSMessages';
 import EditProfile from './pages/profile/EditProfile';
+import Archive from './pages/profile/Archive';
+
 const App = () => {
   const routes = useRoutes([
     {
@@ -67,6 +69,10 @@ const App = () => {
         {
           path: 'edit-profile',
           element: <EditProfile />
+        },
+        {
+          path: 'archive-profile',
+          element: <Archive/>
         },
         {
           path: '/reel',

@@ -25,6 +25,7 @@ const EditProfile = () => {
   const handleRemovePhoto = () => {
     setAvata(false);
     dispatch(setProfile({ avata: '' }));
+    handleCancel();
   };
 
   const handleToogle = () => {
@@ -103,7 +104,7 @@ const EditProfile = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
           >
-            <ChangePhoto onCancel={handleCancel} />
+            <ChangePhoto onCancel={handleCancel} handleRemovePhoto={ handleRemovePhoto} />
           </motion.div>
         </div>
       )}
