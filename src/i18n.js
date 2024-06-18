@@ -40,6 +40,8 @@ import archive_profile_vi from '@/utils/i18n/vietnamese/archive_profile.json';
 import setting_en from '@/utils/i18n/english/setting.json';
 import setting_vi from '@/utils/i18n/vietnamese/setting.json';
 
+
+
 const resources = {
   en: {
     step1Register: step1Register_en,
@@ -55,6 +57,7 @@ const resources = {
     sms_messages: sms_messages_en,
     archive_profile: archive_profile_en,
     setting: setting_en,
+
   },
   vi: {
     step1Register: step1Register_vi,
@@ -70,6 +73,7 @@ const resources = {
     sms_messages: sms_messages_vi,
     archive_profile: archive_profile_vi,
     setting: setting_vi,
+
   }
 };
 

@@ -1,11 +1,14 @@
 import './Menu.scss'
 import logoCapyGram from "../..//assets/images/logoCapyGram.png";
 import { useNavigate } from 'react-router-dom';
+import '@/i18n';
+import { useTranslation } from 'react-i18next';
 
 
 
 const Menu = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation('menu');
     return (
         <div className="menu">
             <div className="menu-container">
@@ -17,62 +20,62 @@ const Menu = () => {
                         <li>
                             <div className="list" onClick={() => navigate("/")}>
                                 <i className="fa-solid fa-house"></i>
-                                <p >Trang chủ</p>
+                                <p>{t('text1')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list">
                                 <i className="fa-solid fa-magnifying-glass"></i>
-                                <p>TÌm kiếm</p>
+                                <p>{t('text2')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list">
                                 <i className="fa-regular fa-compass"></i>
-                                <p>Khám phá</p>
+                                <p>{t('text3')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list" onClick={() => navigate("/reel")}>
                                 <i className="fa-solid fa-film"></i>
-                                <p>Reels</p>
+                                <p>{t('text4')}</p>
                             </div>
 
                         </li>
                         <li>
                             <div className="list" onClick={() => navigate("/messages")}>
                                 <i className="fa-brands fa-facebook-messenger"></i>
-                                <p>Tin nhắn</p>
+                                <p>{t('text5')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list" onClick={() => navigate("/notifications")}>
                                 <i className="fa-regular fa-heart"></i>
-                                <p>Thông báo</p>
+                                <p>{t('text6')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list">
                                 <i className="fa-regular fa-square-plus"></i>
-                                <p>Tạo</p>
+                                <p>{t('text7')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list" onClick={() => navigate("/profile")}>
                                 <i className="fa-solid fa-user"></i>
-                                <p>Trang cá nhân</p>
+                                <p>{t('text8')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list" onClick={() => navigate("/threads")}>
                                 <i className="fa-brands fa-threads"></i>
-                                <p>Threads</p>
+                                <p>{t('text9')}</p>
                             </div>
                         </li>
                         <li>
                             <div className="list">
                                 <i className="fa-solid fa-bars"></i>
-                                <p>Xem thêm</p>
+                                <p>{t('text10')}</p>
                             </div>
                         </li>
                     </ul>
