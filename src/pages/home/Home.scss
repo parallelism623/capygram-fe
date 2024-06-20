@@ -1,1 +1,93 @@
-.home {}
+.home {
+    width: 84%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .home-container {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+
+        .stories-posts {
+            width: 60%;
+            display: grid;
+            grid-template-columns: auto;
+            justify-content: center;
+            align-items: center;
+
+            .post-list {
+                width: 80%;
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+        }
+
+        .account-suggestions {
+            width: 35%;
+
+            .account {
+                margin-top: 30px;
+                margin-bottom: 20px;
+
+                .account-container {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 5px;
+
+                    .account-left {
+                        .account-image {
+                            img {
+                                width: 45px;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .account-right {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        flex-grow: 1;
+                        flex-shrink: 1;
+                        overflow: hidden;
+                        margin-left: 15px;
+
+                        .switch-account {
+                            p {
+                                color: rgb(0, 145, 255);
+                                font-weight: bold;
+                                font-size: 15px;
+                                cursor: pointer;
+                            }
+
+                            p:hover {
+                                color: rgb(5, 78, 133);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .suggestions {
+                .suggestions-container {
+                    padding: 5px;
+
+                    .suggestions-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        p:hover {
+                            color: gray;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
