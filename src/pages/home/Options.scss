@@ -1,0 +1,23 @@
+.option {
+    width: 350px;
+    min-width: 300px;
+    background-color: white;
+    border-radius: 12px;
+
+    .options-list {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        border-bottom: 1px solid rgb(163, 159, 159);
+
+
+        p {
+            cursor: pointer;
+            font-size: 14px;
+            color: rgb(108, 107, 107);
+
+        }
+    }
+}
