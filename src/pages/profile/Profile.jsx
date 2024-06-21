@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import avataxinh from '@/assets/images/avataxinh.jpg'
 import setting from '@/assets/images/setting.png';
@@ -14,14 +15,12 @@ import tagged from '@/assets/images/tagged.png';
 import LayoutFooter from '@/layouts/LayoutFooter';
 import Note from './Note';
 import Setting from './Setting';
-import Step1_HotStory from './Step1_HotStory';
+import HotStory from './HotStory';
+import { setStep } from '@/store/formSlice';
 
 import '@/i18n';
 
 import './Profile.scss';
-import HotStory from './HotStory';
-import { useDispatch } from 'react-redux';
-import { setStep } from '@/store/formSlice';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
