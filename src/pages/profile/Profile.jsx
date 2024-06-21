@@ -19,12 +19,17 @@ import Step1_HotStory from './Step1_HotStory';
 import '@/i18n';
 
 import './Profile.scss';
+import HotStory from './HotStory';
+import { useDispatch } from 'react-redux';
+import { setStep } from '@/store/formSlice';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showFormHotStory, setShowFormHotStory] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleCancel = () => {
     setShowNoteForm(false);
@@ -50,6 +55,12 @@ const Profile = () => {
     navigate('/edit-profile');
   };
 
+  const handleShowHostStory = () => {
+    setShowFormHotStory(true);
+    dispatch(setStep(1));
+  };
+
+
   return (
 
     <div className='body-profile'>
@@ -66,7 +77,7 @@ const Profile = () => {
 
           <div className='other-name'><b>Hanglazy</b></div>
 
-          <div className='add-post' onClick={() => setShowFormHotStory(true)}>
+          <div className='add-post' onClick={handleShowHostStory}>
             <img src={Add} alt='add' />
             <p>{t('new')}</p>
           </div>
@@ -145,7 +156,7 @@ const Profile = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
           >
-            <Step1_HotStory onCancel={handleCancelHotStory} />
+            <HotStory onCancel={handleCancelHotStory} />
           </motion.div>
         </div>
       )}
