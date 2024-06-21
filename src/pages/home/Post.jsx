@@ -1,9 +1,20 @@
 import './Post.scss'
 import avt from '../../assets/images/account.png'
 import { useState } from 'react'
+import { motion } from 'framer-motion';
+import Options from './Options'
+
 const Post = () => {
     const [icons, setIcons] = useState(false);
     const [bookmark, setBookmark] = useState(false);
+    const [showOptions, setShowOptions] = useState(false)
+
+    const handleshowOptions = () => {
+        setShowOptions(true);
+    }
+    const cancelShowOptions = () => {
+        setShowOptions(false);
+    }
 
     const handleChangeIcons = () => {
         setIcons(!icons);
@@ -26,7 +37,7 @@ const Post = () => {
                     </div>
                     <div className="post-header-option">
                         <span>
-                            <i className="fa-solid fa-ellipsis"></i>
+                            <i onClick={handleshowOptions} className="fa-solid fa-ellipsis"></i>
                         </span>
                     </div>
                 </div>
@@ -44,7 +55,7 @@ const Post = () => {
                                 <i className="fa-regular fa-heart" onClick={handleChangeIcons}></i>
                             ) :
                                 (
-                                    <i className="fa-solid fa-heart" style={{ color: '#f20d0d' }} onClick={handleChangeIcons}></i>
+                                    <i className="fa-solid fa-heart" style={{ color: '#f20d0d', scale: '1.1' }} onClick={handleChangeIcons}></i>
                                 )}
 
                         </span>
@@ -94,6 +105,19 @@ const Post = () => {
                     <button className="btn-post-comment">Đăng</button>
                 </form>
             </div>
+            {showOptions && (
+                <div className='overlay' onClick={cancelShowOptions}>
+                    <motion.div
+                        className='note-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Options oncancel={cancelShowOptions} />
+                    </motion.div>
+                </div>
+            )}
 
         </div>
     )
