@@ -18,6 +18,11 @@ const initialState = {
     bio: '',
     sex: '',
     isShow: true,
+  },
+  hotStory: {
+    name: '',
+    selectedStories: [],
+    coverPhoto: '',
   }
 }
 
@@ -46,8 +51,14 @@ const formSlice = createSlice({
         ...action.payload
       }
     },
+    setHotStory: (state, action) => {
+      state.hotStory = {
+        ...state.hotStory,
+        ...action.payload
+      }
+    },
   }
 });
 
-export const { nextStep, prevStep, setStep, setUser, setProfile } = formSlice.actions;
+export const { nextStep, prevStep, setStep, setUser, setProfile, setHotStory } = formSlice.actions;
 export default formSlice.reducer;
