@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Step3_HotStory from './Step3_HotStory';
-import { nextStep, setHotStory, setStep } from '@/store/formSlice';
+import { nextStep, prevStep, setHotStory, setStep } from '@/store/formSlice';
 
 import exit from '@/assets/images/exit.png';
 import muiTen from '@/assets/images/muiTen.png';
@@ -43,9 +43,10 @@ const Step2_HotStory = ({onCancel}) => {
   };
 
   const handleSubmit = () => {
-    dispatch(setHotStory({ selectedStories: selectedStory }));
-    dispatch(nextStep());
-    console.log(step);
+    if(selectedStory.length > 0) {
+      dispatch(setHotStory({ selectedStories: selectedStory }));
+      dispatch(nextStep());
+    }
   };
 
   const handleClickCancel = () => {
@@ -60,7 +61,7 @@ const Step2_HotStory = ({onCancel}) => {
         {step === 2 && (
           <>
             <div className='top-list-story'>
-              <img src={muiTen} alt='back' />
+              <img src={muiTen} alt='back' onClick={() => dispatch(prevStep())} />
               <p>{t('story')}</p>
               <img src={exit} alt='cancel' onClick={onCancel} />
             </div>

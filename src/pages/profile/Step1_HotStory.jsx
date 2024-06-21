@@ -19,8 +19,10 @@ const Step1_HotStory = ({onCancel}) => {
   const step = useSelector((state) => state.form.step);
 
   const handleClickNext = () => {
-    dispatch(setHotStory({ name }));
-    dispatch(nextStep());
+    if( name.trim() !== '') {
+      dispatch(setHotStory({ name }));
+      dispatch(nextStep());
+    }
   };
 
   const handleClickCancel = () => {

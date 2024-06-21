@@ -9,9 +9,9 @@ import exit from '@/assets/images/exit.png';
 import account from '@/assets/images/account.png';
 
 import './Step3_HotStory.scss';
-import { setHotStory, setStep } from '@/store/formSlice';
+import { prevStep, setHotStory, setStep } from '@/store/formSlice';
 
-const Step3_HotStory = ({onCancel}) => {
+const Step3_HotStory = ({ onCancel }) => {
   const [image, setImage] = useState('');
   const dispatch = useDispatch();
   const hotStory = useSelector((state) => state.form.hotStory);
@@ -31,9 +31,11 @@ const Step3_HotStory = ({onCancel}) => {
 
 
   const handleSubmit = () => {
-    console.log(hotStory);
-    dispatch(setStep(0));
-    onCancel();
+    if (image !== '') {
+      console.log(hotStory);
+      dispatch(setStep(0));
+      onCancel();
+    }
   };
 
   return (
@@ -41,7 +43,7 @@ const Step3_HotStory = ({onCancel}) => {
       {step === 3 && (
         <div className='form-step3'>
           <div className='top-form'>
-            <img src={muiTen} alt='back' />
+            <img src={muiTen} alt='back' onClick={() => dispatch(prevStep())} />
             <p>{t('ChoosePhoto')}</p>
             <img src={exit} alt='cancel' onClick={onCancel} />
           </div>
