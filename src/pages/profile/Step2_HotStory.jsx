@@ -2,15 +2,22 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
+import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Step3_HotStory from './Step3_HotStory';
+import { nextStep, prevStep, setHotStory, setStep } from '@/store/formSlice';
 
 import exit from '@/assets/images/exit.png';
 import muiTen from '@/assets/images/muiTen.png';
 
 import './Step2_HotStory.scss';
 
-const Step2_HotStory = ({ onCancel }) => {
+const Step2_HotStory = ({onCancel}) => {
   const { t } = useTranslation('hotStory');
   const [selectedStory, setSelectedStory] = useState([]);
+  const dispatch = useDispatch();
+  const step = useSelector((state) => state.form.step);
 
   //fake data
   const stories = [
@@ -36,36 +43,66 @@ const Step2_HotStory = ({ onCancel }) => {
   };
 
   const handleSubmit = () => {
-    console.log(selectedStory);
+    if(selectedStory.length > 0) {
+      dispatch(setHotStory({ selectedStories: selectedStory }));
+      dispatch(nextStep());
+    }
   };
 
+  const handleClickCancel = () => {
+    dispatch(setStep(0));
+    onCancel();
+  };
+
+
   return (
-    <div className='list-story'>
-      <div className='top-list-story'>
-        <img src={muiTen} alt='back' />
-        <p>{t('story')}</p>
-        <img src={exit} alt='cancel' onClick={onCancel} />
-      </div>
-
-      <div className='story-container'>
-        {stories.map((story) => (
-          <div
-            key={story.id}
-            className="story-item"
-          >
-            <img src={story.imgUrl} alt='story' />
-            <div className='story-date'>{story.date}</div>
-            <div className='circle' onClick={() => toogleStorySelection(story.id)}>
-              <div className={selectedStory.includes(story.id) ? 'selected' : ''}></div>
+    <>
+      <div className='list-story'>
+        {step === 2 && (
+          <>
+            <div className='top-list-story'>
+              <img src={muiTen} alt='back' onClick={() => dispatch(prevStep())} />
+              <p>{t('story')}</p>
+              <img src={exit} alt='cancel' onClick={onCancel} />
             </div>
-          </div>
-        ))}
-      </div>
 
-      <div className='bottom-story'>
-        <p className={selectedStory.length > 0 ? 'btn-Next' : 'btn'} onClick={handleSubmit}>{t('next')}</p>
+            <div className='story-container'>
+              {stories.map((story) => (
+                <div
+                  key={story.id}
+                  className="story-item"
+                >
+                  <img src={story.imgUrl} alt='story' />
+                  <div className='story-date'>{story.date}</div>
+                  <div className='circle' onClick={() => toogleStorySelection(story.id)}>
+                    <div className={selectedStory.includes(story.id) ? 'selected' : ''}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className='bottom-story'>
+              <p className={selectedStory.length > 0 ? 'btn-Next' : 'btn'} onClick={handleSubmit} >{t('next')}</p>
+            </div>
+          </>
+        )}
+        {
+          step === 3 && (
+            <div className='overlay' onClick={handleClickCancel}>
+              <motion.div
+                className='ChoosePhoto-container'
+                onClick={(e) => e.stopPropagation()}
+                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Step3_HotStory />
+              </motion.div>
+            </div>
+          )
+        }
       </div>
-    </div>
+    </>
   )
 }
 
