@@ -85,9 +85,11 @@ const Profile = () => {
         <div className='right'>
           <div className='action'>
             <p className='name'><b>hanglazy4</b></p>
-            <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
-            <button className='btn-action' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
-            <img src={setting} alt='setting' onClick={() => setShowSetting(true)} />
+            <div className='group-btn'>
+              <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
+              <button className='btn-action ' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
+              <img src={setting} alt='setting' onClick={() => setShowSetting(true)} />
+            </div>
           </div>
 
           <div className='data'>
