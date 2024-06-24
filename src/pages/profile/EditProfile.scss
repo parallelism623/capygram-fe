@@ -1,6 +1,7 @@
 .body-edit-profile{
   margin-left: 32%;
   width: 50%;
+  min-height: 100vh;
 
   .edit-profile{
     width: 100%;
@@ -19,6 +20,7 @@
       padding: 30px;
       margin-top: 50px;
       border-radius: 12px;
+      position: relative;
 
       img{
         width: 70px;
@@ -31,13 +33,14 @@
       }
 
       .edit-avata{
-        margin-left: 60%;
         width: 150px;
         height: 40px;
         background-color: rgb(72, 136, 247);
         color: white;
         border: none;
         border-radius: 12px;
+        position: absolute;
+        margin-left: 70%;
 
         &:hover{
           background-color: rgb(14, 78, 189);
@@ -161,4 +164,40 @@
     }
   }
 
+}
+@media (max-width: 1024px){
+  .body-edit-profile{
+    margin-left: 15%;
+    width: 70%;
+
+    .edit-profile{
+      .group-profile{
+        .edit-avata{
+          margin-left: 45%;
+        }
+      }
+
+      .btn-submit{
+        margin-left: 70%;
+      }
+    }
+  }
+}
+@media (max-width: 768px){
+  .body-edit-profile{
+    margin-left: 5%;
+    width: 90%;
+
+    .edit-profile{
+      .group-profile{
+        .edit-avata{
+          margin-left: 50%;
+        }
+      }
+
+      .btn-submit{
+        margin-left: 60%;
+      }
+    }
+  }
 }
