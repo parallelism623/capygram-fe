@@ -47,9 +47,8 @@ import menu_vi from '@/utils/i18n/vietnamese/menu.json'
 import hotStory_en from '@/utils/i18n/english/hotStory.json';
 import hotStory_vi from '@/utils/i18n/vietnamese/hotStory.json';
 
-
-
-
+import search_en from '@/utils/i18n/english/search.json';
+import search_vi from '@/utils/i18n/vietnamese/search.json';
 
 const resources = {
   en: {
@@ -68,6 +67,7 @@ const resources = {
     setting: setting_en,
     menu: menu_en,
     hotStory: hotStory_en,
+    search: search_en,
 
   },
   vi: {
@@ -86,7 +86,7 @@ const resources = {
     setting: setting_vi,
     menu: menu_vi,
     hotStory: hotStory_vi,
-
+    search: search_vi,
 
   }
 };
