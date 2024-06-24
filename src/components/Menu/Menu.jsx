@@ -96,7 +96,7 @@ const Menu = () => {
             </div>
 
             {showSearch && (
-                <div className={`overlay ${showSearch ? 'show' : ''}`}  onClick={() => setShowSearch(false)}>
+                <div className={`overlay ${showSearch ? 'show' : ''}`} onClick={() => setShowSearch(false)}>
                     <motion.div
                         className='box-search-container'
                         onClick={(e) => e.stopPropagation()}
@@ -104,7 +104,7 @@ const Menu = () => {
                         initial={{ opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <Search/>
+                        <Search />
                     </motion.div>
                 </div>
             )}
@@ -117,7 +117,7 @@ const Menu = () => {
                                 <p>{t('text1')}</p>
                             </div>
                         </li>
-                        
+
                         <li>
                             <div className="list">
                                 <i className="fa-regular fa-compass"></i>
@@ -154,7 +154,11 @@ const Menu = () => {
             </div>
 
             <div className='menu2-top'>
-
+                <img src={logoCapyGram} alt='logo' />
+                <div className='box-search-top'>
+                    <input placeholder={t('search')} onClick={() => setShowSearch(!showSearch)} className={ showSearch ? 'not-show-search' : ''} />
+                    <i className="fa-regular fa-heart"></i>
+                </div>
             </div>
         </>
     )
