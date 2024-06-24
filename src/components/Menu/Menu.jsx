@@ -24,6 +24,9 @@ const Menu = () => {
         <>
             <div className="menu">
                 <div className="menu-container">
+                    <div className='menu-container-image'>
+                        <img src={logoCapyGram} alt="logo" />
+                    </div>
                     <div className="menu-container-content">
                         <ul>
                             <li>
@@ -148,6 +151,10 @@ const Menu = () => {
                         </li>
                     </ul>
                 </div>
+            </div>
+
+            <div className='menu2-top'>
+
             </div>
         </>
     )
