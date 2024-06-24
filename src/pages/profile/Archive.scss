@@ -79,3 +79,12 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .body-archive{
+    position: absolute;
+    margin-top: 50px;
+    width: 90%;
+    margin-left: 5%;
+  }
+}

@@ -185,8 +185,10 @@
 }
 @media (max-width: 768px){
   .body-edit-profile{
+    position: absolute;
     margin-left: 5%;
     width: 90%;
+    margin-top: 50px;
 
     .edit-profile{
       .group-profile{
