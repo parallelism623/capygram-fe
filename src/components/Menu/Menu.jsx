@@ -3,14 +3,22 @@ import logoCapyGram from "../..//assets/images/logoCapyGram.png";
 import { useLocation, useNavigate } from 'react-router-dom';
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
-
+import Search from '../search/Search';
 
 const Menu = () => {
     const navigate = useNavigate();
     const { t } = useTranslation('menu');
+    const [showSearch, setShowSearch] = useState(false);
 
     const location = useLocation();
+
+    const handleShowSearch = () => {
+        setShowSearch(prevShowSearch => !prevShowSearch);
+        console.log(showSearch);
+    };
 
     return (
         <>
@@ -25,7 +33,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="list none">
+                                <div className="list none" onClick={handleShowSearch}>
                                     <i className="fa-solid fa-magnifying-glass"></i>
                                     <p>{t('text2')}</p>
                                 </div>
@@ -84,6 +92,19 @@ const Menu = () => {
                 </div>
             </div>
 
+            {showSearch && (
+                <div className={`overlay ${showSearch ? 'show' : ''}`}  onClick={() => setShowSearch(false)}>
+                    <motion.div
+                        className='box-search-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Search/>
+                    </motion.div>
+                </div>
+            )}
             <div className='menu2'>
                 <div className="menu-container-content">
                     <ul>
