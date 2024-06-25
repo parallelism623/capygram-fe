@@ -1,0 +1,172 @@
+.comment-container {
+    width: 1200px;
+    height: 680px;
+    display: flex;
+
+    .comment-image {
+        width: 60%;
+        height: 100%;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .comment-content {
+        width: 40%;
+        height: 100%;
+        background: white;
+        border-radius: 5px;
+
+        .comment-content-header {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #d5d4d4;
+
+            .comment-header-right {
+                margin-left: 14px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                flex-grow: 1;
+                flex-shrink: 1;
+                overflow: hidden;
+
+                .comment-header-username a {
+                    color: #262626;
+                    font-weight: 600;
+                    text-decoration: none;
+                }
+
+                .comment-header-option {
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .comment {
+            width: 100%;
+            height: 65%;
+            border-bottom: 1px solid #d5d4d4;
+        }
+
+        .comment-content-footer {
+            width: 100%;
+            height: 25%;
+
+            .comment-group-bottom {
+                padding: 0 16px;
+
+                width: 100%;
+                height: 60%;
+
+                .icons {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+
+                    i {
+                        font-size: 28px;
+                        color: #262626;
+                        padding: 8px;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+
+                    .fa-heart:hover,
+                    .fa-comment:hover,
+                    .fa-paper-plane:hover,
+                    .fa-bookmark:hover {
+                        color: gray;
+                    }
+
+
+
+                    .icons-right span {
+                        transition: all 0.5s ease;
+                    }
+
+                    .icons-right span:hover {
+                        opacity: 0.8;
+                    }
+                }
+
+                .post-likes {
+                    margin-bottom: 8px;
+
+                    p {
+                        font-weight: bold;
+                        color: #262626;
+                        font-size: 14px;
+
+                    }
+                }
+            }
+
+            .comment-post {
+                border-top: 1px solid #dad9d9;
+                color: #8e8e8e;
+                padding: 20px 0;
+                width: 100%;
+                height: 40%;
+
+                form {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 5px;
+
+                    input {
+                        width: 100%;
+                        height: 18px;
+                        padding: 9px;
+                        outline: none;
+                        border: none;
+                    }
+
+                    button {
+                        background-color: transparent;
+                        color: #52b3f4;
+                        font-weight: 600;
+                        border: none;
+                        cursor: pointer;
+
+                    }
+
+                    button:hover {
+                        color: #095f98;
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+
+        .note-container {
+            position: relative;
+            z-index: 220;
+        }
+    }
+
+
+}

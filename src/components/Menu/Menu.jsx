@@ -24,7 +24,8 @@ const Menu = () => {
         <>
             <div className="menu">
                 <div className="menu-container">
-
+                    <div className="menu-container-image">
+                        <img src={logoCapyGram} alt="" />
                     </div>
                     <div className="menu-container-content">
                         <ul>
@@ -155,7 +156,7 @@ const Menu = () => {
             <div className='menu2-top'>
                 <img src={logoCapyGram} alt='logo' />
                 <div className='box-search-top'>
-                    <input placeholder={t('search')} onClick={() => setShowSearch(!showSearch)} className={ showSearch ? 'not-show-search' : ''} />
+                    <input placeholder={t('search')} onClick={() => setShowSearch(!showSearch)} className={showSearch ? 'not-show-search' : ''} />
                     <i className="fa-regular fa-heart"></i>
                 </div>
             </div>
