@@ -126,6 +126,18 @@
             margin-top: 5px;
         }
 
+        .post-caption-comment {
+            font-size: 14px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: rgb(148, 148, 148);
+        }
+
+        .post-caption-comment:hover {
+            color: rgb(194, 194, 194);
+        }
+
     }
 
     .post-comment {

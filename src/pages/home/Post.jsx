@@ -94,6 +94,7 @@ const Post = () => {
                 <p className="post-caption-time">
                     <span>1</span> ngày trước
                 </p>
+                <p className='post-caption-comment'>Xem tất cả 2.229 bình luận</p>
             </div>
             {/* comments */}
             <div className="post-comment">

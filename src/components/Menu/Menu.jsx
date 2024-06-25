@@ -24,6 +24,9 @@ const Menu = () => {
         <>
             <div className="menu">
                 <div className="menu-container">
+                    <div className="menu-container-image">
+                        <img src={logoCapyGram} alt="" />
+                    </div>
                     <div className="menu-container-content">
                         <ul>
                             <li>
@@ -93,7 +96,7 @@ const Menu = () => {
             </div>
 
             {showSearch && (
-                <div className={`overlay ${showSearch ? 'show' : ''}`}  onClick={() => setShowSearch(false)}>
+                <div className={`overlay ${showSearch ? 'show' : ''}`} onClick={() => setShowSearch(false)}>
                     <motion.div
                         className='box-search-container'
                         onClick={(e) => e.stopPropagation()}
@@ -101,7 +104,7 @@ const Menu = () => {
                         initial={{ opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <Search/>
+                        <Search />
                     </motion.div>
                 </div>
             )}
@@ -114,7 +117,7 @@ const Menu = () => {
                                 <p>{t('text1')}</p>
                             </div>
                         </li>
-                        
+
                         <li>
                             <div className="list">
                                 <i className="fa-regular fa-compass"></i>
