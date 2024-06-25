@@ -3,12 +3,20 @@ import avt from '../../assets/images/account.png'
 import { useState } from 'react'
 import { motion } from 'framer-motion';
 import Options from './Options'
+import Comment from './Comment';
 
 const Post = () => {
     const [icons, setIcons] = useState(false);
     const [bookmark, setBookmark] = useState(false);
-    const [showOptions, setShowOptions] = useState(false)
+    const [showOptions, setShowOptions] = useState(false);
+    const [showComment, setShowComment] = useState(false);
 
+    const handleShowComment = () => {
+        setShowComment(true);
+    }
+    const cancelShowComment = () => {
+        setShowComment(false);
+    }
     const handleshowOptions = () => {
         setShowOptions(true);
     }
@@ -60,7 +68,7 @@ const Post = () => {
 
                         </span>
                         <span>
-                            <i className="fa-regular fa-comment"></i>
+                            <i onClick={handleShowComment} className="fa-regular fa-comment"></i>
                         </span>
                         <span>
                             <i className="fa-regular fa-paper-plane"></i>
@@ -94,7 +102,7 @@ const Post = () => {
                 <p className="post-caption-time">
                     <span>1</span> ngày trước
                 </p>
-                <p className='post-caption-comment'>Xem tất cả 2.229 bình luận</p>
+                <p onClick={handleShowComment} className='post-caption-comment'>Xem tất cả 2.229 bình luận</p>
             </div>
             {/* comments */}
             <div className="post-comment">
@@ -116,6 +124,20 @@ const Post = () => {
                         transition={{ duration: 0.3 }}
                     >
                         <Options oncancel={cancelShowOptions} />
+                    </motion.div>
+                </div>
+            )}
+
+            {showComment && (
+                <div className='overlay' onClick={cancelShowComment}>
+                    <motion.div
+                        className='note-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Comment oncancel={cancelShowComment} />
                     </motion.div>
                 </div>
             )}
