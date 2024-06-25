@@ -205,8 +205,10 @@
 
 @media (max-width: 768px) {
   .body-profile{
+    position: absolute;
     width: 100%;
     margin-left: 5%;
+    margin-top: 150px;
 
     .right{
       margin-left: -15%;
