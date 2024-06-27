@@ -4,12 +4,21 @@ import { useState } from 'react'
 import { motion } from 'framer-motion';
 import Options from './Options'
 import Comment from './Comment';
+import Share from './Share';
 
 const Post = () => {
     const [icons, setIcons] = useState(false);
     const [bookmark, setBookmark] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
     const [showComment, setShowComment] = useState(false);
+    const [showShare, setShowShare] = useState(false);
+
+    const handleShowShare = () => {
+        setShowShare(true);
+    }
+    const cancelShowShare = () => {
+        setShowShare(false);
+    }
 
     const handleShowComment = () => {
         setShowComment(true);
@@ -71,7 +80,7 @@ const Post = () => {
                             <i onClick={handleShowComment} className="fa-regular fa-comment"></i>
                         </span>
                         <span>
-                            <i className="fa-regular fa-paper-plane"></i>
+                            <i onClick={handleShowShare} className="fa-regular fa-paper-plane"></i>
                         </span>
                     </div>
                     <div className="icons-right">
@@ -138,6 +147,20 @@ const Post = () => {
                         transition={{ duration: 0.3 }}
                     >
                         <Comment oncancel={cancelShowComment} />
+                    </motion.div>
+                </div>
+            )}
+
+            {showShare && (
+                <div className='overlay' onClick={cancelShowShare}>
+                    <motion.div
+                        className='note-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Share oncancel={cancelShowShare} />
                     </motion.div>
                 </div>
             )}
