@@ -7,11 +7,17 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import Search from '../search/Search';
+import Post from '@/pages/post/Post';
 
 const Menu = () => {
     const navigate = useNavigate();
     const { t } = useTranslation('menu');
     const [showSearch, setShowSearch] = useState(false);
+    const [showCreatePost, setShowCreatePost] = useState(false);
+
+    const handleCancelCreatePost = () => {
+        setShowCreatePost(false);
+    };
 
     const location = useLocation();
 
@@ -67,7 +73,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="list">
+                                <div className="list" onClick={() => setShowCreatePost(true)}>
                                     <i className="fa-regular fa-square-plus"></i>
                                     <p>{t('text7')}</p>
                                 </div>
@@ -108,6 +114,22 @@ const Menu = () => {
                     </motion.div>
                 </div>
             )}
+
+            {
+                showCreatePost && (
+                    <div className='overlayCreate' onClick={handleCancelCreatePost}>
+                        <motion.div
+                            className='box-create-post'
+                            onClick={(e) => e.stopPropagation()}
+                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Post onCancel={handleCancelCreatePost} />
+                        </motion.div>
+                    </div>
+                )
+            }
             <div className='menu2'>
                 <div className="menu-container-content">
                     <ul>
@@ -138,7 +160,7 @@ const Menu = () => {
                             </div>
                         </li>
                         <li>
-                            <div className="list">
+                            <div className="list" onClick={() => setShowCreatePost(true)}>
                                 <i className="fa-regular fa-square-plus"></i>
                                 <p>{t('text7')}</p>
                             </div>
