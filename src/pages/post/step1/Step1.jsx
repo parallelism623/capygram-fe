@@ -23,6 +23,7 @@ const Step1 = () => {
     const reader = new FileReader();
 
     reader.onloadend = () => {
+      dispatch(setPost({ imageOrVideo: reader.result }));
       setImageOrVideo(reader.result);
     };
 
@@ -36,9 +37,7 @@ const Step1 = () => {
   };
 
   const handleClickNext = () => {
-    dispatch(setPost({ imageOrVideo: imageOrVideo }));
     dispatch(setStep(2));
-    console.log(imageOrVideo);
   };
 
   return (
@@ -72,7 +71,7 @@ const Step1 = () => {
           imageOrVideo !== '' && (
             <>
               <div className='top2-show-image'>
-                <img src={muiTen} alt='back' onClick={handleClickBack}/>
+                <img src={muiTen} alt='back' onClick={handleClickBack} />
                 <p className='p1'>{t('crop')}</p>
                 <p className='p2' onClick={handleClickNext}>{t('next')}</p>
               </div>

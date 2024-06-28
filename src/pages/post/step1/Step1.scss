@@ -77,6 +77,10 @@
 
       .p2{
         color: blue;
+
+        &:hover{
+          color: rgb(2, 2, 50);
+        }
       }
     }
 
