@@ -38,7 +38,6 @@ const Step1 = () => {
   const handleClickNext = () => {
     dispatch(setPost({ imageOrVideo: imageOrVideo }));
     dispatch(setStep(2));
-    console.log(imageOrVideo);
   };
 
   return (

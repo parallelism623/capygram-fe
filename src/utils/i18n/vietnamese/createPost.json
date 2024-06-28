@@ -4,5 +4,9 @@
   "select": "Chọn từ máy tính",
   "crop": "Cắt",
   "next": "Tiếp",
-  "location": "Thêm vị trí"
+  "share": "Chia sẻ",
+  "about": "Viết chú thích...",
+  "location": "Thêm vị trí",
+  "shared": "Đã chia sẻ bài viết",
+  "message": "Đã chia sẻ bài viết của bạn."
 }

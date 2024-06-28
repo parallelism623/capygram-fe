@@ -26,7 +26,7 @@ const initialState = {
   },
   post: {
     imageOrVideo: '',
-    describe: '',
+    description: '',
   }
 }
 
