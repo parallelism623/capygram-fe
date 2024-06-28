@@ -23,9 +23,11 @@ const Step2 = () => {
     setDescribe(e.target.value);
     dispatch(setPost({ description: describe })); //bất đồng bộ
   };
-    
+
   const handleShare = () => {
     dispatch(setStep(3));
+    console.log(post);
+    dispatch(setPost({ imageOrVideo: '', description: '' }));
   };
   return (
     <div className='body-step2'>

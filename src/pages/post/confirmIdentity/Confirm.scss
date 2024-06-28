@@ -1,0 +1,58 @@
+.body-confirm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .confirm{
+    width: 400px;
+    height: 250px;
+    background-color: white;
+    border-radius: 12px;
+
+    .top-cf{
+      width: 100%;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgb(221, 219, 219);
+
+      .p1{
+        font-size: 20px;
+      }
+
+      .p2{
+        font-size: 15px;
+        color: darkgray;
+      }
+    }
+
+    .center-cf{
+      height: 50px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgb(221, 219, 219);
+
+      p{
+        color: red;
+
+        &:hover{
+          color: rgb(2, 2, 50);
+        }
+      }
+    }
+
+    .bottom-cf{
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
