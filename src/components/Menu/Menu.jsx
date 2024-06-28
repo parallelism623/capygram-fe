@@ -5,22 +5,54 @@ import '@/i18n';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Search from '../search/Search';
 import Post from '@/pages/post/Post';
+import { setPost, setStep } from '@/store/formSlice';
+import Confirm from '@/pages/post/confirmIdentity/Confirm';
 
 const Menu = () => {
     const navigate = useNavigate();
     const { t } = useTranslation('menu');
     const [showSearch, setShowSearch] = useState(false);
     const [showCreatePost, setShowCreatePost] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+
+    const location = useLocation();
+
+    const dispatch = useDispatch();
+    const step = useSelector((state) => state.form.step);
+    const post = useSelector((state) => state.form.post);
+
+    const handleShowCreatePost = () => {
+        setShowCreatePost(true);
+        dispatch(setStep(1));
+    };
 
     const handleCancelCreatePost = () => {
         setShowCreatePost(false);
     };
 
-    const location = useLocation();
+    const handleClickOverlayCreatePost = () => {
+        if ((step === 1 && post.imageOrVideo === '') || step === 3) {
+            handleCancelCreatePost();
+        } else {
+            setShowConfirm(true);
+        }
+    };
 
+    const handleCancelConfirm = (message) => {
+        if (message === 'huy') {
+            setShowConfirm(false);
+        }
+
+        if (message === "bo") {
+            dispatch(setPost({ imageOrVideo: '', description: '' }));
+            setShowConfirm(false);
+            handleCancelCreatePost();
+        }
+    };
     const handleShowSearch = () => {
         setShowSearch(prevShowSearch => !prevShowSearch);
         console.log(showSearch);
@@ -73,7 +105,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="list" onClick={() => setShowCreatePost(true)}>
+                                <div className="list" onClick={handleShowCreatePost}>
                                     <i className="fa-regular fa-square-plus"></i>
                                     <p>{t('text7')}</p>
                                 </div>
@@ -117,7 +149,7 @@ const Menu = () => {
 
             {
                 showCreatePost && (
-                    <div className='overlayCreate' onClick={handleCancelCreatePost}>
+                    <div className='overlayCreate' onClick={handleClickOverlayCreatePost}>
                         <motion.div
                             className='box-create-post'
                             onClick={(e) => e.stopPropagation()}
@@ -125,7 +157,23 @@ const Menu = () => {
                             initial={{ opacity: 0, scale: 0.5 }}
                             transition={{ duration: 0.3 }}
                         >
-                            <Post onCancel={handleCancelCreatePost} />
+                            <Post />
+                        </motion.div>
+                    </div>
+                )
+            }
+
+            {
+                showConfirm && (
+                    <div className='overlayCreate' onClick={() => setShowConfirm(false)}>
+                        <motion.div
+                            className='box-create-post'
+                            onClick={(e) => e.stopPropagation()}
+                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Confirm onCancel={handleCancelConfirm} />
                         </motion.div>
                     </div>
                 )
@@ -160,7 +208,7 @@ const Menu = () => {
                             </div>
                         </li>
                         <li>
-                            <div className="list" onClick={() => setShowCreatePost(true)}>
+                            <div className="list" onClick={handleShowCreatePost}>
                                 <i className="fa-regular fa-square-plus"></i>
                                 <p>{t('text7')}</p>
                             </div>

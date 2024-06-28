@@ -4,5 +4,13 @@
   "select": "Chọn từ máy tính",
   "crop": "Cắt",
   "next": "Tiếp",
-  "location": "Thêm vị trí"
+  "share": "Chia sẻ",
+  "about": "Viết chú thích...",
+  "location": "Thêm vị trí",
+  "shared": "Đã chia sẻ bài viết",
+  "message": "Đã chia sẻ bài viết của bạn.",
+  "discard": "Bỏ bài viết ?",
+  "if" : "Nếu rời đi, bạn sẽ mất những gì vừa chỉnh sửa.",
+  "dis": "Bỏ",
+  "cancel": "Huỷ"
 }

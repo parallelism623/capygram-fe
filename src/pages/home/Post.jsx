@@ -86,9 +86,9 @@ const Post = () => {
                     <div className="icons-right">
                         <span>
                             {!bookmark ? (
-                                <i class="fa-regular fa-bookmark" onClick={handleChangeBookmark}></i>
+                                <i className="fa-regular fa-bookmark" onClick={handleChangeBookmark}></i>
                             )
-                                : (<i class="fa-solid fa-bookmark" onClick={handleChangeBookmark}></i>)
+                                : (<i className="fa-solid fa-bookmark" onClick={handleChangeBookmark}></i>)
                             }
 
                         </span>

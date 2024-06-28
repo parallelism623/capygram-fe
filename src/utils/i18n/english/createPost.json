@@ -4,5 +4,13 @@
   "select": "Select from computer",
   "crop": "Crop",
   "next": "Next",
-  "location": "Add location"
+  "share": "Share",
+  "about": "Write a caption...",
+  "location": "Add location",
+  "shared": "Post shared",
+  "message": "Your post has been shared.",
+  "discard": "Discard Post ?",
+  "if" : "If you leave, your edits won't be saved.",
+  "dis": "Discard",
+  "cancel": "Cancel"
 }
