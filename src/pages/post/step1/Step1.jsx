@@ -33,6 +33,7 @@ const Step1 = () => {
   };
 
   const handleClickBack = () => {
+    dispatch(setPost({ imageOrVideo: '' }));
     setImageOrVideo('');
   };
 
