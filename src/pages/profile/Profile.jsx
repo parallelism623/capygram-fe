@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import avataxinh from '@/assets/images/avataxinh.jpg'
 import setting from '@/assets/images/setting.png';
@@ -27,6 +27,8 @@ const Profile = () => {
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showFormHotStory, setShowFormHotStory] = useState(false);
+
+  const note = useSelector((state) => state.form.note);
 
   const dispatch = useDispatch();
 
@@ -68,7 +70,7 @@ const Profile = () => {
           <div className='avata'>
             <img src={avataxinh} alt='avata' />
             <div className='note'>
-              <div className='content-note' onClick={() => setShowNoteForm(true)}>{t('note')}</div>
+              <div className='content-note' onClick={() => setShowNoteForm(true)}>{note.describe === '' ? t('note') : note.describe}</div>
               <div className='cham-to'></div>
               <div className='cham-nho'></div>
             </div>

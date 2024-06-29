@@ -90,8 +90,29 @@
     }
   }
 
+  .btn-delete{
+    margin-top: 50px;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button{
+      width: 100px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: rgb(69, 69, 246);
+      border: none;
+      color: white;
+
+      &:hover{
+        background-color: blue;
+      }
+    }
+  }
   .bottom-note{
-    margin-top: 150px;
+    margin-top: 40px;
     display: flex;
     gap: 5px;
     height: 20px;
