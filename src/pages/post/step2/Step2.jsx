@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch, useSelector } from 'react-redux';
+import EmojiPicker from 'emoji-picker-react';
 
 import { setPost, setStep } from '@/store/formSlice';
 
@@ -15,6 +16,8 @@ import './Step2.scss';
 
 const Step2 = () => {
   const [describe, setDescribe] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
@@ -29,6 +32,15 @@ const Step2 = () => {
     console.log(post);
     dispatch(setPost({ imageOrVideo: '', description: '' }));
   };
+
+
+  const addEmoji = (event, emojiObject) => {
+    const emoji = event.emoji;
+    const newDescribe = describe + emoji;
+    setDescribe(newDescribe);
+    dispatch(setPost({ description: newDescribe }));
+  };
+
   return (
     <div className='body-step2'>
       <div className='step2'>
@@ -45,13 +57,18 @@ const Step2 = () => {
             </div>
             <textarea typeof='text' name='describe' value={describe} placeholder={t('about')} className='input' onChange={handleChange} />
             <div className='gr-icon'>
-              <img src={icon} alt='icon' />
-              {/* dem ky tu */}
+              <img src={icon} alt='icon' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+              {
+                showEmojiPicker && (
+                  <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                )
+              }
             </div>
             <div className='bonus'>
               <div className='gr'>
                 <p>{t('location')}</p>
                 <img src={map} alt='map' />
+
               </div>
             </div>
           </div>
