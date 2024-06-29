@@ -27,6 +27,9 @@ const initialState = {
   post: {
     imageOrVideo: '',
     description: '',
+  },
+  note: {
+    describe: '',
   }
 }
 
@@ -67,8 +70,14 @@ const formSlice = createSlice({
         ...action.payload
       }
     },
+    setNote: (state, action) => {
+      state.note = {
+        ...state.note,
+        ...action.payload
+      }
+    },
   }
 });
 
-export const { nextStep, prevStep, setStep, setUser, setProfile, setHotStory, setPost } = formSlice.actions;
+export const { nextStep, prevStep, setStep, setUser, setProfile, setHotStory, setPost, setNote } = formSlice.actions;
 export default formSlice.reducer;
