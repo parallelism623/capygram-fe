@@ -36,7 +36,7 @@ const Note = ({ onCancel }) => {
   const handleShare = () => {
     console.log(note);
   };
-
+ 
   return (
     <div className='note-form'>
       <div className='body-note'>
