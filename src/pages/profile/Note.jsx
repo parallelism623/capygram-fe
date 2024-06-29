@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import EmojiPicker from 'emoji-picker-react';
@@ -21,7 +21,7 @@ const Note = ({ onCancel }) => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.form.note);
 
-  let deleteNoteTimeout;
+  let deleteNoteTimeoutRef = useRef(null);
 
   const handleChange = (e) => {
     setNewNote(e.target.value);
@@ -39,13 +39,27 @@ const Note = ({ onCancel }) => {
     console.log(note);
     setNoteCookie(note.describe);
     sendNoteToServer(note.describe);
-    clearTimeout(deleteNoteTimeout);
-    deleteNoteTimeout = setTimeout(() => {
-      checkAndDeleteCookie()
+    clearTimeout(deleteNoteTimeoutRef.current);
+    deleteNoteTimeoutRef.current = setTimeout(() => {
+      checkAndDeleteCookie();
     }, 24 * 60 * 60 * 1000);//sau 24h se xoa
     onCancel();
   };
 
+  const handleUpdate = () => {
+    setNoteCookie(newNote);
+    sendNoteToServer(newNote);
+    dispatch(setNote({ describe: newNote }));
+    onCancel();
+  };
+
+  const handleDelete = () => {
+    deleteNoteCookie();
+    setNewNote("");
+    dispatch(setNote({ describe: "" }));
+    sendNoteToServer("");
+    onCancel();
+  };
   //set note vao cookie voi thoi gian ton tai la 24h
   const setNoteCookie = (noteContent) => {
     const d = new Date();
@@ -108,7 +122,12 @@ const Note = ({ onCancel }) => {
         <div className='top-note'>
           <img src={exit} alt='exit' onClick={onCancel} />
           <p className='newNote'><b>{t('newNote')}</b></p>
-          <p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleShare}>{t('share')}</p>
+          {
+            note.describe === '' ?
+              (<p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleShare}>{t('share')}</p>)
+              :
+              (<p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleUpdate}>{t('update')}</p>)
+          }
         </div>
 
         <div className='center-note'>
@@ -124,6 +143,9 @@ const Note = ({ onCancel }) => {
           }
         </div>
 
+        <div className='btn-delete'>
+          <button onClick={handleDelete}>{t('delete')}</button>
+        </div>
         <div className='bottom-note'>
           <img src={people} alt='people' className='people' />
           <p>{t('shareWith')}</p>
