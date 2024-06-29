@@ -22,6 +22,7 @@ const Step2 = () => {
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
 
+  const inputRef = React.createRef();
   const handleChange = (e) => {
     setDescribe(e.target.value);
     dispatch(setPost({ description: describe })); //bất đồng bộ
@@ -36,9 +37,15 @@ const Step2 = () => {
 
   const addEmoji = (event, emojiObject) => {
     const emoji = event.emoji;
-    const newDescribe = describe + emoji;
+    const { selectionStart, selectionEnd } = inputRef.current;
+    const start = describe.substring(0, selectionStart);
+    const end = describe.substring(selectionEnd, describe.length);
+    const newDescribe = start + emoji + end;
     setDescribe(newDescribe);
     dispatch(setPost({ description: newDescribe }));
+    // const newDescribe = describe + emoji;
+    // setDescribe(newDescribe);
+    // dispatch(setPost({ description: newDescribe }));
   };
 
   return (
@@ -55,7 +62,7 @@ const Step2 = () => {
               <img src={avataxinh} alt='avata' />
               <p className='name'><b>hanglazy4</b></p>
             </div>
-            <textarea typeof='text' name='describe' value={describe} placeholder={t('about')} className='input' onChange={handleChange} />
+            <textarea ref={inputRef} typeof='text' name='describe' value={describe} placeholder={t('about')} className='input' onChange={handleChange} />
             <div className='gr-icon'>
               <img src={icon} alt='icon' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
               {

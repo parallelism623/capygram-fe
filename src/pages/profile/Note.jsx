@@ -22,6 +22,7 @@ const Note = ({ onCancel }) => {
   const note = useSelector((state) => state.form.note);
 
   let deleteNoteTimeoutRef = useRef(null);
+  const inputRef = useRef();
 
   const handleChange = (e) => {
     setNewNote(e.target.value);
@@ -30,9 +31,17 @@ const Note = ({ onCancel }) => {
 
   const addEmoji = (event, emojiObject) => {
     const emoji = event.emoji;
-    const Note = newNote + emoji;
-    setNewNote(Note);
-    dispatch(setNote({ describe: Note }));
+    const { selectionStart, selectionEnd } = inputRef.current;//lay vi tri con tro
+    const start = newNote.substring(0, selectionStart);//phan dau cua chuoi truoc con tro
+    const end = newNote.substring(selectionEnd, newNote.length);//phan cuoi cua chuoi sau con tro
+    console.log("start:" + start, "end: " + end);
+    const updateNote = start + emoji + end;
+    setNewNote(updateNote);
+    dispatch(setNote({ describe: updateNote }));
+    inputRef.current.focus();
+    // const Note = newNote + emoji;
+    // setNewNote(Note);
+    // dispatch(setNote({ describe: Note }));
   };
 
   const handleShare = () => {
@@ -132,7 +141,7 @@ const Note = ({ onCancel }) => {
 
         <div className='center-note'>
           <img src={avataxinh} alt='avata' className='avata' />
-          <input className='note-input' placeholder={t('shareContent')} value={newNote} onChange={handleChange} />
+          <input ref={inputRef} className='note-input' placeholder={t('shareContent')} value={newNote} onChange={handleChange} />
           <div className='cham-to'></div>
           <div className='cham-nho'></div>
           <img src={icon} alt='icon' className='icon' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
