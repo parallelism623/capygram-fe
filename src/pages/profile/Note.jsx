@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import EmojiPicker from 'emoji-picker-react';
@@ -21,6 +21,9 @@ const Note = ({ onCancel }) => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.form.note);
 
+  let deleteNoteTimeoutRef = useRef(null);
+  const inputRef = useRef();
+
   const handleChange = (e) => {
     setNewNote(e.target.value);
     dispatch(setNote({ describe: newNote }));
@@ -28,30 +31,120 @@ const Note = ({ onCancel }) => {
 
   const addEmoji = (event, emojiObject) => {
     const emoji = event.emoji;
-    const Note = newNote + emoji;
-    setNewNote(Note);
-    dispatch(setNote({ describe: Note }));
+    const { selectionStart, selectionEnd } = inputRef.current;//lay vi tri con tro
+    const start = newNote.substring(0, selectionStart);//phan dau cua chuoi truoc con tro
+    const end = newNote.substring(selectionEnd, newNote.length);//phan cuoi cua chuoi sau con tro
+    console.log("start:" + start, "end: " + end);
+    const updateNote = start + emoji + end;
+    setNewNote(updateNote);
+    dispatch(setNote({ describe: updateNote }));
+    inputRef.current.focus();
+    // const Note = newNote + emoji;
+    // setNewNote(Note);
+    // dispatch(setNote({ describe: Note }));
   };
 
   const handleShare = () => {
     console.log(note);
+    setNoteCookie(note.describe);
+    sendNoteToServer(note.describe);
+    clearTimeout(deleteNoteTimeoutRef.current);
+    deleteNoteTimeoutRef.current = setTimeout(() => {
+      checkAndDeleteCookie();
+    }, 24 * 60 * 60 * 1000);//sau 24h se xoa
+    onCancel();
   };
- 
+
+  const handleUpdate = () => {
+    setNoteCookie(newNote);
+    sendNoteToServer(newNote);
+    dispatch(setNote({ describe: newNote }));
+    onCancel();
+  };
+
+  const handleDelete = () => {
+    deleteNoteCookie();
+    setNewNote("");
+    dispatch(setNote({ describe: "" }));
+    sendNoteToServer("");
+    onCancel();
+  };
+  //set note vao cookie voi thoi gian ton tai la 24h
+  const setNoteCookie = (noteContent) => {
+    const d = new Date();
+    d.setTime(d.getTime() + (24 * 60 * 60 * 1000)); //time hien tai + 24h
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = "note=" + noteContent + ";" + expires + ";path=/";
+  };
+
+  //Ham lay note tu cookie neu ton tai
+  const getNoteCookie = () => {
+    const name = "note=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.indexOf(name) === 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
+    return "";
+  };
+
+  //ham xoa cookie
+  const deleteNoteCookie = () => {
+    document.cookie = "note=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/";
+  };
+
+  //kiem tra va xoa cookie neu qua 24h
+  const checkAndDeleteCookie = () => {
+    const noteContent = getNoteCookie();
+    if (noteContent !== "") {
+      deleteNoteCookie();
+      setNewNote("");
+      dispatch(setNote({ describe: "" }));
+      sendNoteToServer("");
+    }
+  };
+
+  //chi chay mot lan sau khi render
+  useEffect(() => {
+    const noteContent = getNoteCookie();
+    if (noteContent !== "") {
+      setNewNote(noteContent);
+      dispatch(setNote({ describe: noteContent }));
+    }
+  }, []);
+
+
+  //gui note len server
+  const sendNoteToServer = async (noteContent) => {
+    try {
+      ///api
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className='note-form'>
       <div className='body-note'>
         <div className='top-note'>
           <img src={exit} alt='exit' onClick={onCancel} />
           <p className='newNote'><b>{t('newNote')}</b></p>
-          <p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleShare}>{t('share')}</p>
+          {
+            note.describe === '' ?
+              (<p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleShare}>{t('share')}</p>)
+              :
+              (<p className={(note.trim !== '') ? 'share' : 'notShare'} onClick={handleUpdate}>{t('update')}</p>)
+          }
         </div>
 
         <div className='center-note'>
           <img src={avataxinh} alt='avata' className='avata' />
-          <input className='note-input' placeholder={t('shareContent')} value={newNote} onChange={handleChange} />
+          <input ref={inputRef} className='note-input' placeholder={t('shareContent')} value={newNote} onChange={handleChange} />
           <div className='cham-to'></div>
           <div className='cham-nho'></div>
-          <img src={icon} alt='icon' className='icon' onClick={() => setShowEmojiPicker(!showEmojiPicker)}/>
+          <img src={icon} alt='icon' className='icon' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
           {
             showEmojiPicker && (
               <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
@@ -59,6 +152,9 @@ const Note = ({ onCancel }) => {
           }
         </div>
 
+        <div className='btn-delete'>
+          <button onClick={handleDelete}>{t('delete')}</button>
+        </div>
         <div className='bottom-note'>
           <img src={people} alt='people' className='people' />
           <p>{t('shareWith')}</p>
