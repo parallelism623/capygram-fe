@@ -8,6 +8,7 @@ import img2 from "../../assets/images/Screenshot 2024-06-13 164302.png"
 import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -47,18 +48,27 @@ const Login = () => {
           <div className="form">
             <Formik
               initialValues={{
-                email: '',
+                username: '',
                 password: ''
               }}
               onSubmit={async (values) => {
-                console.log(values);
+                try {
+                  const { data } = await axios.post(
+                    "https://localhost:7284/api/Users/login", values
+                  );
+                  localStorage.setItem("access_token", data.token);
+                  navigate("/")
+                }
+                catch (errors) {
+                  console.error(errors);
+                }
               }}
             >
               {({ handleSubmit, isSubmitting, touched, errors }) => (
                 <Form onSubmit={handleSubmit} className='Form' >
                   <img src={logoCapyGram} alt="" />
                   <div className="form-input">
-                    <Field className='field' name='email' type='text' placeholder={t("placeholder")} />
+                    <Field className='field' name='username' type='text' placeholder={t("placeholder")} />
                   </div>
                   <div className="form-input">
                     <Field className='field' name='password' type={showPassword ? 'text' : 'password'} placeholder={t("password")} />

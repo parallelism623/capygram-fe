@@ -30,7 +30,8 @@ const initialState = {
   },
   note: {
     describe: '',
-  }
+  },
+  comments: [],
 }
 
 const formSlice = createSlice({
@@ -76,8 +77,11 @@ const formSlice = createSlice({
         ...action.payload
       }
     },
+    addComments: (state, action) => {
+      state.comments.push(action.payload);
+    }
   }
 });
 
-export const { nextStep, prevStep, setStep, setUser, setProfile, setHotStory, setPost, setNote } = formSlice.actions;
+export const { nextStep, prevStep, setStep, setUser, setProfile, setHotStory, setPost, setNote, addComments } = formSlice.actions;
 export default formSlice.reducer;
