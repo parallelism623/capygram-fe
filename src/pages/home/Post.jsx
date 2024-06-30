@@ -5,6 +5,10 @@ import { motion } from 'framer-motion';
 import Options from './Options'
 import Comment from './Comment';
 import Share from './Share';
+import { useDispatch, useSelector } from 'react-redux';
+import EmojiPicker from 'emoji-picker-react';
+
+import { setPost, setStep, addComments } from '@/store/formSlice';
 
 const Post = () => {
     const [icons, setIcons] = useState(false);
@@ -12,6 +16,29 @@ const Post = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showComment, setShowComment] = useState(false);
     const [showShare, setShowShare] = useState(false);
+    const [describe, setDescribe] = useState('');
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const dispatch = useDispatch();
+
+
+    const handleChange = (e) => {
+        setDescribe(e.target.value);
+    };
+    const addEmoji = (event, emojiObject) => {
+        const emoji = event.emoji;
+        const newDescribe = describe + emoji;
+        setDescribe(newDescribe);
+        dispatch(setPost({ description: newDescribe }));
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (describe.trim()) {
+            dispatch(addComments(describe));
+            setDescribe('');
+        }
+    }
+
+
 
     const handleShowShare = () => {
         setShowShare(true);
@@ -115,12 +142,17 @@ const Post = () => {
             </div>
             {/* comments */}
             <div className="post-comment">
-                <form>
-                    <span>
-                        <i className="fa-regular fa-face-smile"></i>
+                <form onSubmit={handleSubmit}>
+                    <span style={{ position: 'relative' }}>
+                        <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
+                        {
+                            showEmojiPicker && (
+                                <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                            )
+                        }
                     </span>
-                    <input type="text" placeholder="Thêm bình luận..." />
-                    <button className="btn-post-comment">Đăng</button>
+                    <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
+                    <button type='submit' className="btn-post-comment">Đăng</button>
                 </form>
             </div>
             {showOptions && (

@@ -3,10 +3,36 @@ import avt from '../../assets/images/account.png'
 import { useState } from 'react'
 import Options from './Options'
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import EmojiPicker from 'emoji-picker-react';
+
+import { setPost, setStep, addComments } from '@/store/formSlice';
 const Comment = () => {
     const [icons, setIcons] = useState(false);
     const [bookmark, setBookmark] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
+    const [describe, setDescribe] = useState('');
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const dispatch = useDispatch();
+
+    const comments = useSelector((state) => state.form.comments)
+
+    const handleChange = (e) => {
+        setDescribe(e.target.value);
+    };
+    const addEmoji = (event, emojiObject) => {
+        const emoji = event.emoji;
+        const newDescribe = describe + emoji;
+        setDescribe(newDescribe);
+        dispatch(setPost({ description: newDescribe }));
+    };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (describe.trim()) {
+            dispatch(addComments(describe));
+            setDescribe('');
+        }
+    }
 
     const handleshowOptions = () => {
         setShowOptions(true);
@@ -45,7 +71,19 @@ const Comment = () => {
                     </div>
                 </div>
                 <div className="comment">
-
+                    {comments.map((comment, index) => (
+                        <div className="list-comment">
+                            <div className="cmt-up">
+                                <h5>Hongquan_1103</h5>
+                                <p key={index}>{comment}</p>
+                            </div>
+                            <div className="cmt-down">
+                                <p>52 phút</p>
+                                <p>365 lượt thích</p>
+                                <p>Trả lời</p>
+                            </div>
+                        </div>
+                    ))}
                 </div>
                 <div className="comment-content-footer">
                     <div className="comment-group-bottom">
@@ -87,12 +125,17 @@ const Comment = () => {
                     </div>
                     {/* comments */}
                     <div className="comment-post">
-                        <form>
-                            <span>
-                                <i className="fa-regular fa-face-smile"></i>
+                        <form onSubmit={handleSubmit}>
+                            <span style={{ position: 'relative' }}>
+                                <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
+                                {
+                                    showEmojiPicker && (
+                                        <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                                    )
+                                }
                             </span>
-                            <input type="text" placeholder="Thêm bình luận..." />
-                            <button className="btn-post-comment">Đăng</button>
+                            <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
+                            <button type='submit' className="btn-post-comment">Đăng</button>
                         </form>
                     </div>
                 </div>
