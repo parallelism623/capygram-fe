@@ -5,24 +5,34 @@ import { Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
+import { toast } from 'react-toastify';
 
 import { registerBirthdayValidation } from '@/utils/validation/registerValidation';
 import { nextStep, prevStep, setUser } from '@/store/formSlice';
+import { register } from '@/api/authApi/auth';
 
 import birthday_cake from "@/assets/images/birthday_cake.png";
 
 import './RegisterBirthday.scss';
 
 const RegisterBirthday = () => {
-  const {t} = useTranslation('step2Register');
+  const { t } = useTranslation('step2Register');
 
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.form.user);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     dispatch(setUser(values));
-    dispatch(nextStep());
+
+    console.log(values);
+    try {
+      await register(values);
+      dispatch(nextStep());
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -39,7 +49,7 @@ const RegisterBirthday = () => {
                 <div className='img-birthday-register'>
                   <img className='img' src={birthday_cake} />
                 </div>
-                <p className='title-form'><b>{ t('addYourBirthday')}</b></p>
+                <p className='title-form'><b>{t('addYourBirthday')}</b></p>
                 <p className='p1'>{t('subTitle')} </p>
 
                 <div className='form-birthday'>
