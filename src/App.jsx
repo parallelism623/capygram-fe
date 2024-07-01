@@ -17,7 +17,9 @@ import VerifyAccount from './pages/VerifyAccount/VerifyAccount';
 import SMSMessages from './pages/SMSMessages/SMSMessages';
 import EditProfile from './pages/profile/EditProfile';
 import Archive from './pages/profile/Archive';
+import { ToastContainer } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   const routes = useRoutes([
     {
@@ -72,7 +74,7 @@ const App = () => {
         },
         {
           path: 'archive-profile',
-          element: <Archive/>
+          element: <Archive />
         },
         {
           path: '/reel',
@@ -90,7 +92,13 @@ const App = () => {
     }
   ]);
 
-  return routes;
+  return (
+    <>
+      <ToastContainer />
+      {routes}
+    </>
+  );
+
 }
 
 export default App;
