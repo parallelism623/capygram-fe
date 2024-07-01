@@ -53,9 +53,7 @@ const Login = () => {
               }}
               onSubmit={async (values) => {
                 try {
-                  const { data } = await axios.post(
-                    "https://localhost:7284/api/Users/login", values
-                  );
+
                   localStorage.setItem("access_token", data.token);
                   navigate("/")
                 }
