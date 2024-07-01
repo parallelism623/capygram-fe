@@ -11,6 +11,7 @@ const initialState = {
     day: '',
     year: '',
     otp: '',
+    avatarUrl: '',
   },
   profile: {
     avata: '',

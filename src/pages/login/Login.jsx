@@ -8,6 +8,7 @@ import img2 from "../../assets/images/Screenshot 2024-06-13 164302.png"
 import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 
 const Login = () => {
   const navigate = useNavigate();

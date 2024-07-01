@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -11,16 +11,29 @@ import { setUser } from '@/store/formSlice';
 import { registerOTPValidation } from '@/utils/validation/registerValidation';
 
 import './RegisterOTP.scss';
+import { register } from '@/api/authApi/auth';
+import { toast } from 'react-toastify';
 
 const RegisterOTP = () => {
   const { t } = useTranslation('step3Register');
+
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const user = useSelector(state => state.form.user);
   const gmail = user.email;
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     dispatch(setUser(values));
+
+    try {
+      await register(values);
+      console.log(values);
+      navigate('/ft/login');
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
 
     // Call API
     console.log(values);
