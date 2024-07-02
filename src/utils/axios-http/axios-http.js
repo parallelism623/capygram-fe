@@ -12,8 +12,10 @@ instance.interceptors.response.use(
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
       const accessToken = localStorage.getItem('accessToken');
+      const user = localStorage.getItem('user');
+      const userId = user ? JSON.parse(user).id : null;
       try {
-        const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken });
+        const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken, id: userId });
         localStorage.setItem('accessToken', data.accessToken);
         return instance(originalRequest);
       } catch (error) {
