@@ -28,17 +28,25 @@ const RegisterOTP = () => {
 
     try {
       await active_account(values);
-      console.log(values);
+      toast.success('Đăng ký tài khoản thành công');
+      // console.log(values);
       navigate('/ft/login');
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
     }
-
-    // Call API
-    console.log(values);
+    // console.log(values);
   };
 
+  const handleSendOTP = async ( values) => {
+    try {
+      await active_account(values);
+      toast.success('Gửi mã OTP thành công');
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
   return (
     <div className='body-register-OTP'>
       <div className='body-OTP'>
@@ -63,7 +71,7 @@ const RegisterOTP = () => {
 
                 <button className='btn-submit' type='submit'>{t('button')}</button>
 
-                <p className='p2'>{t('link')}</p>
+                <p className='p2' onClick={handleSendOTP}>{t('link')}</p>
               </Form>
             )}
           </Formik>
