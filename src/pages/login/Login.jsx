@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import "./Login.scss"
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -9,6 +10,7 @@ import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
+import { login } from '@/api/authApi/auth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -53,6 +55,7 @@ const Login = () => {
               }}
               onSubmit={async (values) => {
                 try {
+
                 }
                 catch (errors) {
                   console.error(errors);
