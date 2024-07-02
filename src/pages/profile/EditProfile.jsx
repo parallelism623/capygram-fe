@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
 import account from '@/assets/images/account.png';
@@ -11,6 +12,7 @@ import account from '@/assets/images/account.png';
 import './EditProfile.scss';
 import ChangePhoto from './changePhoto';
 import { setProfile } from '@/store/formSlice';
+import { editProfile } from '@/api/authApi/auth';
 
 const EditProfile = () => {
   const { t } = useTranslation('edit_profile');
@@ -22,6 +24,7 @@ const EditProfile = () => {
   const profile = useSelector((state) => state.form.profile);
   const user = useSelector((state) => state.form.user);
 
+  const navigate = useNavigate();
   const handleRemovePhoto = () => {
     setAvata(false);
     dispatch(setProfile({ avata: '' }));
@@ -38,10 +41,16 @@ const EditProfile = () => {
     dispatch(setProfile({ [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch(setProfile(profile));
     console.log(profile);
+    try {
+      await editProfile(profile);
+      navigate('/profile');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {

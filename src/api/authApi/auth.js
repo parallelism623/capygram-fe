@@ -105,3 +105,36 @@ export const logout = async () => {
     throw error;
   }
 }
+
+export const editProfile = async (data) => {
+  try {
+    const { avata, bio, sex } = data;
+    //se thay doi cach lay id sau
+    const id = localStorage.getItem("userId");
+
+    let gender;
+    if (sex === 'male') {
+      gender = 1;
+    }
+    else if (sex === 'female') {
+      gender = 2;
+    } else {
+      gender = 0;
+    }
+
+    await requestWithToken({
+      data: {
+        id,
+        avatarUrl: avata,
+        story: bio,
+        gender ,
+      },
+      method: "post",
+      url: "/api/Users/edit"
+    });
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
