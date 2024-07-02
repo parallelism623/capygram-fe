@@ -11,7 +11,7 @@ import { setUser } from '@/store/formSlice';
 import { registerOTPValidation } from '@/utils/validation/registerValidation';
 
 import './RegisterOTP.scss';
-import { register } from '@/api/authApi/auth';
+import { active_account } from '@/api/authApi/auth';
 import { toast } from 'react-toastify';
 
 const RegisterOTP = () => {
@@ -27,7 +27,7 @@ const RegisterOTP = () => {
     dispatch(setUser(values));
 
     try {
-      await register(values);
+      await active_account(values);
       console.log(values);
       navigate('/ft/login');
     } catch (error) {
@@ -53,7 +53,7 @@ const RegisterOTP = () => {
                 <div className='img-otp'>
                   <img src={checkEmail} />
                 </div>
-                <p className='sub-tittle'><b>{ t('title1')}</b></p>
+                <p className='sub-tittle'><b>{t('title1')}</b></p>
                 <p className='p1'>{t('title2')} {gmail}</p>
 
                 <div className='input-OTP'>
