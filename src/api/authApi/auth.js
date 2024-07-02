@@ -1,4 +1,4 @@
-import { request } from "@/utils/axios-http/axios-http";
+import { request, requestWithToken } from "@/utils/axios-http/axios-http";
 
 export const register = async (data) => {
   try {
@@ -73,10 +73,12 @@ export const login = async (data) => {
     });
 
     //lấy refreshToken và accessToken từ phản hồi
-    const { refreshToken, accessToken } = response.data.value;
+    const { refreshToken, accessToken, id } = response.data.value;
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("accessToken", accessToken);
 
+    //có getMe sẽ lưu vào redux user
+    localStorage.setItem("userId", id);
     //getMe();
   } catch (error) {
     console.log(error);
@@ -84,4 +86,55 @@ export const login = async (data) => {
   }
 };
 
-// const getMe = 
+// const getMe =
+
+export const logout = async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+
+    await requestWithToken({
+      method: "post",
+      url: `/api/Users/logout?Id=${userId}`
+    });
+
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export const editProfile = async (data) => {
+  try {
+    const { avata, bio, sex } = data;
+    //se thay doi cach lay id sau
+    const id = localStorage.getItem("userId");
+
+    let gender;
+    if (sex === 'male') {
+      gender = 1;
+    }
+    else if (sex === 'female') {
+      gender = 2;
+    } else {
+      gender = 0;
+    }
+
+    await requestWithToken({
+      data: {
+        id,
+        avatarUrl: avata,
+        story: bio,
+        gender ,
+      },
+      method: "post",
+      url: "/api/Users/edit"
+    });
+
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

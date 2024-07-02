@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import '@/i18n';
 
+import { logout } from '@/api/authApi/auth';
+
 import './Setting.scss';
 
 const Setting = ({onCancel}) => {
@@ -11,7 +13,8 @@ const Setting = ({onCancel}) => {
 
   const navigate = useNavigate();  
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
+    await logout();
     //localstorage
     navigate('/ft/login');
   }
