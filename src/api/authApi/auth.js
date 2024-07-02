@@ -57,3 +57,31 @@ export const active_account = async (data) => {
     throw error;
   }
 }
+
+export const login = async (data) => {
+  try {
+    const { username, password } = data;
+
+    //gọi API và chờ phản hồi
+    const response = await request({
+      data: {
+        userName: username,
+        password,
+      },
+      method: "post",
+      url: "/api/Users/login"
+    });
+
+    //lấy refreshToken và accessToken từ phản hồi
+    const { refreshToken, accessToken } = response.data.value;
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("accessToken", accessToken);
+
+    //getMe();
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// const getMe = 
