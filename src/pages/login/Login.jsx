@@ -53,9 +53,6 @@ const Login = () => {
               }}
               onSubmit={async (values) => {
                 try {
-
-                  localStorage.setItem("access_token", data.token);
-                  navigate("/")
                 }
                 catch (errors) {
                   console.error(errors);
