@@ -3,11 +3,14 @@ import React, { useEffect, useState } from 'react'
 
 import ChatContainer from '@/components/chat/ChatContainer';
 import Contacts from '@/components/chat/Contacts';
+import Welcome from '@/components/chat/Welcome';
 
 import './Messages.scss';
+
 const Messages = () => {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentChat, setCurrentChat] = useState(undefined);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -113,13 +116,17 @@ const Messages = () => {
   }, [currentUser]);
 
   const changeChat = (user) => {
-
+    setCurrentChat(user);
   }
   return (
     <div className='body-mesages' >
       <div className='message-container'>
         <Contacts contacts={contacts} currentUser={currentUser} changeChat={changeChat} />
-        <ChatContainer />
+        {
+          currentChat === undefined ? 
+            (<Welcome />) : 
+            (<ChatContainer/>)
+        }
       </div>
     </div>
   )
