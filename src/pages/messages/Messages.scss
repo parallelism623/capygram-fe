@@ -1,0 +1,30 @@
+.body-mesages{
+  height: 100vh;
+  width: 84%;
+  position: relative;
+  margin-left: 16%;
+
+  .message-container{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .body-mesages{
+    margin-left: 10%;
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .body-mesages{
+    margin-left: 0;
+    width: 100%;
+    margin-top: 80px;
+    position: absolute;
+    
+  }
+}

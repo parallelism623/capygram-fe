@@ -1,0 +1,215 @@
+.body-contacts{
+  .contacts-container{
+    padding: 30px 20px;
+    height: 100%;
+    border-right: 1px solid rgb(181, 178, 178);
+
+    .current-user{
+      width: 100%;
+      height: 200px;
+      .top-current-user{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .current-name{
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          p{
+            font-size: 20px;
+          }
+
+          img{
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        img{
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .current-avatar{
+        width: 100%;
+        height: 150px;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        .avatar{
+          width: 100px;
+          img{
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+          }
+          p{
+            font-size: 12px;
+            color: rgb(134, 134, 134);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+
+        .note{
+          min-width: 30px;
+          max-width: 100px;
+          .content-note{
+            width: 100%;
+            word-wrap: break-word;
+            background-color: rgb(240, 236, 236);
+            min-height: 35px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+
+            margin-top: -125px;
+            margin-left: 5px;
+            font-size: 12px;
+            color: rgb(82, 81, 81);
+          }
+
+          .cham-to{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgb(240, 236, 236);
+            margin-left: 10px;
+            margin-top: -5px;
+          }
+        }
+      
+      }
+    }
+
+    .title{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      img{
+        display: none;
+      }
+    }
+
+    .contacts{
+      width: 100%;
+      max-height: 550px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      overflow: auto;
+      margin-top: 20px;
+      &::-webkit-scrollbar{
+      width: 2px;
+      &-thumb{
+        background-color: #46464639;
+        width: 1px;
+      }
+    }
+
+      .contact{
+        width: 100%;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .contact-avatar{
+          width: 70px;
+          height: 70px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .selected{
+        background-color: rgb(240, 236, 236);
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+
+    .note-container {
+      position: relative;
+      z-index: 20;
+    }
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 768px) {
+  .body-contacts{
+    .contacts-container{
+      
+      .title{
+        .p2{
+          display: none;
+        }
+
+        img{
+          display: block;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .body-contacts{
+    .contacts-container{
+      .current-user{
+        .top-current-user{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .current-name{
+            display: none;
+          }
+        }
+
+        // .current-avatar{
+        //   display: none;
+        // }
+      }
+
+      .title{
+        .p2{
+          display: none;
+        }
+
+        img{
+          display: block;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
