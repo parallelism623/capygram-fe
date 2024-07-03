@@ -210,6 +210,14 @@
           height: 20px;
         }
       }
+
+      .contacts{
+        .contact{
+          .contact-info{
+            display: none;
+          }
+        }
+      }
     }
   }
 }
