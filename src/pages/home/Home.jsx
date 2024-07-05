@@ -6,9 +6,11 @@ import avt from '../../assets/images/account.png'
 import LayoutFooter from '@/layouts/LayoutFooter'
 import { motion } from 'framer-motion';
 import AccountTransfer from './AccountTransfer'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const [showacctransfer, setshowacctransfer] = useState(false);
+  const navigate = useNavigate();
 
   const handleshowacctransfer = () => {
     setshowacctransfer(true);
@@ -52,7 +54,7 @@ const Home = () => {
             <div className="suggestions-container">
               <div className="suggestions-header">
                 <p style={{ fontWeight: 'bold', color: 'gray' }}>Gợi ý cho bạn</p>
-                <p style={{ fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Xem tất cả</p>
+                <p style={{ fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }} onClick={() => navigate('/see-all')}>Xem tất cả</p>
               </div>
               <div className="suggestions-list">
 
