@@ -2,5 +2,8 @@
   "note": "Note",
   "yourNote": "Your note",
   "messages": "Messages",
-  "request": "Requests"
+  "request": "Requests",
+  "yourMessage": "Your message",
+  "title": "Send a message to start a chat.",
+  "sendMessage": "Send message"
 }
