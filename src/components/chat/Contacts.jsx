@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 
 import Note from '@/pages/profile/Note';
+import SwitchAccount from './SwitchAccount';
 
 import down from '@/assets/images/down.png';
 import edit from '@/assets/images/edit.png';
@@ -16,6 +17,7 @@ import './Contacts.scss';
 const Contacts = ({ contacts, currentUser, changeChat }) => {
   const [currentSelected, setCurrentSelected] = useState(undefined);
   const [showNoteForm, setShowNoteForm] = useState(false);
+  const [showSwitchAccount, setShowSwitchAccount] = useState(false);
 
   const { t } = useTranslation('messages');
 
@@ -29,6 +31,11 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
   const handleCancel = () => {
     setShowNoteForm(false);
   };
+
+  const handleCancelSwitch = () => {
+    setShowSwitchAccount(false);
+  };
+
   return (
     <>
       {currentUser && (
@@ -38,7 +45,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
               <div className='top-current-user'>
                 <div className='current-name'>
                   <p><b>{currentUser.fullname}</b></p>
-                  <img src={down} alt='down' />
+                  <img src={down} alt='down' onClick={() => setShowSwitchAccount(true)} />
                 </div>
                 <img src={edit} alt='editAccount' />
               </div>
@@ -90,6 +97,22 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
               </motion.div>
             </div>
           )}
+
+
+          {showSwitchAccount && (
+            <div className='overlay' onClick={handleCancelSwitch}>
+              <motion.div
+                className='note-container'
+                onClick={(e) => e.stopPropagation()}
+                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.3 }}
+              >
+                <SwitchAccount onCancel={handleCancelSwitch} currentUser={currentUser} />
+              </motion.div>
+            </div>
+          )}
+
         </div>
       )}
     </>

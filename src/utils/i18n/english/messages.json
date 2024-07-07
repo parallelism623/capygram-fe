@@ -5,5 +5,8 @@
   "request": "Requests",
   "yourMessage": "Your message",
   "title": "Send a message to start a chat.",
-  "sendMessage": "Send message"
+  "sendMessage": "Send message",
+  "SwitchAccount": "Switch accounts",
+  "logInto": "Log into an Existing Account",
+  "message": "Message..."
 }
