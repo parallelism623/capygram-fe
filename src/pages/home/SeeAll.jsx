@@ -71,7 +71,7 @@ const SeeAll = () => {
                                         <div className="profile-header">
                                             <div className="header-up">
                                                 <div className="header-up-image">
-                                                    <img src={avt} alt="" />
+                                                    <img src={item.avatar} alt="" />
                                                 </div>
                                                 <div className="header-up-right">
                                                     <p style={{ fontWeight: 'bold' }}>{item.username}</p>
@@ -97,7 +97,12 @@ const SeeAll = () => {
 
                                         </div>
                                         <div className="profile-footer">
-                                            <button><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>
+                                            {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
+                                                : (<div className='profile-footer-container'>
+                                                    <button className='button2'>Nhắn tin</button>
+                                                    <button className='button3' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
+                                                </div>)
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -160,7 +165,6 @@ const SeeAll = () => {
                                         <button className='button2' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
                                     )
                                 }
-
                             </div>
                         </div>
                     </div>

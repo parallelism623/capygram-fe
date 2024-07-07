@@ -87,7 +87,7 @@
                             align-items: center;
                             justify-content: center;
 
-                            button {
+                            .button1 {
                                 width: 85%;
                                 height: 35px;
                                 border-radius: 8px;
@@ -100,8 +100,44 @@
 
                             }
 
-                            button:hover {
+                            .button1:hover {
                                 background: #05386f;
+                            }
+
+                            .profile-footer-container {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                justify-content: space-around;
+                                align-items: center;
+
+                                .button2 {
+                                    width: 45%;
+                                    height: 55%;
+                                    border-radius: 10px;
+                                    background: rgb(3, 116, 245);
+                                    border: none;
+                                    color: white;
+                                    cursor: pointer;
+                                }
+
+                                .button2:hover {
+                                    background: #05386f;
+                                }
+
+                                .button3 {
+                                    width: 45%;
+                                    height: 55%;
+                                    border-radius: 10px;
+                                    background: #b7b7b7;
+                                    border: none;
+                                    color: black;
+                                    cursor: pointer;
+                                }
+
+                                .button3:hover {
+                                    background: #898989;
+                                }
                             }
                         }
                     }
