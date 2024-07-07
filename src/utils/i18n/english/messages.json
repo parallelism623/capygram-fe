@@ -7,5 +7,6 @@
   "title": "Send a message to start a chat.",
   "sendMessage": "Send message",
   "SwitchAccount": "Switch accounts",
-  "logInto": "Log into an Existing Account"
+  "logInto": "Log into an Existing Account",
+  "message": "Message..."
 }
