@@ -1,11 +1,23 @@
 /* eslint-disable */
-import React from 'react'
+import React, { useState } from 'react'
 import './Home.scss'
 import Post from './Post'
 import avt from '../../assets/images/account.png'
 import LayoutFooter from '@/layouts/LayoutFooter'
+import { motion } from 'framer-motion';
+import AccountTransfer from './AccountTransfer'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const [showacctransfer, setshowacctransfer] = useState(false);
+  const navigate = useNavigate();
+
+  const handleshowacctransfer = () => {
+    setshowacctransfer(true);
+  }
+  const cancleshowacctransfer = () => {
+    setshowacctransfer(false);
+  }
   return (
     <div className='home' style={{ position: "absolute", left: "16%" }}>
       <div className="home-container">
@@ -33,7 +45,7 @@ const Home = () => {
                   </p>
                 </div>
                 <div className="switch-account">
-                  <p>Chuyển</p>
+                  <p onClick={handleshowacctransfer}>Chuyển</p>
                 </div>
               </div>
             </div>
@@ -42,7 +54,7 @@ const Home = () => {
             <div className="suggestions-container">
               <div className="suggestions-header">
                 <p style={{ fontWeight: 'bold', color: 'gray' }}>Gợi ý cho bạn</p>
-                <p style={{ fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>Xem tất cả</p>
+                <p style={{ fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }} onClick={() => navigate('/see-all')}>Xem tất cả</p>
               </div>
               <div className="suggestions-list">
 
@@ -54,6 +66,19 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {showacctransfer && (
+        <div className='overlay' onClick={cancleshowacctransfer}>
+          <motion.div
+            className='note-container'
+            onClick={(e) => e.stopPropagation()}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <AccountTransfer oncancel={cancleshowacctransfer} />
+          </motion.div>
+        </div>
+      )}
     </div>
   )
 }

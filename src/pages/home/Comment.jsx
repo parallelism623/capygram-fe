@@ -13,6 +13,7 @@ const Comment = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [describe, setDescribe] = useState('');
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [heart, setheart] = useState(false);
     const dispatch = useDispatch();
 
     const comments = useSelector((state) => state.form.comments)
@@ -47,6 +48,9 @@ const Comment = () => {
     const handleChangeBookmark = () => {
         setBookmark(!bookmark);
     }
+    const handleheart = () => {
+        setheart(!heart);
+    }
     return (
         <div className='comment-container'>
             <div className="comment-image">
@@ -73,15 +77,26 @@ const Comment = () => {
                 <div className="comment">
                     {comments.map((comment, index) => (
                         <div className="list-comment">
-                            <div className="cmt-up">
-                                <h5>Hongquan_1103</h5>
-                                <p key={index}>{comment}</p>
+                            <div className="cmt-right">
+                                <div className="cmt-image">
+                                    <img src={avt} alt="" />
+                                </div>
+                                <div className="cmt">
+                                    <div className="cmt-up">
+                                        <h5>Hongquan_1103</h5>
+                                        <p key={index}>{comment}</p>
+                                    </div>
+                                    <div className="cmt-down">
+                                        <p>52 phút</p>
+                                        <p>365 lượt thích</p>
+                                        <p style={{ cursor: 'pointer' }}>Trả lời</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="cmt-down">
-                                <p>52 phút</p>
-                                <p>365 lượt thích</p>
-                                <p>Trả lời</p>
+                            <div className="cmt-left">
+                                <i className="fa-regular fa-heart" ></i>
                             </div>
+
                         </div>
                     ))}
                 </div>

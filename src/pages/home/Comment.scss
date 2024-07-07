@@ -52,29 +52,55 @@
 
         .comment {
             width: 100%;
-            height: 65%;
+            min-height: 65%;
+            max-height: 65%;
+            overflow-y: auto;
             border-bottom: 1px solid #d5d4d4;
 
             .list-comment {
-                .cmt-up {
-                    display: flex;
-                    padding: 10px 10px 5px 10px;
+                display: flex;
+                justify-content: space-between;
 
-                    p {
-                        margin-left: 10px;
+                .cmt-right {
+                    display: flex;
+
+                    .cmt-image {
+                        padding: 10px 5px;
+                    }
+
+                    .cmt {
+                        .cmt-up {
+                            display: flex;
+                            align-items: center;
+                            padding: 10px 10px 5px 10px;
+
+                            p {
+                                margin-left: 10px;
+                            }
+                        }
+
+                        .cmt-down {
+                            display: flex;
+                            padding: 0px 10px;
+
+                            p {
+                                font-size: 15px;
+                                color: gray;
+                                margin-right: 10px;
+                            }
+                        }
+                    }
+
+                }
+
+                .cmt-left {
+                    padding: 18px 10px;
+
+                    i {
+                        width: 20px;
                     }
                 }
 
-                .cmt-down {
-                    display: flex;
-                    padding: 0px 10px;
-
-                    p {
-                        font-size: 15px;
-                        color: gray;
-                        margin-right: 10px;
-                    }
-                }
             }
         }
 
