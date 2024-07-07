@@ -15,7 +15,7 @@ const ChatInput = () => {
       <form>
         <input className='input-chat' type='text' value={input} />
 
-        <img src={icon} alt='icon' className='icon-haha'/>
+        <img src={icon} alt='icon' className='icon-haha' />
 
         <div className='action'>
           {

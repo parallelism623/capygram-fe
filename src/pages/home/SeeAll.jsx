@@ -1,25 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { SuggestionsContext, SuggestionsProvider } from './SuggestionsContext';
 import './SeeAll.scss'
-import avt from '../../assets/images/account.png'
+
 import LayoutFooter from '@/layouts/LayoutFooter';
 const SeeAll = () => {
-    const [suggestions, setSuggestions] = useState([]);
+    const { suggestions, setSuggestions } = useContext(SuggestionsContext);
     const [hoveredItem, sethoveredItem] = useState({ id: null, type: null });
     const [hoveredProfile, setHoveredProfile] = useState({ id: null, type: null });
-    const [follow, setFollow] = useState(
-        suggestions.reduce((acc, suggestion) => {
-            acc[suggestion.id] = false;
-            return acc;
-        }, {})
-    );
-    const handleFollowClick = (id) => {
-        setFollow({
-            ...follow,
-            [id]: !follow[id]
-        }
-        )
-        console.log(follow)
-    };
+    const { follow, handleFollowClick } = useContext(SuggestionsContext);
     const handleMouseEnter = (id, type) => {
         sethoveredItem({ id, type })
     };
@@ -34,29 +22,6 @@ const SeeAll = () => {
         setHoveredProfile({ id: null, type: null });
     };
 
-
-
-
-
-    useEffect(() => {
-        const fetchSuggestions = async () => {
-            const data = [
-                { id: 1, username: 'feewwer28', name: 'Huong Thanh', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 2, username: '_n.m.cng_', name: 'nmcuong', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 3, username: 'swt.dt26', name: 'swt.dt26', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 4, username: 'ptlinnnn', name: 'ptlinnnn', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 5, username: 'truongyenhi1711', name: 'Nhi Trương', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 6, username: '_trancaocuong_', name: 'Trần Cường ©', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 7, username: 'trungkienp_29', name: 'Phạm Trung Kiên', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 8, username: '20pta', name: 'Thuy An', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 9, username: 'sunni_1709', name: 'Bông', status: 'Mới tham gia Instagram', avatar: avt },
-            ];
-
-            setSuggestions(data);
-        };
-
-        fetchSuggestions();
-    }, []);
     return (
         <div className='see-all'>
             <div className="see-all-container">
