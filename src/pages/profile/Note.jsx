@@ -22,7 +22,7 @@ const Note = ({ onCancel }) => {
   const note = useSelector((state) => state.form.note);
 
   let deleteNoteTimeoutRef = useRef(null);
-  const inputRef = useRef();
+  const inputRef = React.createRef();
 
   const handleChange = (e) => {
     setNewNote(e.target.value);
