@@ -12,6 +12,8 @@ export const SuggestionsProvider = ({ children }) => {
             return acc;
         }, {})
     );
+    const [hoveredItem, sethoveredItem] = useState({ id: null, type: null });
+    const [hoveredProfile, setHoveredProfile] = useState({ id: null, type: null });
     const handleFollowClick = (id) => {
         setFollow({
             ...follow,
@@ -19,6 +21,19 @@ export const SuggestionsProvider = ({ children }) => {
         }
         )
         console.log(follow)
+    };
+    const handleMouseEnter = (id, type) => {
+        sethoveredItem({ id, type })
+    };
+    const handleMouseLeave = (id, type) => {
+        sethoveredItem({ id: null, type: null });
+    };
+    const handleMouseProfileEnter = (id, type) => {
+        setHoveredProfile({ id, type });
+    };
+
+    const handleMouseProfileLeave = () => {
+        setHoveredProfile({ id: null, type: null });
     };
 
     useEffect(() => {
@@ -42,7 +57,7 @@ export const SuggestionsProvider = ({ children }) => {
     }, []);
 
     return (
-        <SuggestionsContext.Provider value={{ suggestions, setSuggestions, follow, handleFollowClick }}>
+        <SuggestionsContext.Provider value={{ suggestions, setSuggestions, follow, handleFollowClick, handleMouseEnter, handleMouseLeave, handleMouseProfileEnter, handleMouseProfileLeave, hoveredItem, hoveredProfile }}>
             {children}
         </SuggestionsContext.Provider>
     );

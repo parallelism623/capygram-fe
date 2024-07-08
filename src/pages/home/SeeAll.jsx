@@ -5,22 +5,10 @@ import './SeeAll.scss'
 import LayoutFooter from '@/layouts/LayoutFooter';
 const SeeAll = () => {
     const { suggestions, setSuggestions } = useContext(SuggestionsContext);
-    const [hoveredItem, sethoveredItem] = useState({ id: null, type: null });
-    const [hoveredProfile, setHoveredProfile] = useState({ id: null, type: null });
+    const { hoveredItem, handleMouseEnter, handleMouseLeave } = useContext(SuggestionsContext);
+    const { hoveredProfile, handleMouseProfileEnter, handleMouseProfileLeave } = useContext(SuggestionsContext);
     const { follow, handleFollowClick } = useContext(SuggestionsContext);
-    const handleMouseEnter = (id, type) => {
-        sethoveredItem({ id, type })
-    };
-    const handleMouseLeave = (id, type) => {
-        sethoveredItem({ id: null, type: null });
-    };
-    const handleMouseProfileEnter = (id, type) => {
-        setHoveredProfile({ id, type });
-    };
 
-    const handleMouseProfileLeave = () => {
-        setHoveredProfile({ id: null, type: null });
-    };
 
     return (
         <div className='see-all'>
