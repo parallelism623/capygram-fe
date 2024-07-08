@@ -19,6 +19,7 @@ import EditProfile from './pages/profile/EditProfile';
 import Archive from './pages/profile/Archive';
 import { ToastContainer } from 'react-toastify';
 import SeeAll from './pages/home/SeeAll';
+import { SuggestionsProvider } from './pages/home/SuggestionsContext';
 import 'react-toastify/dist/ReactToastify.css';
 const App = () => {
   const routes = useRoutes([
@@ -52,6 +53,7 @@ const App = () => {
       path: '/',
       element: <LayoutMenu />,
       children: [
+
         {
           path: '/',
           element: <Home />
@@ -97,10 +99,12 @@ const App = () => {
   ]);
 
   return (
-    <>
-      <ToastContainer />
-      {routes}
-    </>
+    <SuggestionsProvider>
+      <>
+        <ToastContainer />
+        {routes}
+      </>
+    </SuggestionsProvider>
   );
 
 }

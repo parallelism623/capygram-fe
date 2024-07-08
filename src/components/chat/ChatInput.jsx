@@ -37,7 +37,7 @@ const ChatInput = () => {
           <textarea type='text' placeholder={t('message')} value={input} onChange={(e) => setInput(e.target.value)} ref={inputRef} />
         </div>
 
-        <img src={icon} alt='icon' className='icon-haha' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
+
 
         <div className='action'>
           {
