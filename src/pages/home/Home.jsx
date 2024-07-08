@@ -1,5 +1,7 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
+import { SuggestionsContext, SuggestionsProvider } from './SuggestionsContext';
+import './SeeAll.scss'
 import './Home.scss'
 import Post from './Post'
 import avt from '../../assets/images/account.png'
@@ -11,6 +13,10 @@ import { useNavigate } from 'react-router-dom'
 const Home = () => {
   const [showacctransfer, setshowacctransfer] = useState(false);
   const navigate = useNavigate();
+  const { suggestions, setSuggestions } = useContext(SuggestionsContext);
+  const { follow, handleFollowClick } = useContext(SuggestionsContext);
+  const { hoveredItem, handleMouseEnter, handleMouseLeave } = useContext(SuggestionsContext);
+  const { hoveredProfile, handleMouseProfileEnter, handleMouseProfileLeave } = useContext(SuggestionsContext);
 
   const handleshowacctransfer = () => {
     setshowacctransfer(true);
@@ -57,7 +63,109 @@ const Home = () => {
                 <p style={{ fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }} onClick={() => navigate('/see-all')}>Xem tất cả</p>
               </div>
               <div className="suggestions-list">
+                {suggestions.slice(0, 5).map((item, id) => (
+                  <div className='suggestions-list-container' key={id}>
+                    <div className="suggestions-image">
+                      <img src={item.avatar} alt="" onMouseEnter={() => handleMouseEnter(item.id, 'img')} onMouseLeave={handleMouseLeave} />
+                      {(hoveredItem.id === item.id && hoveredItem.type === 'img') || (hoveredProfile.id === item.id && hoveredProfile.type === 'img') ? (
+                        <div className='profile' onMouseEnter={() => handleMouseProfileEnter(item.id, 'img')} onMouseLeave={handleMouseProfileLeave}>
+                          <div className="profile-container">
+                            <div className="profile-header">
+                              <div className="header-up">
+                                <div className="header-up-image">
+                                  <img src={item.avatar} alt="" />
+                                </div>
+                                <div className="header-up-right">
+                                  <p style={{ fontWeight: 'bold' }}>{item.username}</p>
+                                  <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
+                                </div>
+                              </div>
+                              <div className="header-down">
+                                <div className="header-down-content">
+                                  <p style={{ fontWeight: 'bold' }}>0</p>
+                                  <p>bài viết</p>
+                                </div>
+                                <div className="header-down-content">
+                                  <p style={{ fontWeight: 'bold' }}>63</p>
+                                  <p>người theo dõi</p>
+                                </div>
+                                <div className="header-down-content">
+                                  <p style={{ fontWeight: 'bold' }}>30</p>
+                                  <p>đang theo dõi</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="profile-content">
 
+                            </div>
+                            <div className="profile-footer">
+                              {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
+                                : (<div className='profile-footer-container'>
+                                  <button className='button2'>Nhắn tin</button>
+                                  <button className='button3' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
+                                </div>)
+                              }
+                            </div>
+                          </div>
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="suggestions-right">
+                      <div className="sgt-ct">
+                        <div className="p-hover">
+                          <p style={{ fontWeight: 'bold', cursor: 'pointer' }} onMouseEnter={() => handleMouseEnter(item.id, 'username')} onMouseLeave={handleMouseLeave}>{item.username}</p>
+                          {(hoveredItem.id === item.id && hoveredItem.type === 'username') || (hoveredProfile.id === item.id && hoveredProfile.type === 'username') ? (
+                            <div className='profile' onMouseEnter={() => handleMouseProfileEnter(item.id, 'username')} onMouseLeave={handleMouseProfileLeave}>
+                              <div className="profile-container">
+                                <div className="profile-header">
+                                  <div className="header-up">
+                                    <div className="header-up-image">
+                                      <img src={item.avatar} alt="" />
+                                    </div>
+                                    <div className="header-up-right">
+                                      <p style={{ fontWeight: 'bold' }}>{item.username}</p>
+                                      <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
+                                    </div>
+                                  </div>
+                                  <div className="header-down">
+                                    <div className="header-down-content">
+                                      <p style={{ fontWeight: 'bold' }}>0</p>
+                                      <p>bài viết</p>
+                                    </div>
+                                    <div className="header-down-content">
+                                      <p style={{ fontWeight: 'bold' }}>63</p>
+                                      <p>người theo dõi</p>
+                                    </div>
+                                    <div className="header-down-content">
+                                      <p style={{ fontWeight: 'bold' }}>30</p>
+                                      <p>đang theo dõi</p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="profile-content">
+
+                                </div>
+                                <div className="profile-footer">
+                                  {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
+                                    : (<div className='profile-footer-container'>
+                                      <button className='button2'>Nhắn tin</button>
+                                      <button className='button3' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
+                                    </div>)
+                                  }
+
+                                </div>
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                        <p style={{ fontSize: '14px', color: 'gray' }}>{item.name}</p>
+                      </div>
+                      <div className="sgt-button">
+                        {!follow[item.id] ? (<p className='p1' onClick={() => handleFollowClick(item.id)}>Theo dõi</p>) : (<div className='p2' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</div>)}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="suggestions-footer">
                 <LayoutFooter />

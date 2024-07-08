@@ -76,6 +76,304 @@
                 .suggestions-container {
                     padding: 5px;
 
+                    .suggestions-list {
+                        width: 100%;
+                        margin-top: 20px;
+                        margin-bottom: 20px;
+                        padding: 10px;
+
+                        .suggestions-list-container {
+                            display: flex;
+                            align-items: center;
+                            margin-bottom: 10px;
+
+                            .suggestions-image {
+                                width: 40px;
+                                position: relative;
+
+                                img {
+                                    width: 100%;
+                                    cursor: pointer;
+                                }
+
+                                .profile {
+                                    position: absolute;
+                                    top: 75%;
+                                    left: 50%;
+                                    width: 370px;
+                                    height: 350px;
+                                    border-radius: 10px;
+                                    background: white;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    z-index: 1000;
+
+                                    .profile-container {
+                                        width: 100%;
+                                        height: 100%;
+
+                                        .profile-header {
+                                            width: 100%;
+                                            height: 45%;
+                                            border-bottom: 2px solid rgb(231, 231, 231);
+
+                                            .header-up {
+                                                display: flex;
+                                                padding: 20px;
+                                                align-items: center;
+
+                                                img {
+                                                    width: 40px;
+                                                }
+
+                                                .header-up-right {
+
+                                                    flex-grow: 1;
+                                                    flex-shrink: 1;
+                                                    overflow: hidden;
+                                                    margin-left: 14px;
+                                                }
+                                            }
+
+                                            .header-down {
+                                                display: flex;
+                                                justify-content: space-around;
+                                                text-align: center;
+                                            }
+                                        }
+
+                                        .profile-content {
+                                            width: 100%;
+                                            height: 40%;
+                                            border-bottom: 2px solid rgb(231, 231, 231);
+                                        }
+
+                                        .profile-footer {
+                                            width: 100%;
+                                            height: 15%;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+
+                                            .button1 {
+                                                width: 85%;
+                                                height: 35px;
+                                                border-radius: 8px;
+                                                border: none;
+                                                background-color: rgb(3, 116, 245);
+                                                color: aliceblue;
+                                                font-size: 16px;
+                                                cursor: pointer;
+                                                transition: 0.3s all;
+
+                                            }
+
+                                            .button1:hover {
+                                                background: #05386f;
+                                            }
+
+                                            .profile-footer-container {
+                                                width: 100%;
+                                                height: 100%;
+                                                display: flex;
+                                                justify-content: space-around;
+                                                align-items: center;
+
+                                                .button2 {
+                                                    width: 45%;
+                                                    height: 55%;
+                                                    border-radius: 10px;
+                                                    background: rgb(3, 116, 245);
+                                                    border: none;
+                                                    color: white;
+                                                    cursor: pointer;
+                                                }
+
+                                                .button2:hover {
+                                                    background: #05386f;
+                                                }
+
+                                                .button3 {
+                                                    width: 45%;
+                                                    height: 55%;
+                                                    border-radius: 10px;
+                                                    background: #b7b7b7;
+                                                    border: none;
+                                                    color: black;
+                                                    cursor: pointer;
+                                                }
+
+                                                .button3:hover {
+                                                    background: #898989;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+
+                            .suggestions-right {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                flex-grow: 1;
+                                flex-shrink: 1;
+
+                                margin-left: 14px;
+
+                                .sgt-ct {
+                                    .p-hover {
+
+                                        position: relative;
+
+                                        .profile {
+                                            position: absolute;
+                                            top: 100%;
+                                            left: 20%;
+                                            width: 370px;
+                                            height: 350px;
+                                            border-radius: 10px;
+                                            background: white;
+                                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            z-index: 1000;
+
+
+                                            .profile-container {
+                                                width: 100%;
+                                                height: 100%;
+
+                                                .profile-header {
+                                                    width: 100%;
+                                                    height: 45%;
+                                                    border-bottom: 2px solid rgb(231, 231, 231);
+
+                                                    .header-up {
+                                                        display: flex;
+                                                        padding: 20px;
+                                                        align-items: center;
+
+                                                        img {
+                                                            width: 40px;
+                                                        }
+
+                                                        .header-up-right {
+
+                                                            flex-grow: 1;
+                                                            flex-shrink: 1;
+                                                            overflow: hidden;
+                                                            margin-left: 14px;
+                                                        }
+                                                    }
+
+                                                    .header-down {
+                                                        display: flex;
+                                                        justify-content: space-around;
+                                                        text-align: center;
+                                                    }
+                                                }
+
+                                                .profile-content {
+                                                    width: 100%;
+                                                    height: 40%;
+                                                    border-bottom: 2px solid rgb(231, 231, 231);
+                                                }
+
+                                                .profile-footer {
+                                                    width: 100%;
+                                                    height: 15%;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+
+                                                    .button1 {
+                                                        width: 85%;
+                                                        height: 35px;
+                                                        border-radius: 8px;
+                                                        border: none;
+                                                        background-color: rgb(3, 116, 245);
+                                                        color: aliceblue;
+                                                        font-size: 16px;
+                                                        cursor: pointer;
+                                                        transition: 0.3s all;
+
+                                                    }
+
+                                                    .button1:hover {
+                                                        background: #05386f;
+                                                    }
+
+                                                    .profile-footer-container {
+                                                        width: 100%;
+                                                        height: 100%;
+                                                        display: flex;
+                                                        justify-content: space-around;
+                                                        align-items: center;
+
+                                                        .button2 {
+                                                            width: 45%;
+                                                            height: 55%;
+                                                            border-radius: 10px;
+                                                            background: rgb(3, 116, 245);
+                                                            border: none;
+                                                            color: white;
+                                                            cursor: pointer;
+                                                        }
+
+                                                        .button2:hover {
+                                                            background: #05386f;
+                                                        }
+
+                                                        .button3 {
+                                                            width: 45%;
+                                                            height: 55%;
+                                                            border-radius: 10px;
+                                                            background: #b7b7b7;
+                                                            border: none;
+                                                            color: black;
+                                                            cursor: pointer;
+                                                        }
+
+                                                        .button3:hover {
+                                                            background: #898989;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                .sgt-button {
+                                    .p1 {
+                                        font-size: 15px;
+                                        cursor: pointer;
+                                        font-weight: bold;
+                                        color: rgb(0, 110, 255);
+                                    }
+
+                                    .p1:hover {
+                                        color: rgb(12, 50, 99);
+                                    }
+
+                                    .p2 {
+                                        font-size: 15px;
+                                        cursor: pointer;
+                                    }
+
+                                    .p2:hover {
+                                        color: gray;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     .suggestions-header {
                         display: flex;
                         justify-content: space-between;
