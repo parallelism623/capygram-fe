@@ -8,5 +8,6 @@
   "sendMessage": "Send message",
   "SwitchAccount": "Switch accounts",
   "logInto": "Log into an Existing Account",
-  "message": "Message..."
+  "message": "Message...",
+  "viewProfile": "View profile"
 }

@@ -29,6 +29,7 @@ const Profile = () => {
   const [showFormHotStory, setShowFormHotStory] = useState(false);
 
   const note = useSelector((state) => state.form.note);
+  const hotStory = useSelector((state) => state.form.hotStory);
 
   const dispatch = useDispatch();
 
@@ -78,9 +79,19 @@ const Profile = () => {
 
           <div className='other-name'><b>Hanglazy</b></div>
 
-          <div className='add-post' onClick={handleShowHostStory}>
-            <img src={Add} alt='add' />
-            <p>{t('new')}</p>
+          <div className='hot-story'>
+            {(hotStory.name !== '' && hotStory.coverPhoto !==  '') && (
+              <div className='story'>
+                <div className='image'>
+                  <img src={hotStory.coverPhoto} alt='hotStory' />
+                </div>
+                <p>{hotStory.name}</p>
+              </div>
+            )}
+            <div className='add-post' onClick={handleShowHostStory}>
+              <img src={Add} alt='add' />
+              <p>{t('new')}</p>
+            </div>
           </div>
         </div>
 

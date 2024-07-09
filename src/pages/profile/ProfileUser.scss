@@ -20,48 +20,6 @@
           border-radius: 50%;
         }
 
-        .note{
-          min-width: 50px;
-          max-width: 150px;
-          .content-note{
-            width: 100%;
-            word-wrap: break-word;
-            background-color: rgb(240, 236, 236);
-            min-height: 35px;
-            text-align: center;
-            padding: 10px;
-            border-radius: 12px;
-
-            margin-top: -200px;
-            margin-left: 10px;
-            font-size: 10px;
-            color: rgb(82, 81, 81);
-          }
-
-          .cham-to{
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgb(240, 236, 236);
-            margin-left: 20px;
-            margin-top: -3px;
-          }
-
-          .cham-nho{
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background-color: rgb(240, 236, 236);
-            margin-left: 30px;
-            margin-top: 1px;
-          }
-        }
-      }
-
-      .other-name{
-        margin-top: 140px;
-        width: 150px;
-        text-align: center;
       }
 
       .hot-story{
@@ -69,6 +27,7 @@
         max-width: 100%;
         height: 110px;
         align-items: center;
+        margin-top: 50px;
         .story{
           width: 110px;
           height: 110px;
@@ -122,11 +81,45 @@
         .group-btn{
           display: flex;
           gap: 20px;
-          .btn-action{
+          .btn-action-1{
             width: 170px;
             height: 35px;
             border: none;
             border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            img{
+              height: 20px;
+              width: 20px;
+            }
+          }
+
+          .btn-action-2{
+            width: 100px;
+            height: 35px;
+            border: none;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .btn-action-3{
+            width: 50px;
+            height: 35px;
+            border: none;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img{
+              width: 20px;
+              height: 20px;
+            }
           }
         }
       }
@@ -185,7 +178,7 @@
     align-items: center;
     z-index: 10;
 
-    .note-container {
+    .option-container {
       position: relative;
       z-index: 20;
     }
@@ -204,17 +197,6 @@
             width: 100px;
             height: 100px;
           }
-          .note{
-            max-width: 100px;
-            .content-note{
-              margin-top: -150px;
-              margin-left: 10px;
-            }
-          }
-        }
-        .other-name{
-          margin-top: 80px;
-          width: 100px;
         }
       }
     }
