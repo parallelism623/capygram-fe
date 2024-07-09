@@ -12,7 +12,7 @@ import sendMessage from '@/assets/images/sendMessage.png';
 
 import './ChatInput.scss';
 
-const ChatInput = () => {
+const ChatInput = ({handleSendMsg}) => {
   const [input, setInput] = useState('');
   const { t } = useTranslation('messages');
 
@@ -34,7 +34,7 @@ const ChatInput = () => {
     <div className='chatinput-container'>
       <form>
         <div className='input-chat'>
-          <textarea type='text' placeholder={t('message')} value={input} onChange={(e) => setInput(e.target.value)} ref={inputRef} />
+          <textarea type='text' placeholder={t('message')} value={input} onChange={(e) => setInput(e.target.value)} ref={inputRef} onClick={() => setShowEmojiPicker(false)}/>
         </div>
 
         <img src={icon} alt='icon' className='icon-haha' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />

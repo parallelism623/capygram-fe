@@ -43,5 +43,45 @@
     }
   }
 
+  .chat-message{
+
+    .top-chat-message{
+      width: 100%;
+      height: 200px;
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .infor{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        .avatar{
+          width: 100px;
+          height: 100px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+
+        .btn-viewProfile{
+          width: 150px;
+          height: 40px;
+          border: none;
+          border-radius: 8px;
+        }
+      }
+    }
+  }
 
 }
