@@ -2,6 +2,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
+import { useNavigate } from 'react-router-dom';
 
 import ChatInput from './ChatInput';
 
@@ -14,9 +15,14 @@ import './ChatContainer.scss';
 const ChatContainer = ({ currentChat, currentUser }) => {
 
   const { t } = useTranslation('messages');
-  
+  const navigate = useNavigate();
   const handleSendMsg = (msg) => {
   }
+
+  const handleClickViewProfile = () => {
+    navigate(`/profile/${currentChat.id}`);
+  }
+
   return (
     <div className='body-chatContainer'>
       <div className='chat-header'>
@@ -43,7 +49,7 @@ const ChatContainer = ({ currentChat, currentUser }) => {
             <div className='username'>
               <p><b>{currentChat.fullname}</b></p>
             </div>
-            <button className='btn-viewProfile'><b>{t('viewProfile')}</b></button>
+            <button className='btn-viewProfile' onClick={ handleClickViewProfile}><b>{t('viewProfile')}</b></button>
           </div>
         </div>
 

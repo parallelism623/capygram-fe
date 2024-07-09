@@ -21,6 +21,8 @@ import { ToastContainer } from 'react-toastify';
 import SeeAll from './pages/home/SeeAll';
 import { SuggestionsProvider } from './pages/home/SuggestionsContext';
 import 'react-toastify/dist/ReactToastify.css';
+import ProfileUser from './pages/profile/ProfileUser';
+
 const App = () => {
   const routes = useRoutes([
     {
@@ -69,6 +71,10 @@ const App = () => {
         {
           path: 'profile',
           element: <Profile />
+        },
+        {
+          path: 'profile/:id',
+          element: <ProfileUser />
         },
         {
           path: 'edit-profile',

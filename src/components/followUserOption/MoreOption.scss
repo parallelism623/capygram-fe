@@ -1,0 +1,26 @@
+.body-option{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .moreOption{
+    width: 350px;
+    height: 240px;
+    background-color: white;
+    border-radius: 8px;
+    
+    .item{
+      width: 100%;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid rgb(221, 219, 219);
+
+      .p1{
+        color: rgb(248, 85, 85);
+      }
+    }
+
+  }
+}
