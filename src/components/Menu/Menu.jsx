@@ -11,6 +11,7 @@ import Search from '../search/Search';
 import Post from '@/pages/post/Post';
 import { setPost, setStep } from '@/store/formSlice';
 import Confirm from '@/pages/post/confirmIdentity/Confirm';
+import SeeMore from '../SeeMore/SeeMore';
 
 const Menu = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Menu = () => {
     const [showSearch, setShowSearch] = useState(false);
     const [showCreatePost, setShowCreatePost] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
+    const [showSeeMore, setShowSeeMore] = useState(false);
 
     const location = useLocation();
 
@@ -29,6 +31,9 @@ const Menu = () => {
         setShowCreatePost(true);
         dispatch(setStep(1));
     };
+    const handleCancleSeeMore = () => {
+        setShowSeeMore(false);
+    }
 
     const handleCancelCreatePost = () => {
         setShowCreatePost(false);
@@ -123,7 +128,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="list none">
+                                <div className="list none" onClick={() => setShowSeeMore(true)}>
                                     <i className="fa-solid fa-bars"></i>
                                     <p>{t('text10')}</p>
                                 </div>
@@ -178,6 +183,20 @@ const Menu = () => {
                     </div>
                 )
             }
+            {showSeeMore && (
+                <div className='overlay-more' onClick={handleCancleSeeMore}>
+                    <motion.div
+                        className='box-seemore-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 100 }}
+                        exit={{ opacity: 0, y: 100 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <SeeMore />
+                    </motion.div>
+                </div>
+            )}
             <div className='menu2'>
                 <div className="menu-container-content">
                     <ul>
