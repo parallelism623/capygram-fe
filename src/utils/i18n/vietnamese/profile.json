@@ -8,5 +8,16 @@
   "new": "Mới",
   "post": "Bài viết",
   "saved": "Đã lưu",
-  "tagged": "Được gắn thẻ"
+  "tagged": "Được gắn thẻ",
+  "message": "Nhắn tin",
+  "addCloseFriends": "Thêm vào danh sách bạn thân",
+  "addFavorites": "Thêm vào mục yêu thích",
+  "mute": "Cấm đăng",
+  "restrict": "Hạn chế",
+  "unfollow": "Bỏ theo dõi",
+  "block": "Chặn",
+  "report": "Báo cáo",
+  "shareTo": "Chia sẻ lên...",
+  "aboutAccount": "Giới thiệu về tài khoản này",
+  "cancel": "Huỷ"
 }
