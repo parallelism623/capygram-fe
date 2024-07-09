@@ -125,7 +125,7 @@ const Messages = () => {
         {
           currentChat === undefined ?
             (<Welcome />) :
-            (<ChatContainer currentChat={currentChat} />)
+            (<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
         }
       </div>
     </div>
