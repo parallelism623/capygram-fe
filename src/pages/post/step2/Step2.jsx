@@ -43,9 +43,6 @@ const Step2 = () => {
     const newDescribe = start + emoji + end;
     setDescribe(newDescribe);
     dispatch(setPost({ description: newDescribe }));
-    // const newDescribe = describe + emoji;
-    // setDescribe(newDescribe);
-    // dispatch(setPost({ description: newDescribe }));
   };
 
   return (
@@ -80,7 +77,13 @@ const Step2 = () => {
             </div>
           </div>
           <div className='right-content-step2'>
-            <img src={post.imageOrVideo} />
+            {
+              post.fileType === 'image' ? (
+                <img src={post.imageOrVideo} />
+              ) : (
+                <video src={post.imageOrVideo} />
+              )
+            }
           </div>
         </div>
       </div>
