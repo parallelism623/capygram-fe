@@ -17,19 +17,25 @@ const Step1 = () => {
   const dispatch = useDispatch();
 
   const [imageOrVideo, setImageOrVideo] = useState('');
+  const [fileType, setFileType] = useState(''); // [image, video]
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
+    const fileType = file.type.startsWith('video/') ? 'video' : 'image';
+
     reader.onloadend = () => {
       dispatch(setPost({ imageOrVideo: reader.result }));
+      dispatch(setPost({ fileType }));
       setImageOrVideo(reader.result);
+      setFileType(fileType);
     };
 
     if (file) {
       reader.readAsDataURL(file);
     }
+
   };
 
   const handleClickBack = () => {
@@ -77,7 +83,13 @@ const Step1 = () => {
                 <p className='p2' onClick={handleClickNext}>{t('next')}</p>
               </div>
               <div className='show-image'>
-                <img src={imageOrVideo} alt='imageOrVideo' />
+                {
+                  fileType === 'image' ? (
+                    <img src={imageOrVideo} alt='image' />
+                  ) : (
+                    <video controls src={imageOrVideo} alt='video' />
+                  )
+                }
               </div>
             </>
 
