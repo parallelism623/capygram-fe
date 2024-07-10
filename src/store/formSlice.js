@@ -28,6 +28,7 @@ const initialState = {
   post: {
     imageOrVideo: '',
     description: '',
+    fileType: '',
   },
   note: {
     describe: '',
