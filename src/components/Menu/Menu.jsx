@@ -193,7 +193,7 @@ const Menu = () => {
                         exit={{ opacity: 0, y: 100 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <SeeMore />
+                        <SeeMore onCanclesm={handleCancleSeeMore} />
                     </motion.div>
                 </div>
             )}
