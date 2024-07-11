@@ -14,6 +14,11 @@ export const SuggestionsProvider = ({ children }) => {
     );
     const [hoveredItem, sethoveredItem] = useState({ id: null, type: null });
     const [hoveredProfile, setHoveredProfile] = useState({ id: null, type: null });
+    const [isDarkNight, setIsDarkNight] = useState(false);
+
+    const handleToggle = () => {
+        setIsDarkNight(!isDarkNight)
+    }
     const handleFollowClick = (id) => {
         setFollow({
             ...follow,
@@ -55,9 +60,12 @@ export const SuggestionsProvider = ({ children }) => {
 
         fetchSuggestions();
     }, []);
+    useEffect(() => {
+        document.body.className = isDarkNight ? 'dark-mode' : 'light-mode';
+    }, [isDarkNight]);
 
     return (
-        <SuggestionsContext.Provider value={{ suggestions, setSuggestions, follow, handleFollowClick, handleMouseEnter, handleMouseLeave, handleMouseProfileEnter, handleMouseProfileLeave, hoveredItem, hoveredProfile }}>
+        <SuggestionsContext.Provider value={{ suggestions, setSuggestions, follow, handleFollowClick, handleMouseEnter, handleMouseLeave, handleMouseProfileEnter, handleMouseProfileLeave, hoveredItem, hoveredProfile, isDarkNight, handleToggle }}>
             {children}
         </SuggestionsContext.Provider>
     );

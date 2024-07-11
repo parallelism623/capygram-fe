@@ -1,20 +1,20 @@
 import './SwitchMode.scss'
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { SuggestionsContext } from '@/pages/home/SuggestionsContext';
 const SwitchMode = ({ onBack }) => {
-    const [toggle, setToggle] = useState(false);
 
-    const handleToggle = () => {
-        setToggle(!toggle);
-    }
+    const { isDarkNight, handleToggle } = useContext(SuggestionsContext);
+
+
     return (
-        <div className={`switch-mode ${toggle ? 'swm' : ''}`} >
+        <div className={`switch-mode ${isDarkNight ? 'swm' : ''}`} >
             <div className="switch-mode-header">
                 <div className="back" onClick={onBack}>
                     <i className="fa-solid fa-chevron-left" ></i>
                 </div>
                 <div className="content-header">
                     <p>Chuyển chế độ</p>
-                    {!toggle ? (<i className="fa-regular fa-sun"></i>) :
+                    {!isDarkNight ? (<i className="fa-regular fa-sun"></i>) :
                         (<i className="fa-regular fa-moon" style={{ color: 'white' }}></i>)
                     }
 
@@ -22,8 +22,8 @@ const SwitchMode = ({ onBack }) => {
             </div>
             <div className={`switch-mode-content`}>
                 <p>Chế độ tối</p>
-                <div className={`toggle ${toggle ? "tg" : ''}`} onClick={handleToggle}>
-                    <div className={`toggle-btn ${toggle ? "disable" : ''}`} ></div>
+                <div className={`toggle ${isDarkNight ? "tg" : ''}`} onClick={handleToggle}>
+                    <div className={`toggle-btn ${isDarkNight ? "disable" : ''}`} ></div>
                 </div>
             </div>
         </div>
