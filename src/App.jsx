@@ -22,6 +22,7 @@ import SeeAll from './pages/home/SeeAll';
 import { SuggestionsProvider } from './pages/home/SuggestionsContext';
 import 'react-toastify/dist/ReactToastify.css';
 import ProfileUser from './pages/profile/ProfileUser';
+import Explore from './pages/explore/Explore';
 
 const App = () => {
   const routes = useRoutes([
@@ -95,6 +96,10 @@ const App = () => {
         {
           path: '/see-all',
           element: <SeeAll />
+        },
+        {
+          path: '/explore',
+          element: <Explore/>
         }
       ]
     },

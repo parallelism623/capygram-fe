@@ -85,7 +85,7 @@ const Menu = () => {
                                 </div>
                             </li>
                             <li>
-                                <div className="list">
+                                <div className={`list ${location.pathname === '/explore' ? 'active' : ''}`} onClick={() => navigate('/explore')}>
                                     <i className="fa-regular fa-compass"></i>
                                     <p>{t('text3')}</p>
                                 </div>
