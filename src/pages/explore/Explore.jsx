@@ -1,10 +1,15 @@
 /* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import explores from "./fakeExplore.json";
 
+import video from '@/assets/images/video.png';
+import images from '@/assets/images/images.png';
+import heart from '@/assets/images/heart.png';
+import comment from '@/assets/images/comment.png';
+
 import './Explore.scss';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Explore = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -38,9 +43,35 @@ const Explore = () => {
             <div key={index} className='item'>
               {
                 explore.media.type === 'video' ? (
-                  <video src={explore.media.url} controls/>
+                  <div className='i'>
+                    <video src={explore.media.url} controls className='video' />
+                    <img src={video} alt='video' className='icon1' />
+                    <div className='hover'>
+                      <div className='icon2'>
+                        <img src={heart} alt='heart' />
+                        <p>{explore.likes}</p>
+                      </div>
+                      <div className='icon3'>
+                        <img src={comment} alt='comment' />
+                        <p>{explore.comments}</p>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <img src={explore.media.url[0]} alt='explore' />
+                  <div className='i'>
+                    <img src={explore.media.url[0]} alt='explore' className='img' />
+                    <img src={images} alt='images' className='icon1' />
+                    <div className='hover'>
+                      <div className='icon2'>
+                        <img src={heart} alt='heart' />
+                        <p>{explore.likes}</p>
+                      </div>
+                      <div className='icon3'>
+                        <img src={comment} alt='comment' />
+                        <p>{explore.comments}</p>
+                      </div>
+                    </div>
+                  </div>
                 )
               }
             </div>
