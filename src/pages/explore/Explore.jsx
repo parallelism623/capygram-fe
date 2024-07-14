@@ -18,6 +18,7 @@ const Explore = () => {
   const [page, setPage] = useState(1);
   const [showItem, setShowItem] = useState(false);
   const [item, setItem] = useState(undefined);
+  const [idItem, setIdItem] = useState(undefined);
 
   useEffect(() => {
     //api
@@ -38,8 +39,9 @@ const Explore = () => {
     setShowItem(false);
   };
 
-  const handleClick = (explore) => {
+  const handleClick = (explore, index) => {
     setItem(explore);
+    setIdItem(index);
     setShowItem(true);
   }
   return (
@@ -53,7 +55,7 @@ const Explore = () => {
         {
           (exploreData && exploreData.length > 0) && exploreData.map((explore, index) => (
             <>
-              <div key={index} className='item' onClick={() => handleClick(explore)}>
+              <div key={index} className='item' onClick={() => handleClick(explore, index)}>
                 {
                   explore.media.type === 'video' ? (
                     <div className='i'>
@@ -98,7 +100,7 @@ const Explore = () => {
                     initial={{ opacity: 0, scale: 0.5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ExploreItem onCancel={handleCancel} explore={item} />
+                    <ExploreItem onCancel={handleCancel} explore={item} id={idItem} />
                   </motion.div>
                 </div>
               )}

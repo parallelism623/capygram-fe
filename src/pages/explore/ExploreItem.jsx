@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import { Carousel } from 'antd';
@@ -13,9 +13,45 @@ import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
 
-const ExploreItem = ({ explore, onCancel }) => {
+const ExploreItem = ({ explore, onCancel , id}) => {
 
   const { t } = useTranslation('explore');
+  const videoRef = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.play();
+        } else {
+          entry.target.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    videoRef.current.forEach(video => {
+      if (video) {
+        observer.observe(video);
+      }
+    });
+
+    return () => {
+      videoRef.current.forEach(video => {
+        if (video) {
+          observer.unobserve(video);
+        }
+      });
+    };
+  }, [explore]);
+
+  const handleVideoClick = (index) => {
+    const video = videoRef.current[index];
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
+    }
+  };
 
   return (
     <div className='body-item'>
@@ -25,7 +61,15 @@ const ExploreItem = ({ explore, onCancel }) => {
           {
             explore.media.type === 'video' ? (
               <div className='i'>
-                <video src={explore.media.url} controls className='video' />
+                <video
+                  src={explore.media.url}
+                  className='video' 
+                  ref={el => (videoRef.current[id] = el)}
+                  onClick={() => handleVideoClick(id)}
+                  autoPlay
+                  muted
+                  loop
+                  />
               </div>
             ) : (
               <div className='i'>
