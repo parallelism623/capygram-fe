@@ -1,11 +1,10 @@
 import './Comment.scss'
 import avt from '../../assets/images/account.png'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Options from './Options'
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
-
 import { setPost, setStep, addComments } from '@/store/formSlice';
 const Comment = () => {
     const [icons, setIcons] = useState(false);
