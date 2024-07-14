@@ -1,0 +1,87 @@
+.reel {
+    width: 84%;
+
+    .reel-container {
+        margin: 30px auto 20px auto;
+        width: 450px;
+        height: 650px;
+        display: flex;
+        justify-content: space-between;
+
+        .reel-video {
+            width: 90%;
+            height: 100%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+
+            video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .info {
+                position: absolute;
+                bottom: 40px;
+                left: 20px;
+
+                .info-img {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+
+
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        cursor: pointer;
+                    }
+
+                    .info-img-content {
+                        color: white;
+                        display: flex;
+                        align-items: center;
+                        margin-left: 14px;
+
+                        button {
+                            width: 70px;
+                            height: 30px;
+                            background: transparent;
+                            border: 1px solid white;
+                            border-radius: 7px;
+                            color: white;
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+
+        .reel-action {
+            margin-top: 380px;
+
+            ul {
+                height: 100%;
+                display: grid;
+                grid-template-columns: auto;
+                justify-content: center;
+                align-content: space-evenly;
+                list-style: none;
+            }
+
+            .action-list {
+                text-align: center;
+
+                i {
+                    cursor: pointer;
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+
+
+}
