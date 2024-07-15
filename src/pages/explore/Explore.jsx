@@ -20,6 +20,8 @@ const Explore = () => {
   const [item, setItem] = useState(undefined);
   const [idItem, setIdItem] = useState(undefined);
 
+  const videoRef = useRef([]);
+
   useEffect(() => {
     //api
     const loadData = () => {
@@ -30,6 +32,32 @@ const Explore = () => {
     loadData();
   }, [page]);
 
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.play();
+        } else {
+          entry.target.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    videoRef.current.forEach(video => {
+      if (video) {
+        observer.observe(video);
+      }
+    });
+
+    return () => {
+      videoRef.current.forEach(video => {
+        if (video) {
+          observer.unobserve(video);
+        }
+      });
+    };
+  }, [exploreData]);
 
   const fetchMoreData = () => {
     setPage(prevPage => prevPage + 1);
@@ -59,7 +87,15 @@ const Explore = () => {
                 {
                   explore.media.type === 'video' ? (
                     <div className='i'>
-                      <video src={explore.media.url} controls className='video' />
+                      <video
+                        src={explore.media.url}
+                        controls
+                        ref={el => (videoRef.current[index] = el)}
+                        className='video' 
+                        autoPlay
+                        muted
+                        loop
+                        />
                       <img src={video} alt='video' className='icon1' />
                       <div className='hover'>
                         <div className='icon2'>
