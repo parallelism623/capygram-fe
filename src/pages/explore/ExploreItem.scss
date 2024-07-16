@@ -102,7 +102,7 @@
           align-items: center;
           gap: 10px;
 
-          img{
+          .avatar-info{
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -112,6 +112,7 @@
           .fl{
             color: rgb(64, 64, 249);
           }
+
         }
 
         .icon-loadMore{

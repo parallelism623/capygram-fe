@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import { Carousel } from 'antd';
@@ -12,8 +12,11 @@ import saved from '@/assets/images/saved.png';
 import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
+import CardUser from './CardUser';
 
-const ExploreItem = ({ explore, onCancel , id}) => {
+const ExploreItem = ({ explore, onCancel, id }) => {
+  const [showCardUser, setShowCardUser] = useState(false);
+  const [hovering, setHovering] = useState(false);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
@@ -53,6 +56,21 @@ const ExploreItem = ({ explore, onCancel , id}) => {
     }
   };
 
+
+  const handleMouseEnter = () => {
+    setHovering(true);
+    setShowCardUser(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHovering(false);
+    setTimeout(() => {
+      if (!hovering) {
+        setShowCardUser(false);
+      }
+    }, 500);
+  };
+
   return (
     <div className='body-item'>
       <div className='item-explore'>
@@ -63,13 +81,13 @@ const ExploreItem = ({ explore, onCancel , id}) => {
               <div className='i'>
                 <video
                   src={explore.media.url}
-                  className='video' 
+                  className='video'
                   ref={el => (videoRef.current[id] = el)}
                   onClick={() => handleVideoClick(id)}
                   autoPlay
                   muted
                   loop
-                  />
+                />
               </div>
             ) : (
               <div className='i'>
@@ -90,10 +108,15 @@ const ExploreItem = ({ explore, onCancel , id}) => {
         <div className='content-explore'>
           <div className='top-content-explore'>
             <div className='info-user'>
-              <img src={explore.user.avatarUrl} />
-              <p><b>{explore.user.name}</b></p>
+              <img src={explore.user.avatarUrl} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{explore.user.name}</b></p>
               <p className='fl'>{t('follow')}</p>
+
+              {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
+                <CardUser user={explore.user} />
+              </div>}
             </div>
+
             <div className='icon-loadMore'>
               <img src={more} alt='more' />
             </div>

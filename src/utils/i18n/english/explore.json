@@ -1,5 +1,9 @@
 {
   "follow": "Follow",
   "liked": "Liked",
-  "comment": "Add a comment..."
+  "comment": "Add a comment...",
+  "posts": "posts",
+  "followers": "followers",
+  "following": "following",
+  "message": "Message"
 }
