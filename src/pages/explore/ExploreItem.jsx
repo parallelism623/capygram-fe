@@ -13,13 +13,18 @@ import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
 import CardUser from './CardUser';
+import EmojiPicker from 'emoji-picker-react';
 
 const ExploreItem = ({ explore, onCancel, id }) => {
   const [showCardUser, setShowCardUser] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [input, setInput] = useState('');
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
+  const inputRef = React.createRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -70,6 +75,40 @@ const ExploreItem = ({ explore, onCancel, id }) => {
       }
     }, 500);
   };
+
+  const addEmoji = (event, emojiObject) => {
+    const emoji = event.emoji;
+    const { selectionStart, selectionEnd } = inputRef.current;
+    const start = input.substring(0, selectionStart);
+    const end = input.substring(selectionEnd, input.length);
+    const updateInput = start + emoji + end;
+    setInput(updateInput);
+    inputRef.current.focus();
+  };
+
+
+  useEffect(() => {
+    const getComments = JSON.parse(localStorage.getItem('comments')) || [];
+    setComments(getComments);
+  }, []);
+  const handleSend = () => {
+    if (input.trim() !== '') {
+      const newComment = {
+        user: explore.user,
+        comment: input.trim(),
+      };
+
+      const storedComments = JSON.parse(localStorage.getItem('comments')) || [];
+
+      storedComments.push(newComment);
+
+      localStorage.setItem('comments', JSON.stringify(storedComments));
+
+      setComments(storedComments);
+      setInput('');
+    }
+  };
+
 
   return (
     <div className='body-item'>
@@ -122,7 +161,21 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             </div>
           </div>
 
-          <div className='comment-explore'></div>
+          <div className='comment-explore'>
+            {
+              comments.map((comment, index) => (
+                <div className='comment-item' key={index}>
+                  <div className='info-user-comment'>
+                    <img src={comment.user.avatarUrl} alt='avatar-info-user-comment' />
+                  </div>
+                  <div className='content-comment'>
+                    <p><b>{comment.user.name}</b></p>
+                    <p>{comment.comment}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
 
           <div className='bottom-explore'>
             <div className='bottom1-explore'>
@@ -142,9 +195,22 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             </div>
 
             <div className='bottom2-explore'>
-              <img src={icon} alt='icon' />
-              <textarea placeholder={t('comment')} typeof='text' />
+              <img src={icon} alt='icon' onClick={() => setShowEmoji(!showEmoji)}/>
+              <textarea
+                placeholder={t('comment')}
+                typeof='text'
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onClick={() => setShowEmoji(false)}
+                ref={inputRef} />
+              <p className={ input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
             </div>
+
+            {
+              showEmoji && (
+                <EmojiPicker onEmojiClick={addEmoji} className='emoji-picker-react' />
+              )
+            }
           </div>
         </div>
       </div>

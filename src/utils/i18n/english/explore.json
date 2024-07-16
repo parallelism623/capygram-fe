@@ -5,5 +5,6 @@
   "posts": "posts",
   "followers": "followers",
   "following": "following",
-  "message": "Message"
+  "message": "Message",
+  "send": "Send"
 }
