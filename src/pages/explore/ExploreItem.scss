@@ -200,6 +200,21 @@
               outline: none;
             }
           }
+
+          .send{
+            color: rgb(5, 5, 244);
+          }
+
+          .notSend{
+            color: rgb(157, 196, 249);
+          }
+        }
+
+        .emoji-picker-react{
+          position: absolute;
+          bottom: 70px;
+          height: 300px !important;
+          width: 250px !important;
         }
       }
 

@@ -13,13 +13,17 @@ import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
 import CardUser from './CardUser';
+import EmojiPicker from 'emoji-picker-react';
 
 const ExploreItem = ({ explore, onCancel, id }) => {
   const [showCardUser, setShowCardUser] = useState(false);
   const [hovering, setHovering] = useState(false);
+  const [input, setInput] = useState('');
+  const [showEmoji, setShowEmoji] = useState(false);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
+  const inputRef = React.createRef();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -69,6 +73,16 @@ const ExploreItem = ({ explore, onCancel, id }) => {
         setShowCardUser(false);
       }
     }, 500);
+  };
+
+  const addEmoji = (event, emojiObject) => {
+    const emoji = event.emoji;
+    const { selectionStart, selectionEnd } = inputRef.current;
+    const start = input.substring(0, selectionStart);
+    const end = input.substring(selectionEnd, input.length);
+    const updateInput = start + emoji + end;
+    setInput(updateInput);
+    inputRef.current.focus();
   };
 
   return (
@@ -142,9 +156,22 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             </div>
 
             <div className='bottom2-explore'>
-              <img src={icon} alt='icon' />
-              <textarea placeholder={t('comment')} typeof='text' />
+              <img src={icon} alt='icon' onClick={() => setShowEmoji(!showEmoji)}/>
+              <textarea
+                placeholder={t('comment')}
+                typeof='text'
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onClick={() => setShowEmoji(false)}
+                ref={inputRef} />
+              <p className={ input !== '' ? 'send' : "notSend"}>{t('send')}</p>
             </div>
+
+            {
+              showEmoji && (
+                <EmojiPicker onEmojiClick={addEmoji} className='emoji-picker-react' />
+              )
+            }
           </div>
         </div>
       </div>
