@@ -20,6 +20,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [hovering, setHovering] = useState(false);
   const [input, setInput] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
@@ -85,6 +86,30 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     inputRef.current.focus();
   };
 
+
+  useEffect(() => {
+    const getComments = JSON.parse(localStorage.getItem('comments')) || [];
+    setComments(getComments);
+  }, []);
+  const handleSend = () => {
+    if (input.trim() !== '') {
+      const newComment = {
+        user: explore.user,
+        comment: input.trim(),
+      };
+
+      const storedComments = JSON.parse(localStorage.getItem('comments')) || [];
+
+      storedComments.push(newComment);
+
+      localStorage.setItem('comments', JSON.stringify(storedComments));
+
+      setComments(storedComments);
+      setInput('');
+    }
+  };
+
+
   return (
     <div className='body-item'>
       <div className='item-explore'>
@@ -136,7 +161,21 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             </div>
           </div>
 
-          <div className='comment-explore'></div>
+          <div className='comment-explore'>
+            {
+              comments.map((comment, index) => (
+                <div className='comment-item' key={index}>
+                  <div className='info-user-comment'>
+                    <img src={comment.user.avatarUrl} alt='avatar-info-user-comment' />
+                  </div>
+                  <div className='content-comment'>
+                    <p><b>{comment.user.name}</b></p>
+                    <p>{comment.comment}</p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
 
           <div className='bottom-explore'>
             <div className='bottom1-explore'>
@@ -164,7 +203,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                 onChange={(e) => setInput(e.target.value)}
                 onClick={() => setShowEmoji(false)}
                 ref={inputRef} />
-              <p className={ input !== '' ? 'send' : "notSend"}>{t('send')}</p>
+              <p className={ input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
             </div>
 
             {
