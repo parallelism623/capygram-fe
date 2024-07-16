@@ -18,6 +18,9 @@ const Explore = () => {
   const [page, setPage] = useState(1);
   const [showItem, setShowItem] = useState(false);
   const [item, setItem] = useState(undefined);
+  const [idItem, setIdItem] = useState(undefined);
+
+  const videoRef = useRef([]);
 
   useEffect(() => {
     //api
@@ -30,6 +33,32 @@ const Explore = () => {
   }, [page]);
 
 
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.play();
+        } else {
+          entry.target.pause();
+        }
+      });
+    }, { threshold: 0.5 });
+
+    videoRef.current.forEach(video => {
+      if (video) {
+        observer.observe(video);
+      }
+    });
+
+    return () => {
+      videoRef.current.forEach(video => {
+        if (video) {
+          observer.unobserve(video);
+        }
+      });
+    };
+  }, [exploreData]);
+
   const fetchMoreData = () => {
     setPage(prevPage => prevPage + 1);
   };
@@ -38,8 +67,9 @@ const Explore = () => {
     setShowItem(false);
   };
 
-  const handleClick = (explore) => {
+  const handleClick = (explore, index) => {
     setItem(explore);
+    setIdItem(index);
     setShowItem(true);
   }
   return (
@@ -53,11 +83,19 @@ const Explore = () => {
         {
           (exploreData && exploreData.length > 0) && exploreData.map((explore, index) => (
             <>
-              <div key={index} className='item' onClick={() => handleClick(explore)}>
+              <div key={index} className='item' onClick={() => handleClick(explore, index)}>
                 {
                   explore.media.type === 'video' ? (
                     <div className='i'>
-                      <video src={explore.media.url} controls className='video' />
+                      <video
+                        src={explore.media.url}
+                        controls
+                        ref={el => (videoRef.current[index] = el)}
+                        className='video' 
+                        autoPlay
+                        muted
+                        loop
+                        />
                       <img src={video} alt='video' className='icon1' />
                       <div className='hover'>
                         <div className='icon2'>
@@ -98,7 +136,7 @@ const Explore = () => {
                     initial={{ opacity: 0, scale: 0.5 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ExploreItem onCancel={handleCancel} explore={item} />
+                    <ExploreItem onCancel={handleCancel} explore={item} id={idItem} />
                   </motion.div>
                 </div>
               )}
