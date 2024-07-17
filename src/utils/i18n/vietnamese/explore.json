@@ -1,5 +1,10 @@
 {
   "follow": "Theo dõi",
   "liked": "Lượt thích",
-  "comment": "Bình luận..."
+  "comment": "Bình luận...",
+  "posts": "bài viết",
+  "followers": "người theo dõi",
+  "following": "đang theo dõi",
+  "message": "Nhắn tin",
+  "send": "Đăng"
 }
