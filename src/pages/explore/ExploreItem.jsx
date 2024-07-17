@@ -89,22 +89,29 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
   useEffect(() => {
     const getComments = JSON.parse(localStorage.getItem('comments')) || [];
-    setComments(getComments);
-  }, []);
+    
+    const exploreComments = getComments.filter(comment => comment.exploreId === explore.id);
+
+    setComments(exploreComments);
+  }, [explore.id]);
+
   const handleSend = () => {
     if (input.trim() !== '') {
       const newComment = {
         user: explore.user,
         comment: input.trim(),
+        exploreId: explore.id,
       };
 
       const storedComments = JSON.parse(localStorage.getItem('comments')) || [];
 
       storedComments.push(newComment);
 
+      const commentsExplore = storedComments.filter(comment => comment.exploreId === explore.id);
+
       localStorage.setItem('comments', JSON.stringify(storedComments));
 
-      setComments(storedComments);
+      setComments(commentsExplore);
       setInput('');
     }
   };
@@ -163,7 +170,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
           <div className='comment-explore'>
             {
-              comments.map((comment, index) => (
+              Array.isArray(comments) && comments.map((comment, index) => (
                 <div className='comment-item' key={index}>
                   <div className='info-user-comment'>
                     <img src={comment.user.avatarUrl} alt='avatar-info-user-comment' />
