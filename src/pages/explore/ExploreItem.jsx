@@ -3,17 +3,16 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import { Carousel } from 'antd';
+import { motion } from 'framer-motion';
+import EmojiPicker from 'emoji-picker-react';
 
 import more from '@/assets/images/more.png';
-import heart from '@/assets/images/heart.png';
-import comment from '@/assets/images/comment.png';
-import sendMessage from '@/assets/images/sendMessage.png';
-import saved from '@/assets/images/saved.png';
 import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
 import CardUser from './CardUser';
-import EmojiPicker from 'emoji-picker-react';
+import ShowMoreOption from './ShowMoreOption';
+import ShareTo from './ShareTo';
 
 const ExploreItem = ({ explore, onCancel, id }) => {
   const [showCardUser, setShowCardUser] = useState(false);
@@ -21,6 +20,11 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [input, setInput] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isFollow, setIsFollow] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+  const [like, setLike] = useState(false);
+  const [loved, setLoved] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
@@ -89,7 +93,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
   useEffect(() => {
     const getComments = JSON.parse(localStorage.getItem('comments')) || [];
-    
+
     const exploreComments = getComments.filter(comment => comment.exploreId === explore.id);
 
     setComments(exploreComments);
@@ -116,6 +120,13 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     }
   };
 
+  const handleCancelShowMore = () => {
+    setShowMore(false);
+  }
+
+  const handleCancelShare = () => {
+    setShowShare(false);
+  }
 
   return (
     <div className='body-item'>
@@ -156,15 +167,29 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             <div className='info-user'>
               <img src={explore.user.avatarUrl} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{explore.user.name}</b></p>
-              <p className='fl'>{t('follow')}</p>
+              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={() => setIsFollow(true)}>{t('follow')}</p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
-                <CardUser user={explore.user} />
+                <CardUser user={explore.user} Follow={isFollow} />
               </div>}
+
+              {showMore && (
+                <div className='overlay' onClick={handleCancelShowMore}>
+                  <motion.div
+                    className='item-explore-container'
+                    onClick={(e) => e.stopPropagation()}
+                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ShowMoreOption onCancel={handleCancelShowMore} />
+                  </motion.div>
+                </div>
+              )}
             </div>
 
             <div className='icon-loadMore'>
-              <img src={more} alt='more' />
+              <img src={more} alt='more' onClick={() => setShowMore(true)} />
             </div>
           </div>
 
@@ -188,12 +213,45 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             <div className='bottom1-explore'>
               <div className='gr-icon'>
                 <div className='gr-icon1'>
-                  <img src={heart} alt='heart' />
-                  <img src={comment} alt='comment' />
-                  <img src={sendMessage} alt='sendMessage' />
+                  <span onClick={() => setLoved(!loved)}>
+                    {
+                      !loved ? (
+                        <i className='fa-regular fa-heart'></i>
+                      ) : (
+                        <i className='fa-solid fa-heart'></i>
+                      )
+                    }
+                  </span>
+                  <span>
+                    <i className='fa-regular fa-comment'></i>
+                  </span>
+                  <span onClick={() => setShowShare(true)}>
+                    <i className='fa-regular fa-paper-plane'></i>
+                  </span>
                 </div>
-                <div className='gr-icon2'>
-                  <img src={saved} alt='saved' />
+                {showShare && (
+                  <div className='overlay' onClick={handleCancelShare}>
+                    <motion.div
+                      className='item-explore-container'
+                      onClick={(e) => e.stopPropagation()}
+                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ShareTo onCancel={handleCancelShare} />
+                    </motion.div>
+                  </div>
+                )}
+                <div className='gr-icon2' >
+                  <span onClick={() => setLike(!like)}>
+                    {
+                      !like ? (
+                        <i className='fa-regular fa-bookmark'></i>
+                      ) : (
+                        <i className='fa-solid fa-bookmark'></i>
+                      )
+                    }
+                  </span>
                 </div>
               </div>
               <div className='count-liked'>
@@ -202,7 +260,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             </div>
 
             <div className='bottom2-explore'>
-              <img src={icon} alt='icon' onClick={() => setShowEmoji(!showEmoji)}/>
+              <img src={icon} alt='icon' onClick={() => setShowEmoji(!showEmoji)} />
               <textarea
                 placeholder={t('comment')}
                 typeof='text'
@@ -210,7 +268,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                 onChange={(e) => setInput(e.target.value)}
                 onClick={() => setShowEmoji(false)}
                 ref={inputRef} />
-              <p className={ input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
+              <p className={input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
             </div>
 
             {
