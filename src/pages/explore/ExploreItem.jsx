@@ -12,6 +12,7 @@ import icon from '@/assets/images/icon.png';
 import './ExploreItem.scss';
 import CardUser from './CardUser';
 import ShowMoreOption from './ShowMoreOption';
+import ShareTo from './ShareTo';
 
 const ExploreItem = ({ explore, onCancel, id }) => {
   const [showCardUser, setShowCardUser] = useState(false);
@@ -23,6 +24,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [showMore, setShowMore] = useState(false);
   const [like, setLike] = useState(false);
   const [loved, setLoved] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
@@ -122,6 +124,10 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     setShowMore(false);
   }
 
+  const handleCancelShare = () => {
+    setShowShare(false);
+  }
+
   return (
     <div className='body-item'>
       <div className='item-explore'>
@@ -219,10 +225,23 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                   <span>
                     <i className='fa-regular fa-comment'></i>
                   </span>
-                  <span>
+                  <span onClick={() => setShowShare(true)}>
                     <i className='fa-regular fa-paper-plane'></i>
                   </span>
                 </div>
+                {showShare && (
+                  <div className='overlay' onClick={handleCancelShare}>
+                    <motion.div
+                      className='item-explore-container'
+                      onClick={(e) => e.stopPropagation()}
+                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ShareTo onCancel={handleCancelShare} />
+                    </motion.div>
+                  </div>
+                )}
                 <div className='gr-icon2' >
                   <span onClick={() => setLike(!like)}>
                     {

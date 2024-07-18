@@ -13,5 +13,9 @@
   "copyLink": "Copy link",
   "embed": "Embed",
   "aboutAccount": "About this account",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "share": "Share",
+  "to": "To:",
+  "suggested": "Suggested",
+  "search": "Search..."
 }
