@@ -6,5 +6,12 @@
   "followers": "người theo dõi",
   "following": "đang theo dõi",
   "message": "Nhắn tin",
-  "send": "Đăng"
+  "send": "Đăng",
+  "report": "Báo cáo",
+  "goToPost": "Đi đến bài viết",
+  "shareTo": "Chia sẻ lên...",
+  "copyLink": "Sao chép liên kết",
+  "embed": "Nhúng",
+  "aboutAccount": "Giới thiệu về tài khoản này",
+  "cancel": "Huỷ"
 }

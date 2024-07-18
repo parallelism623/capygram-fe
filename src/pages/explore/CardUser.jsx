@@ -7,10 +7,10 @@ import addFriend from '@/assets/images/addFriend.png';
 import './CardUser.scss';
 import { useNavigate } from 'react-router-dom';
 
-const CardUser = ({ user }) => {
+const CardUser = ({ user, Follow }) => {
   const { t } = useTranslation('explore');
   
-  const [isFollow, setIsFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState(Follow);
 
   const navigate = useNavigate();
 

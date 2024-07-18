@@ -6,5 +6,12 @@
   "followers": "followers",
   "following": "following",
   "message": "Message",
-  "send": "Send"
+  "send": "Send",
+  "report": "Report",
+  "goToPost": "Go to post",
+  "shareTo": "Share to...",
+  "copyLink": "Copy link",
+  "embed": "Embed",
+  "aboutAccount": "About this account",
+  "cancel": "Cancel"
 }
