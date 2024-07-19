@@ -30,11 +30,18 @@ const ChatInput = ({handleSendMsg}) => {
     inputRef.current.focus();
   };
 
+  const sendChat = (e) => {
+    e.preventDefault();
+    if (input.trim() === '') return;
+    handleSendMsg(input);
+    setInput('');
+  };
+
   return (
     <div className='chatinput-container'>
-      <form>
+      <form onSubmit={(e) => sendChat(e)}>
         <div className='input-chat'>
-          <textarea type='text' placeholder={t('message')} value={input} onChange={(e) => setInput(e.target.value)} ref={inputRef} onClick={() => setShowEmojiPicker(false)}/>
+          <textarea placeholder={t('message')} value={input} onChange={(e) => setInput(e.target.value)} ref={inputRef} onClick={() => setShowEmojiPicker(false)} typeof='text'/>
         </div>
         <img src={icon} alt='icon' className='icon-haha' onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
 
@@ -51,7 +58,9 @@ const ChatInput = ({handleSendMsg}) => {
               ) :
               (
                 <div className='icon'>
-                  <img src={sendMessage} alt='sendMessage' />
+                  <button type='submit'>
+                    <img src={sendMessage} alt='sendMessage' />
+                  </button>
                 </div>
               )
           }
