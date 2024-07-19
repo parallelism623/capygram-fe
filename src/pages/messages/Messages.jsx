@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import ChatContainer from '@/components/chat/ChatContainer';
 import Contacts from '@/components/chat/Contacts';
@@ -11,6 +11,8 @@ const Messages = () => {
   const [contacts, setContacts] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
+
+  const socket = useRef();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -128,7 +130,7 @@ const Messages = () => {
     if (userChat !== undefined) {
       const isexiting = contacts.find((contact) => contact.id === userChat.id);
 
-      if(!isexiting) {
+      if (!isexiting) {
         setContacts([...contacts, userChat]);
       }
 
@@ -147,7 +149,7 @@ const Messages = () => {
         {
           currentChat === undefined ?
             (<Welcome />) :
-            (<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
+            (<ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />)
         }
       </div>
     </div>
