@@ -10,6 +10,7 @@ import './ShareTo.scss';
 const ShareTo = ({ onCancel }) => {
   const { t } = useTranslation('explore');
   const [suggestedUser, setSuggestedUser] = useState([]);
+  const [selectedUser, setSelectedUser] = useState([]);
 
   useEffect(() => {
     const fakeSuggestedUser = [
@@ -65,6 +66,23 @@ const ShareTo = ({ onCancel }) => {
     setSuggestedUser(fakeSuggestedUser);
   }, []);
 
+  const handleSelected = (user) => {
+    const check = selectedUser.find(item => item.id === user.id);
+    if (check) {
+      setSelectedUser(selectedUser.filter(item => item.id !== user.id));
+    } else {
+      setSelectedUser([...selectedUser, user]);
+    }
+  };
+
+  const handleSend = () => {
+    onCancel();
+  };
+
+  const handleDeleteSelect = (user) => {
+    setSelectedUser(selectedUser.filter(item => item.id !== user.id));
+  };
+  
   return (
     <div className='shareTo-container'>
       <div className='top-shareTo'>
@@ -75,8 +93,17 @@ const ShareTo = ({ onCancel }) => {
         </div>
       </div>
       <div className='to-shareTo'>
-        <span>
+        <span className='to'>
           <p><b>{t('to')}</b></p>
+          {
+            selectedUser.length > 0 &&
+            selectedUser.map((user, index) => (
+              <span key={index} className='span-item'>
+                <p>{user.fullname}</p>
+                <img src={exit} alt='delete' onClick={() => handleDeleteSelect(user)}/>
+              </span>
+            ))
+          }
         </span>
         <input type='text' placeholder={t('search')} />
       </div>
@@ -93,13 +120,24 @@ const ShareTo = ({ onCancel }) => {
                     <p className='username'>{user.username}</p>
                   </div>
                 </div>
-                <div className='btn-select'>
-                  <div></div>
+                <div className='btn-select'
+                  onClick={() => handleSelected(user)}
+                >
+                  <div className={selectedUser.includes(user) ? 'selected' : ''}></div>
                 </div>
               </div>
             ))
           }
         </div>
+      </div>
+
+      <div className='btn-send'>
+        <button
+          className={`button ${selectedUser.length > 0 ? 'send' : ''}`}
+          onClick={handleSend}
+        >
+          {t('send')}
+        </button>
       </div>
     </div>
   )
