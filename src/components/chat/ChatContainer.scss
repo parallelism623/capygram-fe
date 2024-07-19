@@ -9,6 +9,9 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid rgb(181, 178, 178);
+    background-color: white;
+    position: fixed;
+    z-index: 10;
 
     .user-details{
       width: 200px;
@@ -44,6 +47,8 @@
   }
 
   .chat-message{
+    max-height: 750px;
+    overflow: auto;
 
     .top-chat-message{
       width: 100%;
@@ -89,8 +94,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      overflow: auto;
-
 
       .chat{
         width: 100%;
@@ -122,19 +125,19 @@
           &.sent{
             justify-content: flex-end ;
             .message-content{
-              background-color: darkgray;
+              background-color: rgb(228, 227, 227);
               order: 1;
             }
 
             .avatar{
-              order: 2;
+              display: none;
             }
           }
 
           &.received{
             justify-content: flex-start;
             .message-content{
-              background-color: rgb(181, 178, 178);
+              background-color: rgb(228, 227, 227);
               order: 2;
             }
 

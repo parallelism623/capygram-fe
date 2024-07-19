@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useNavigate } from 'react-router-dom';
@@ -11,15 +11,16 @@ import call from '@/assets/images/call.png';
 import down from '@/assets/images/down.png';
 
 import './ChatContainer.scss';
-import { prevStep } from '@/store/formSlice';
 
-const ChatContainer = ({ currentChat, currentUser }) => {
+const ChatContainer = ({ currentChat, currentUser, socket }) => {
 
   const { t } = useTranslation('messages');
   const navigate = useNavigate();
 
   const [messages, setMessages] = useState([]);
+  const [arrivalMessage, setArrivalMessage] = useState(null);
 
+  const scrollRef = useRef();
 
   const handleSendMsg = (msg) => {
     const message = {
@@ -32,13 +33,20 @@ const ChatContainer = ({ currentChat, currentUser }) => {
     listMessages.push(message);
     localStorage.setItem("messages", JSON.stringify(listMessages));
 
-    const msgs = [...messages];
-    msgs.push({
-      fromSelf: true,
-      message: msg
-    });
+    // socket.current.emit("sendMessage", {
+    //   to: currentChat.id,
+    //   msg,
+    // });
 
-    setMessages(msgs);
+    // const msgs = [...messages];
+    // msgs.push({
+    //   fromSelf: true,
+    //   message: msg
+    // });
+
+    // setMessages(msgs);
+
+    setMessages([...messages, message]);
   }
 
   const handleClickViewProfile = () => {
@@ -54,6 +62,11 @@ const ChatContainer = ({ currentChat, currentUser }) => {
       }
     }
   }, [currentChat, currentUser]);
+
+  useEffect(() => {
+    //cuộn xuống tin nhắn mới khi danh sách tin nhắn thay đổi
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className='body-chatContainer'>
@@ -88,7 +101,7 @@ const ChatContainer = ({ currentChat, currentUser }) => {
         <div className='message'>
           {
             messages.map((msg, index) => (
-              <div className='chat' key={index}>
+              <div className='chat' key={index} ref={scrollRef}>
                 <div className={`message-item ${msg.from === currentUser.id ? 'sent' : 'received'}`}>
                   <div className='avatar'>
                     <img src={msg.from === currentUser.id ? currentUser.avatarUrl : currentChat.avatarUrl} alt='avatar' />
