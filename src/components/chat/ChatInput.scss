@@ -35,6 +35,61 @@
         &:focus{
         outline: none;
       }
+
+      }
+    }
+
+    .preview-files{
+      position: absolute;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      top: -50px;
+      left: 30px;
+
+      .preview-file{
+        margin-top: -10px;
+        .preview-item{
+          position: relative;
+          width: 50px;
+          height: 50px;
+
+          .it{
+            width: 100% ;
+            height: 50px ;
+            object-fit: cover;
+          }
+          .exit{
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            left: 43px;
+            top: -5px;
+            border-radius: 50%;
+            border: 1px solid rgb(186, 185, 185);
+          }
+        }
+      }
+    }
+
+    .upload-image{
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      label{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img{
+          width: 50px;
+          height: 50px;
+        }
       }
     }
 
@@ -43,7 +98,7 @@
       height: 40px;
       position: absolute;
       left: 10px;
-      top: 8px;
+      top: 10px;
     }
 
     .action{
@@ -67,8 +122,29 @@
         }
 
         img{
+          width: 20px;
+          height: 20px;
+        }
+
+          .upload-image{
             width: 20px;
             height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            label{
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              img{
+                width: 20px;
+                height: 20px;
+              }
+            }
           }
       }
 
