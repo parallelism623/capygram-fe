@@ -24,7 +24,8 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
 
   const handleSendMsg = (msg) => {
     const message = {
-      message: msg,
+      type: msg.type,
+      content: msg.content,
       from: currentUser.id,
       to: currentChat.id
     }
@@ -94,7 +95,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
             <div className='username'>
               <p><b>{currentChat.fullname}</b></p>
             </div>
-            <button className='btn-viewProfile' onClick={ handleClickViewProfile}><b>{t('viewProfile')}</b></button>
+            <button className='btn-viewProfile' onClick={handleClickViewProfile}><b>{t('viewProfile')}</b></button>
           </div>
         </div>
 
@@ -107,12 +108,20 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
                     <img src={msg.from === currentUser.id ? currentUser.avatarUrl : currentChat.avatarUrl} alt='avatar' />
                   </div>
                   <div className='message-content'>
-                    <p>{msg.message}</p>
+                    {
+                      msg.type === 'text' ?
+                        <p>{msg.content}</p> :
+                        msg.type === 'image' ?
+                          <img src={msg.content} alt='image' /> :
+                          msg.type === 'video' ?
+                            <video src={msg.content} controls /> :
+                            null
+                    }
                   </div>
                 </div>
               </div>
             ))
-          
+
           }
         </div>
 
