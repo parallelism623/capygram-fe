@@ -10,7 +10,8 @@ import { setPost, setStep } from '@/store/formSlice';
 import uploadImage from '@/assets/images/uploadImage.png';
 import uploadVideo from '@/assets/images/uploadVideo.png';
 import muiTen from '@/assets/images/muiTen.png';
-import images from '@/assets/images/images.png'
+import images from '@/assets/images/images.png';
+import exit from '@/assets/images/exit.png';
 
 import './Step1.scss';
 
@@ -30,26 +31,27 @@ const Step1 = () => {
   const dispatch = useDispatch();
 
   const [files, setFiles] = useState([]);
+  const [isAdd, setIsAdd] = useState(false);
 
   const handleFileChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
     const newFiles = [];
 
     try {
-      for(const file of selectedFiles) {
+      for (const file of selectedFiles) {
         const fileData = await readFileAsync(file);
         newFiles.push(fileData);
       }
 
-      dispatch(setPost({ media: newFiles }));
-      setFiles(newFiles);
+      dispatch(setPost({ media: [...files, ...newFiles] }));
+      setFiles((prev) => [...prev, ...newFiles]);
 
       console.log(newFiles);
       console.log(files);
 
     } catch (error) {
       console.error(error);
-    } 
+    }
   };
 
   const handleClickBack = () => {
@@ -61,10 +63,18 @@ const Step1 = () => {
     dispatch(setStep(2));
   };
 
+
+  const handleDeleteItem = (index) => {
+    const newFiles = [...files];
+    newFiles.splice(index, 1);
+    setFiles(newFiles);
+    dispatch(setPost({ media: newFiles }));
+  }
+
   return (
     <div className='body-step1'>
       <div className='step1'>
-        { files.length === 0 && (
+        {files.length === 0 && (
           <>
             <div className='top-step1'>
               <p><b>{t('createPost')}</b></p>
@@ -89,7 +99,7 @@ const Step1 = () => {
           </>
         )}
         {
-         files.length > 0 && (
+          files.length > 0 && (
             <>
               <div className='top2-show-image'>
                 <img src={muiTen} alt='back' onClick={handleClickBack} />
@@ -113,11 +123,45 @@ const Step1 = () => {
                   }
                 </Carousel>
               </div>
-              <div className='bottom-step1'>
-                <div className='group-add-file'>
-                  <img src={images} alt='addFiles' />
+              <div className={isAdd ? '' : "bottom-step1"}>
+                <div className={isAdd ? '' : "group-add-file"}>
+                  <img src={images} alt='addFiles' onClick={() => setIsAdd(true)} />
                 </div>
               </div>
+
+              {
+                isAdd && files.length > 0 && (
+                  <div className='list-imagesOrVideo'>
+                    {
+                      files.map((file, index) => (
+                        <div key={index} className='file-preview2'>
+                          {
+                            file.type === 'image' ? (
+                              <div className='preview-item'>
+                                <img src={file.data} alt='image' className='item' />
+                                <div className='gr-exit'>
+                                  <img src={exit} alt='exit' className='exit' onClick={() => handleDeleteItem(index)}/>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className='preview-item'>
+                                <video controls src={file.data} alt='video' className='item' />
+                                  <div className='gr-exit'>
+                                    <img src={exit} alt='exit' className='exit' onClick={() => handleDeleteItem(index)} />
+                                  </div>
+                              </div>
+                            )
+                          }
+                        </div>
+                      ))
+                    }
+                    <label>
+                      <input type='file' accept='image/*, video/*' style={{ display: 'none' }} onChange={handleFileChange} multiple />
+                      <img src={images} alt='add' className='add-item' />
+                    </label>
+                  </div>
+                )
+              }
             </>
 
           )
