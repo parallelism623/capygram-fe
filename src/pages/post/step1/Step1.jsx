@@ -1,46 +1,60 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch } from 'react-redux';
+import { Carousel } from 'antd';
 
 import { setPost, setStep } from '@/store/formSlice';
 
 import uploadImage from '@/assets/images/uploadImage.png';
 import uploadVideo from '@/assets/images/uploadVideo.png';
 import muiTen from '@/assets/images/muiTen.png';
+import images from '@/assets/images/images.png'
 
 import './Step1.scss';
+
+const readFileAsync = (file) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      resolve({ data: reader.result, type: file.type.startsWith('video/') ? 'video' : 'image' });
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
 
 const Step1 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
 
-  const [imageOrVideo, setImageOrVideo] = useState('');
-  const [fileType, setFileType] = useState(''); // [image, video]
+  const [files, setFiles] = useState([]);
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
+  const handleFileChange = async (e) => {
+    const selectedFiles = Array.from(e.target.files);
+    const newFiles = [];
 
-    const fileType = file.type.startsWith('video/') ? 'video' : 'image';
+    try {
+      for(const file of selectedFiles) {
+        const fileData = await readFileAsync(file);
+        newFiles.push(fileData);
+      }
 
-    reader.onloadend = () => {
-      dispatch(setPost({ imageOrVideo: reader.result }));
-      dispatch(setPost({ fileType }));
-      setImageOrVideo(reader.result);
-      setFileType(fileType);
-    };
+      dispatch(setPost({ media: newFiles }));
+      setFiles(newFiles);
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+      console.log(newFiles);
+      console.log(files);
 
+    } catch (error) {
+      console.error(error);
+    } 
   };
 
   const handleClickBack = () => {
-    dispatch(setPost({ imageOrVideo: '' }));
-    setImageOrVideo('');
+    dispatch(setPost({ media: [] }));
+    setFiles([]);
   };
 
   const handleClickNext = () => {
@@ -50,7 +64,7 @@ const Step1 = () => {
   return (
     <div className='body-step1'>
       <div className='step1'>
-        {imageOrVideo === '' && (
+        { files.length === 0 && (
           <>
             <div className='top-step1'>
               <p><b>{t('createPost')}</b></p>
@@ -66,7 +80,7 @@ const Step1 = () => {
                   <button className='btn-select'>
                     <label>
                       {t('select')}
-                      <input type='file' accept='image/*, video/*' style={{ display: 'none' }} onChange={handleFileChange} />
+                      <input type='file' accept='image/*, video/*' style={{ display: 'none' }} onChange={handleFileChange} multiple />
                     </label>
                   </button>
                 </div>
@@ -75,7 +89,7 @@ const Step1 = () => {
           </>
         )}
         {
-          imageOrVideo !== '' && (
+         files.length > 0 && (
             <>
               <div className='top2-show-image'>
                 <img src={muiTen} alt='back' onClick={handleClickBack} />
@@ -83,13 +97,26 @@ const Step1 = () => {
                 <p className='p2' onClick={handleClickNext}>{t('next')}</p>
               </div>
               <div className='show-image'>
-                {
-                  fileType === 'image' ? (
-                    <img src={imageOrVideo} alt='image' />
-                  ) : (
-                    <video controls src={imageOrVideo} alt='video' />
-                  )
-                }
+                <Carousel arrows infinite={false} >
+                  {
+                    files.map((file, index) => (
+                      <div key={index} className='file-preview'>
+                        {
+                          file.type === 'image' ? (
+                            <img src={file.data} alt='image' />
+                          ) : (
+                            <video controls src={file.data} alt='video' />
+                          )
+                        }
+                      </div>
+                    ))
+                  }
+                </Carousel>
+              </div>
+              <div className='bottom-step1'>
+                <div className='group-add-file'>
+                  <img src={images} alt='addFiles' />
+                </div>
               </div>
             </>
 

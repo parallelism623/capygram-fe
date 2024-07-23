@@ -61,7 +61,13 @@ const ChatInput = ({ handleSendMsg }) => {
     e.preventDefault();
     if (input.trim() === '' && files.length === 0) return;
 
-    const messageToSend = [{ type: 'text', content: input }, ...files.map((file) => ({ type: file.file.type.startsWith('video/') ? 'video' : 'image', content: file.data }))];
+    const messageToSend = [{
+      type: 'text',
+      content: input
+    }, ...files.map((file) => ({
+      type: file.file.type.startsWith('video/') ? 'video' : 'image',
+      content: file.data
+    }))];
 
     messageToSend.forEach((msg) => handleSendMsg(msg));
 

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
+import { Carousel } from 'antd';
 
 import { setPost, setStep } from '@/store/formSlice';
 
@@ -31,7 +32,7 @@ const Step2 = () => {
   const handleShare = () => {
     dispatch(setStep(3));
     console.log(post);
-    dispatch(setPost({ imageOrVideo: '', description: '' }));
+    dispatch(setPost({ media: [], description: '' }));
   };
 
 
@@ -77,13 +78,21 @@ const Step2 = () => {
             </div>
           </div>
           <div className='right-content-step2'>
-            {
-              post.fileType === 'image' ? (
-                <img src={post.imageOrVideo} />
-              ) : (
-                <video src={post.imageOrVideo} />
-              )
-            }
+            <Carousel arrows infinite={false} >
+              {
+                post.media.map((item, index) => (
+                  <div key={index} className='gr-img'>
+                    {
+                      item.type === 'image' ? (
+                        <img src={item.data} alt='image' />
+                      ) : (
+                        <video src={item.data} controls />
+                      )
+                    }
+                  </div>
+                ))
+              }
+            </Carousel>
           </div>
         </div>
       </div>
