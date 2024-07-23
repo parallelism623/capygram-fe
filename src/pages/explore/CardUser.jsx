@@ -5,11 +5,19 @@ import '@/i18n';
 
 import addFriend from '@/assets/images/addFriend.png';
 import './CardUser.scss';
+import { useNavigate } from 'react-router-dom';
 
-const CardUser = ({ user }) => {
+const CardUser = ({ user, Follow }) => {
   const { t } = useTranslation('explore');
   
-  const [isFollow, setIsFollow] = useState(false);
+  const [isFollow, setIsFollow] = useState(Follow);
+
+  const navigate = useNavigate();
+
+  const handleChat = () => {
+    localStorage.setItem('userChat', JSON.stringify(user));
+    navigate('/messages');
+  };
 
   return (
     <div className='container'>
@@ -44,7 +52,7 @@ const CardUser = ({ user }) => {
             </button>
           ) : (
               <div className='isfollow'>
-                <button className='btn-message'>{t('message')}</button>
+                <button className='btn-message' onClick={handleChat}>{t('message')}</button>
                 <button className='btn-following'>{t('following')}</button>
               </div>
           )

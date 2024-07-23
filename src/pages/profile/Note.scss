@@ -59,10 +59,13 @@
         text-align: center;
         padding: 10px;
         border-radius: 12px;
-
+        
         margin-top:-200px ;
         margin-left: 20px;
 
+        &:focus{
+          outline: none;
+        }
       }
     
       .cham-to{
