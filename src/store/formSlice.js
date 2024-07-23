@@ -26,9 +26,8 @@ const initialState = {
     coverPhoto: '',
   },
   post: {
-    imageOrVideo: '',
+    media: [],
     description: '',
-    fileType: '',
   },
   note: {
     describe: '',
