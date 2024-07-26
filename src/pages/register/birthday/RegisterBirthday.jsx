@@ -25,7 +25,7 @@ const RegisterBirthday = () => {
   const handleSubmit = async (values) => {
     dispatch(setUser(values));
 
-    console.log(values);
+    // console.log(values);
     try {
       await register(values);
       dispatch(nextStep());
@@ -56,21 +56,21 @@ const RegisterBirthday = () => {
                   <Field as='select' name='month' className='form-input'>
                     <option value=''>{t('input1')}</option>
                     {Array.from({ length: 12 }, (_, i) => (
-                      <option key={i} value={i + 1}>{t('input1')} {i + 1}</option>
+                      <option key={i} value={i + 1}> {i + 1}</option>
                     ))}
                   </Field>
 
                   <Field as='select' name='day' className='form-input'>
                     <option value=''>{t('input2')}</option>
                     {Array.from({ length: 31 }, (_, i) => (
-                      <option key={i} value={i + 1}>{t('input2')} {i + 1}</option>
+                      <option key={i} value={i + 1}> {i + 1}</option>
                     ))}
                   </Field>
 
                   <Field as='select' name='year' className='form-input'>
                     <option value=''>{t('input3')}</option>
                     {Array.from({ length: 120 }, (_, i) => (
-                      <option key={i} value={2022 - i}>{t('input3')} {2022 - i}</option>
+                      <option key={i} value={2022 - i}> {2022 - i}</option>
                     ))}
                   </Field>
                 </div>
