@@ -1,7 +1,14 @@
 /* eslint-disable */
 import axios from 'axios';
 
+//tao ra instance axios cho cac request khong can token
 const createAxiosInstance = (baseURL) => {
+  return axios.create({
+    baseURL,
+  });
+};
+
+const createAuthInstance = (baseURL) => {
   const instance = axios.create({
     baseURL,
   });
@@ -32,7 +39,8 @@ const createAxiosInstance = (baseURL) => {
   return instance;
 };
 
-const authInstance = createAxiosInstance(import.meta.env.VITE_APP_URL_BE);
+const publicInstance = createAxiosInstance(import.meta.env.VITE_APP_URL_BE);
+const authInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE);
 
 const request = (instance, config) => {
   return instance({ ...config });
@@ -46,4 +54,4 @@ const requestWithToken = (instance, config) => {
   return instance({ ...config, headers: { Authorization: `Bearer ${accessToken}` } });
 };
 
-export { request, requestWithToken, authInstance };
+export { request, requestWithToken, authInstance, publicInstance };

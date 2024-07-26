@@ -1,4 +1,4 @@
-import { authInstance, request, requestWithToken } from "@/utils/axios-http/axios-http";
+import { authInstance, publicInstance, request, requestWithToken } from "@/utils/axios-http/axios-http";
 
 export const register = async (data) => {
   try {
@@ -6,7 +6,7 @@ export const register = async (data) => {
     const date = new Date(year, month - 1, day);
     const birthday = date.toISOString();
 
-    await request(authInstance, {
+    await request(publicInstance, {
       data: {
         fullName: fullname,
         email,
@@ -47,6 +47,8 @@ export const active_account = async (data) => {
       url: "/api/Users/active-account"
     });
 
+    
+
     //lấy refreshToken và accessToken từ phản hồi
     const { refreshToken, accessToken } = response.value;
     localStorage.setItem("refreshToken", refreshToken);
@@ -63,7 +65,7 @@ export const login = async (data) => {
     const { username, password } = data;
 
     //gọi API và chờ phản hồi
-    const response = await request(authInstance, {
+    const response = await request(publicInstance, {
       data: {
         userName: username,
         password,
@@ -86,7 +88,19 @@ export const login = async (data) => {
   }
 };
 
-// const getMe =
+export const getUserById = async (id) => {
+  try {
+    const response = await requestWithToken(authInstance, {
+      method: "get",
+      url: `/api/Users/get-user-by-userID?UserID=${id}`
+    });
+
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export const logout = async () => {
   try {
@@ -138,3 +152,24 @@ export const editProfile = async (data) => {
     throw error;
   }
 };
+
+export const uploadAvatar = async (data) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', data);
+
+    const response = await requestWithToken(authInstance, {
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      method: "post",
+      url: "/api/Users/upload-avatar"
+    });
+
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
