@@ -1,4 +1,4 @@
-import { request, requestWithToken } from "@/utils/axios-http/axios-http";
+import { authInstance, request, requestWithToken } from "@/utils/axios-http/axios-http";
 
 export const register = async (data) => {
   try {
@@ -6,7 +6,7 @@ export const register = async (data) => {
     const date = new Date(year, month - 1, day);
     const birthday = date.toISOString();
 
-    await request({
+    await request(authInstance, {
       data: {
         fullName: fullname,
         email,
@@ -33,7 +33,7 @@ export const active_account = async (data) => {
     const birthday = date.toISOString();
 
     //gọi API và chờ phản hồi
-    const response = await request({
+    const response = await request(authInstance,{
       data: {
         fullName: fullname,
         email,
@@ -63,7 +63,7 @@ export const login = async (data) => {
     const { username, password } = data;
 
     //gọi API và chờ phản hồi
-    const response = await request({
+    const response = await request(authInstance, {
       data: {
         userName: username,
         password,
@@ -92,7 +92,7 @@ export const logout = async () => {
   try {
     const userId = localStorage.getItem("userId");
 
-    await requestWithToken({
+    await requestWithToken(authInstance, {
       method: "post",
       url: `/api/Users/logout?Id=${userId}`
     });
@@ -122,7 +122,7 @@ export const editProfile = async (data) => {
       gender = 0;
     }
 
-    await requestWithToken({
+    await requestWithToken(authInstance, {
       data: {
         id,
         avatarUrl: avata,
