@@ -15,9 +15,11 @@ const createAuthInstance = (baseURL) => {
 
   instance.interceptors.response.use(
     (response) => response, async (error) => {
-      const originalRequest = error.config;
-      if (error.response.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
+      const originalRequest = error.data.success;
+      console.log(originalRequest);
+      
+      if (error.data.result_detail === 500 && !originalRequest) {
+        originalRequest = true;
         const refreshToken = localStorage.getItem('refreshToken');
         const accessToken = localStorage.getItem('accessToken');
         //sẽ sửa sau
@@ -25,6 +27,7 @@ const createAuthInstance = (baseURL) => {
         try {
           const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken, id: userId });
           localStorage.setItem('accessToken', data.accessToken);
+
           return instance(originalRequest);
         } catch (error) {
           console.error(error);
