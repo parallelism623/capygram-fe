@@ -1,24 +1,24 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
+import '@/i18n';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { setStep } from '@/store/formSlice';
 
-import avataxinh from '@/assets/images/avataxinh.jpg'
 import setting from '@/assets/images/setting.png';
 import Add from '@/assets/images/Add.png';
 import post from '@/assets/images/post.png';
 import saved from '@/assets/images/saved.png';
 import tagged from '@/assets/images/tagged.png';
+import account from '@/assets/images/account.png';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
 import Note from './Note';
 import Setting from './Setting';
 import HotStory from './HotStory';
-import { setStep } from '@/store/formSlice';
-
-import '@/i18n';
+import { fetchUser } from '@/store/userSlice';
 
 import './Profile.scss';
 
@@ -30,8 +30,12 @@ const Profile = () => {
 
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
-
+  const me = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUser(localStorage.getItem('userId')));
+  }, [dispatch]);
 
   const handleCancel = () => {
     setShowNoteForm(false);
@@ -69,7 +73,7 @@ const Profile = () => {
       <div className='content-top'>
         <div className='group-avata'>
           <div className='avata'>
-            <img src={avataxinh} alt='avata' />
+            <img src={me.avatarUrl === ('string' && "") ? account : me.avatarUrl} alt='avata' />
             <div className='note'>
               <div className='content-note' onClick={() => setShowNoteForm(true)}>{note.describe === '' ? t('note') : note.describe}</div>
               <div className='cham-to'></div>
@@ -77,7 +81,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className='other-name'><b>Hanglazy</b></div>
+          <div className='other-name'><b>{me.username }</b></div>
 
           <div className='hot-story'>
             {(hotStory.name !== '' && hotStory.coverPhoto !==  '') && (
@@ -97,7 +101,7 @@ const Profile = () => {
 
         <div className='right'>
           <div className='action'>
-            <p className='name'><b>hanglazy4</b></p>
+            <p className='name'><b>{ me.fullname}</b></p>
             <div className='group-btn'>
               <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
               <button className='btn-action ' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>

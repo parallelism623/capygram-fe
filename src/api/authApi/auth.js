@@ -121,6 +121,7 @@ export const logout = async () => {
 }
 
 export const editProfile = async (data) => {
+  //cần xoá avatarUrl
   try {
     const { avata, bio, sex } = data;
     //se thay doi cach lay id sau
@@ -153,10 +154,11 @@ export const editProfile = async (data) => {
   }
 };
 
-export const uploadAvatar = async (data) => {
+export const uploadAvatar = async (data, userId) => {
   try {
     const formData = new FormData();
-    formData.append('file', data);
+    formData.append('fileToUpload', data);
+    formData.append('userId', userId);
 
     const response = await requestWithToken(authInstance, {
       data: formData,
