@@ -8,14 +8,23 @@ import { updateAvatar } from '@/store/userSlice';
 
 import './ChangePhoto.scss';
 
-const ChangePhoto = ({ onCancel, handleRemovePhoto }) => {
+const ChangePhoto = ({ onCancel, handleRemovePhoto, setNewAvatar }) => {
   const { t } = useTranslation('changePhoto_profile');
 
   const dispatch = useDispatch();
+
   const handleFileChange = async (e) => {
     const fileToUpload = e.target.files[0];
     if (!fileToUpload) return;
-    dispatch(updateAvatar({ fileToUpload, userId : localStorage.getItem('userId') }));
+
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      const base64 = fileReader.result;
+      setNewAvatar(base64);
+    };
+    fileReader.readAsDataURL(fileToUpload);
+    
+    dispatch(updateAvatar({ fileToUpload, userId: localStorage.getItem('userId') }));
     onCancel();
   };
 

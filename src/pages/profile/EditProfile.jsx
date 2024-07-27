@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setProfile } from '@/store/formSlice';
-import { updateProfile } from '@/store/userSlice';
+import { fetchUser, updateProfile } from '@/store/userSlice';
 import ChangePhoto from './changePhoto';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
@@ -19,6 +19,7 @@ const EditProfile = () => {
   const [toogle, setToogle] = useState('ON');
   const [avata, setAvata] = useState(true);
   const [showChangePhoto, setShowChangePhoto] = useState(false);
+  const [newAvatar, setNewAvatar] = useState('');
 
   const me = useSelector((state) => state.user.user);
 
@@ -27,10 +28,15 @@ const EditProfile = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(fetchUser(localStorage.getItem('userId')));
+  }, [dispatch]);
+
   const handleRemovePhoto = () => {
     setAvata(false);
     dispatch(setProfile({ avata: '' }));
     handleCancel();
+    setNewAvatar('');
   };
 
   const handleToogle = () => {
@@ -59,7 +65,7 @@ const EditProfile = () => {
         <p className='title'><b>{t('title')}</b> </p>
 
         <div className='group-profile'>
-          {(me.avatarUrl !== ('string' && "")) ? (<img src={me.avatarUrl} alt='avata' />) : (<img src={account} alt='avata' />)}
+          {newAvatar !== '' ? <img src={newAvatar} /> : (me.avatarUrl !== ('string' && "")) ? (<img src={me.avatarUrl} alt='avata' />) : (<img src={account} alt='avata' />)}
           <div className='name'>
             <p className='p1'><b>{me.fullname !== '' ? me.fullname : 'Hanglazy'}</b></p>
             <p className='p2'>{me.username !== '' ? me.username : 'Hangcute'}</p>
@@ -110,7 +116,11 @@ const EditProfile = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
           >
-            <ChangePhoto onCancel={handleCancel} handleRemovePhoto={handleRemovePhoto} />
+            <ChangePhoto
+              onCancel={handleCancel}
+              handleRemovePhoto={handleRemovePhoto}
+              setNewAvatar={setNewAvatar}
+            />
           </motion.div>
         </div>
       )}
