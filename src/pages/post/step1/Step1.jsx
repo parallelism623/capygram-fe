@@ -32,22 +32,23 @@ const Step1 = () => {
 
   const [files, setFiles] = useState([]);
   const [isAdd, setIsAdd] = useState(false);
+  const [rawFiles, setRawFiles] = useState([]);
 
   const handleFileChange = async (e) => {
     const selectedFiles = Array.from(e.target.files);
     const newFiles = [];
+    const newRawFiles = [];
 
     try {
       for (const file of selectedFiles) {
         const fileData = await readFileAsync(file);
         newFiles.push(fileData);
+        newRawFiles.push(file);
       }
 
-      dispatch(setPost({ media: [...files, ...newFiles] }));
+      dispatch(setPost({ media: [...files, ...newFiles], rawFiles: [...rawFiles, ...newRawFiles] }));
       setFiles((prev) => [...prev, ...newFiles]);
-
-      console.log(newFiles);
-      console.log(files);
+      setRawFiles((prev) => [...prev, ...newRawFiles]);
 
     } catch (error) {
       console.error(error);
@@ -55,20 +56,25 @@ const Step1 = () => {
   };
 
   const handleClickBack = () => {
-    dispatch(setPost({ media: [] }));
+    dispatch(setPost({ media: [] , rawFiles: []}));
     setFiles([]);
+    setRawFiles([]);
   };
 
   const handleClickNext = () => {
     dispatch(setStep(2));
+    console.log("rawFiles", rawFiles);
   };
 
 
   const handleDeleteItem = (index) => {
     const newFiles = [...files];
+    const newRawFiles = [...rawFiles];
+
+    newRawFiles.splice(index, 1);
     newFiles.splice(index, 1);
     setFiles(newFiles);
-    dispatch(setPost({ media: newFiles }));
+    dispatch(setPost({ media: newFiles, rawFiles: newRawFiles }));
   }
 
   return (
@@ -125,7 +131,11 @@ const Step1 = () => {
               </div>
               <div className={isAdd ? '' : "bottom-step1"}>
                 <div className={isAdd ? '' : "group-add-file"}>
-                  <img src={images} alt='addFiles' onClick={() => setIsAdd(true)} />
+                  {
+                    !isAdd && (
+                      <img src={images} alt='addFiles' onClick={() => setIsAdd(true)} />
+                    )
+                  }
                 </div>
               </div>
 

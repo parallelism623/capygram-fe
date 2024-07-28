@@ -7,6 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { Carousel } from 'antd';
 
 import { setPost, setStep } from '@/store/formSlice';
+import { createPost } from '@/api/authApi/post';
 
 import muiTen from '@/assets/images/muiTen.png';
 import avataxinh from '@/assets/images/avataxinh.jpg';
@@ -22,6 +23,7 @@ const Step2 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
+  const user = useSelector((state) => state.user.user);
 
   const inputRef = React.createRef();
   const handleChange = (e) => {
@@ -29,10 +31,25 @@ const Step2 = () => {
     dispatch(setPost({ description: describe })); //bất đồng bộ
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     dispatch(setStep(3));
     console.log(post);
+
+    const userCreate = {
+      UserName: user.username,
+      UserId: user.id,
+    }
+
+    const postToCreate = {
+      ImageUrls: post.rawFiles,
+      Likes: 0,
+      Content: post.description,
+    }
+
+    await createPost(postToCreate, userCreate);
+
     dispatch(setPost({ media: [], description: '' }));
+
   };
 
 

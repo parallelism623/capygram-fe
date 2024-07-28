@@ -28,6 +28,7 @@ const initialState = {
   },
   post: {
     media: [],
+    rawFiles: [],
     description: '',
   },
   note: {
