@@ -6,6 +6,7 @@ export const createPost = async (post, user) => {
     const { ImageUrls, Likes, Content } = post;
     const { UserName, UserId } = user;
     ImageUrls.forEach((image) => {
+      new File([], image)
       formData.append('ImageUrls', image);
     });
     formData.append('Likes', Likes);
