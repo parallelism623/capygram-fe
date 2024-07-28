@@ -19,6 +19,7 @@ import Note from './Note';
 import Setting from './Setting';
 import HotStory from './HotStory';
 import { fetchUser } from '@/store/userSlice';
+import ListPost from '../post/listPost/ListPost';
 
 import './Profile.scss';
 
@@ -81,10 +82,10 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className='other-name'><b>{me.username }</b></div>
+          <div className='other-name'><b>{me.username}</b></div>
 
           <div className='hot-story'>
-            {(hotStory.name !== '' && hotStory.coverPhoto !==  '') && (
+            {(hotStory.name !== '' && hotStory.coverPhoto !== '') && (
               <div className='story'>
                 <div className='image'>
                   <img src={hotStory.coverPhoto} alt='hotStory' />
@@ -101,7 +102,7 @@ const Profile = () => {
 
         <div className='right'>
           <div className='action'>
-            <p className='name'><b>{ me.fullname}</b></p>
+            <p className='name'><b>{me.fullname}</b></p>
             <div className='group-btn'>
               <button className='btn-action' onClick={handleEditProfile}><b>{t('editProfile')}</b></button>
               <button className='btn-action ' onClick={() => navigate('/archive-profile')}><b>{t('viewArchive')}</b></button>
@@ -134,6 +135,13 @@ const Profile = () => {
             <img src={tagged} alt='tagged' />
             <p>{t('tagged')}</p>
           </div>
+        </div>
+
+        <div className='list-post'>
+          {activeItem === 'post' && (
+            <ListPost />
+          )
+          }
         </div>
       </div>
 

@@ -15,6 +15,7 @@ import icon from '@/assets/images/icon.png';
 import map from '@/assets/images/map.png';
 
 import './Step2.scss';
+import { getUserById } from '@/api/authApi/auth';
 
 const Step2 = () => {
   const [describe, setDescribe] = useState('');
@@ -23,30 +24,35 @@ const Step2 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
-  const user = useSelector((state) => state.user.user);
+  // const user = useSelector((state) => state.user.user);
 
   const inputRef = React.createRef();
   const handleChange = (e) => {
     setDescribe(e.target.value);
-    dispatch(setPost({ description: describe })); 
+    dispatch(setPost({ description: describe }));
   };
 
   const handleShare = async () => {
     dispatch(setStep(3));
     console.log(post);
 
-    const userCreate = {
-      UserName: user.username,
-      UserId: user.id,
-    }
+    try {
+      const user = await getUserById(localStorage.getItem("userId"));
 
-    const postToCreate = {
-      ImageUrls: post.rawFiles,
-      Likes: 0,
-      Content: describe,
-    }
+      const userCreate = {
+        UserName: user.userName,
+        UserId: user.id,
+      }
 
-    await createPost(postToCreate, userCreate);
+      const postToCreate = {
+        ImageUrls: post.rawFiles,
+        Likes: 0,
+        Content: describe,
+      }
+      await createPost(postToCreate, userCreate);
+    } catch (error) {
+      console.log(error);
+    }
 
     dispatch(setPost({ media: [], description: '' }));
 
