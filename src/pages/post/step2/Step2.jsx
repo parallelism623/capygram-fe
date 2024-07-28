@@ -28,7 +28,7 @@ const Step2 = () => {
   const inputRef = React.createRef();
   const handleChange = (e) => {
     setDescribe(e.target.value);
-    dispatch(setPost({ description: describe })); //bất đồng bộ
+    dispatch(setPost({ description: describe })); 
   };
 
   const handleShare = async () => {
@@ -43,7 +43,7 @@ const Step2 = () => {
     const postToCreate = {
       ImageUrls: post.rawFiles,
       Likes: 0,
-      Content: post.description,
+      Content: describe,
     }
 
     await createPost(postToCreate, userCreate);

@@ -43,7 +43,8 @@ const Step1 = () => {
       for (const file of selectedFiles) {
         const fileData = await readFileAsync(file);
         newFiles.push(fileData);
-        newRawFiles.push(file);
+        // newRawFiles.push(file);
+        newRawFiles.push(file.name);
       }
 
       dispatch(setPost({ media: [...files, ...newFiles], rawFiles: [...rawFiles, ...newRawFiles] }));

@@ -27,3 +27,16 @@ export const createPost = async (post, user) => {
     throw error;
   }
 }
+
+export const getPostByUserId = async (userId) => {
+  try {
+    const response = await requestWithToken(postInstance, {
+      method: "get",
+      url: `/api/Posts/GetPostsByUserID?UserId=${userId}`
+    });
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
