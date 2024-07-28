@@ -13,37 +13,47 @@ const createAuthInstance = (baseURL) => {
     baseURL,
   });
 
-  instance.interceptors.response.use(
-    (response) => response, async (error) => {
-      const originalRequest = error.data.success;
-      console.log(originalRequest);
-      
-      if (error.data.result_detail === 500 && !originalRequest) {
-        originalRequest = true;
-        const refreshToken = localStorage.getItem('refreshToken');
-        const accessToken = localStorage.getItem('accessToken');
-        //sẽ sửa sau
-        const userId = localStorage.getItem('userId');
-        try {
-          const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken, id: userId });
-          localStorage.setItem('accessToken', data.accessToken);
+  // instance.interceptors.response.use(
+  //   (response) => response, async (error) => {
+  //     // console.log(error.response.data);
+  //     // let originalRequest = error.response.data.success;
+  //     const originalRequest = error.config;
+  //     // console.log(originalRequest);
 
-          return instance(originalRequest);
-        } catch (error) {
-          console.error(error);
-          //truong hop khong refresh duoc token
-          return Promise.reject(error);
-        }
-      }
-      return Promise.reject(error);
-    }
-  );
+  //     if (error?.response?.code === 401 && !originalRequest._retry) {
+  //       originalRequest._retry = true;
+
+  //       const refreshToken = localStorage.getItem('refreshToken');
+  //       const accessToken = localStorage.getItem('accessToken');
+        
+  //       const userId = localStorage.getItem('userId');
+
+  //       try {
+  //         const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken, id: userId });
+          
+  //         localStorage.setItem('accessToken', data.accessToken);
+
+  //         instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
+  //         originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+
+  //         return instance(originalRequest);
+          
+  //       } catch (error) {
+  //         console.error(error);
+  //         //truong hop khong refresh duoc token
+  //         return Promise.reject(error);
+  //       }
+  //     }
+  //     return Promise.reject(error);
+  //   }
+  // );
   
   return instance;
 };
 
 const publicInstance = createAxiosInstance(import.meta.env.VITE_APP_URL_BE);
 const authInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE);
+const postInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_POST);
 
 const request = (instance, config) => {
   return instance({ ...config });
@@ -57,4 +67,4 @@ const requestWithToken = (instance, config) => {
   return instance({ ...config, headers: { Authorization: `Bearer ${accessToken}` } });
 };
 
-export { request, requestWithToken, authInstance, publicInstance };
+export { request, requestWithToken, authInstance, publicInstance, postInstance };
