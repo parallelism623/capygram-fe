@@ -20,7 +20,7 @@ const EditProfile = () => {
   const [avata, setAvata] = useState(true);
   const [showChangePhoto, setShowChangePhoto] = useState(false);
   const [newAvatar, setNewAvatar] = useState('');
-
+  // const [me, setMe] = useState({});
   const me = useSelector((state) => state.user.user);
 
   const dispatch = useDispatch();
@@ -30,6 +30,17 @@ const EditProfile = () => {
 
   useEffect(() => {
     dispatch(fetchUser(localStorage.getItem('userId')));
+    // const getUser = async () => {
+    //   const user = await getUserById(localStorage.getItem("userId"));
+    //   setMe({
+    //     id: user.id,
+    //     email: user.email,
+    //     fullname: user.profile.fullName,
+    //     username: user.userName,
+    //     avatarUrl: user.profile.avatarUrl
+    //   })
+    // }
+    // getUser();
   }, [dispatch]);
 
   const handleRemovePhoto = () => {
