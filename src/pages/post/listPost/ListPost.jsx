@@ -15,17 +15,19 @@ const ListPost = () => {
       setPosts(response);
     };
     getPost();
-  });
+  }, []);
   return (
     <div className='list-post'>
       {
         posts.map((post) => (
           <div key={post.id} className='post-item'>
-            <img src={post.imageUrls[0]} alt='post' className='img' />
-            <div className='hover'>
-              <div className='icon2'>
-                <img src={heart} alt='heart' />
-                <p>{post.likes}</p>
+            <div className='i'>
+              <img src={post.imageUrls[0]} alt='post' className='img' />
+              <div className='hover'>
+                <div className='icon2'>
+                  <img src={heart} alt='heart' />
+                  <p>{post.likes}</p>
+                </div>
               </div>
             </div>
           </div>
