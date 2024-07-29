@@ -11,6 +11,7 @@ import icon from '@/assets/images/icon.png';
 
 import './PostItem.scss';
 import { useSelector } from 'react-redux';
+import ShareTo from '@/pages/explore/ShareTo';
 
 const PostItem = ({ post, onCancel}) => {
   const [input, setInput] = useState('');
@@ -18,6 +19,7 @@ const PostItem = ({ post, onCancel}) => {
   const [comments, setComments] = useState([]);
   const [like, setLike] = useState(false);
   const [loved, setLoved] = useState(false);
+  const [showShare, setShowShare] = useState(false);
 
   const { t } = useTranslation('explore');
   const inputRef = React.createRef();
@@ -65,6 +67,10 @@ const PostItem = ({ post, onCancel}) => {
     }
   };
 
+  const handleCancelShare = () => {
+    setShowShare(false);
+  };
+  
   return (
     <div className='body-item'>
       <div className='item-post'>
@@ -133,6 +139,19 @@ const PostItem = ({ post, onCancel}) => {
                     <i className='fa-regular fa-paper-plane'></i>
                   </span>
                 </div>
+                {showShare && (
+                  <div className='overlay' onClick={handleCancelShare}>
+                    <motion.div
+                      className='item-explore-container'
+                      onClick={(e) => e.stopPropagation()}
+                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, scale: 0.5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ShareTo onCancel={handleCancelShare} />
+                    </motion.div>
+                  </div>
+                )}
                 <div className='gr-icon2' >
                   <span onClick={() => setLike(!like)}>
                     {
