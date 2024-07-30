@@ -14,7 +14,7 @@ import More from '../more/More';
 
 import './PostItem.scss';
 
-const PostItem = ({ post, onCancel}) => {
+const PostItem = ({ post, onCancel, setIscall }) => {
   const [input, setInput] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
   const [comments, setComments] = useState([]);
@@ -25,7 +25,7 @@ const PostItem = ({ post, onCancel}) => {
 
   const { t } = useTranslation('explore');
   const inputRef = React.createRef();
-  
+
   const user = useSelector(state => state.user.user);
 
   const addEmoji = (event, emojiObject) => {
@@ -72,7 +72,7 @@ const PostItem = ({ post, onCancel}) => {
   const handleCancelShare = () => {
     setShowShare(false);
   };
-  
+
   const handleCancelMore = () => {
     setShowMore(false);
   };
@@ -82,19 +82,19 @@ const PostItem = ({ post, onCancel}) => {
       <div className='item-post'>
 
         <div className='image-video'>
-              <div className='i'>
-                <Carousel arrows infinite={false} >
-                  {
-                    post.imageUrls.map((url, index) => (
-                      <div className='image-slider'>
-                        <img src={url} alt='image' key={index} className='img-item' />
-                      </div>
-                    ))
-                  }
-                </Carousel>
-              </div>
-            
-          
+          <div className='i'>
+            <Carousel arrows infinite={false} >
+              {
+                post.imageUrls.map((url, index) => (
+                  <div className='image-slider'>
+                    <img src={url} alt='image' key={index} className='img-item' />
+                  </div>
+                ))
+              }
+            </Carousel>
+          </div>
+
+
         </div>
 
         <div className='content-explore'>
@@ -118,7 +118,7 @@ const PostItem = ({ post, onCancel}) => {
                 initial={{ opacity: 0, scale: 0.5 }}
                 transition={{ duration: 0.3 }}
               >
-                <More onCancel={handleCancelMore} />
+                <More onCancel={handleCancelMore} post={post} setIscall={setIscall} onCancelItem={ onCancel} />
               </motion.div>
             </div>
           )}

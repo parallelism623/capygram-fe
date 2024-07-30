@@ -8,7 +8,7 @@ import ConfirmDelete from '../confirmDelete/ConfirmDelete';
 
 import './More.scss';
 
-const More = ({ onCancel }) => {
+const More = ({ onCancel, post, setIscall, onCancelItem }) => {
   const { t } = useTranslation('postItem');
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
@@ -50,7 +50,7 @@ const More = ({ onCancel }) => {
           </div>
         </div>
       ) : (
-        <ConfirmDelete onCancel={handleCancelConfirmDelete}/>
+        <ConfirmDelete onCancel={onCancel} post={post} setIscall={setIscall} onCancelItem={onCancelItem} />
       )}
     </div>
   )

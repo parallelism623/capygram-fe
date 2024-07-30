@@ -41,3 +41,15 @@ export const getPostByUserId = async (userId) => {
     throw error;
   }
 }
+
+export const deletePostByPostId = async (postId) => {
+  try {
+    await requestWithToken(postInstance, {
+      method: "delete",
+      url: `/api/Posts/Delete/${postId}`
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
