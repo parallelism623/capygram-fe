@@ -5,13 +5,14 @@ import "@/i18n";
 import { Carousel } from 'antd';
 import { motion } from 'framer-motion';
 import EmojiPicker from 'emoji-picker-react';
+import { useSelector } from 'react-redux';
 
 import more from '@/assets/images/more.png';
 import icon from '@/assets/images/icon.png';
+import ShareTo from '@/pages/explore/ShareTo';
+import More from '../more/More';
 
 import './PostItem.scss';
-import { useSelector } from 'react-redux';
-import ShareTo from '@/pages/explore/ShareTo';
 
 const PostItem = ({ post, onCancel}) => {
   const [input, setInput] = useState('');
@@ -20,6 +21,7 @@ const PostItem = ({ post, onCancel}) => {
   const [like, setLike] = useState(false);
   const [loved, setLoved] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   const { t } = useTranslation('explore');
   const inputRef = React.createRef();
@@ -71,6 +73,10 @@ const PostItem = ({ post, onCancel}) => {
     setShowShare(false);
   };
   
+  const handleCancelMore = () => {
+    setShowMore(false);
+  };
+
   return (
     <div className='body-item'>
       <div className='item-post'>
@@ -99,9 +105,23 @@ const PostItem = ({ post, onCancel}) => {
             </div>
 
             <div className='icon-loadMore'>
-              <img src={more} alt='more' />
+              <img src={more} alt='more' onClick={() => setShowMore(true)} />
             </div>
           </div>
+
+          {showMore && (
+            <div className='overlay' onClick={handleCancelMore}>
+              <motion.div
+                className='item-explore-container'
+                onClick={(e) => e.stopPropagation()}
+                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                transition={{ duration: 0.3 }}
+              >
+                <More onCancel={handleCancelMore} />
+              </motion.div>
+            </div>
+          )}
 
           <div className='comment-explore'>
             {
