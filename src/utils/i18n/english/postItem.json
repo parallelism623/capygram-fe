@@ -9,5 +9,7 @@
   "Embed": "Embed",
   "Cancel": "Cancel",
   "deletePost": "Delete post?",
-  "isSure": "Are you sure you want to delete this post?"
+  "isSure": "Are you sure you want to delete this post?",
+  "editInfo": "Edit info",
+  "done": "Done"
 }
