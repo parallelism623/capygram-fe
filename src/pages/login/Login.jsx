@@ -9,8 +9,9 @@ import img2 from "../../assets/images/Screenshot 2024-06-13 164302.png"
 import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
-import { login } from '@/api/authApi/auth';
+import { getUserById, login } from '@/api/authApi/auth';
+import { useDispatch} from 'react-redux';
+import { setUser } from '@/store/formSlice';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Login = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = [img, img2, img3];
   const { t } = useTranslation('login');
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -56,12 +58,22 @@ const Login = () => {
               onSubmit={async (values) => {
                 try {
                   await login(values);
-                  // console.log(values);
-                  navigate("/")
+
+                  const userId = localStorage.getItem('userId');
+                  const me = await getUserById(userId);
+                  dispatch(setUser({
+                    id: me.id,
+                    email: me.email,
+                    fullname: me.profile.fullName,
+                    username: me.userName
+                  }));
+                  
+                  navigate("/");
+
                 }
                 catch (errors) {
                   console.error(errors);
-                }
+                } 
               }}
             >
               {({ handleSubmit, isSubmitting, touched, errors }) => (

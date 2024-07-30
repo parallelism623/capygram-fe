@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
+import { Carousel } from 'antd';
 
 import { setPost, setStep } from '@/store/formSlice';
+import { createPost } from '@/api/authApi/post';
 
 import muiTen from '@/assets/images/muiTen.png';
 import avataxinh from '@/assets/images/avataxinh.jpg';
@@ -13,6 +15,7 @@ import icon from '@/assets/images/icon.png';
 import map from '@/assets/images/map.png';
 
 import './Step2.scss';
+import { getUserById } from '@/api/authApi/auth';
 
 const Step2 = () => {
   const [describe, setDescribe] = useState('');
@@ -21,17 +24,38 @@ const Step2 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
+  // const user = useSelector((state) => state.user.user);
 
   const inputRef = React.createRef();
   const handleChange = (e) => {
     setDescribe(e.target.value);
-    dispatch(setPost({ description: describe })); //bất đồng bộ
+    dispatch(setPost({ description: describe }));
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     dispatch(setStep(3));
     console.log(post);
-    dispatch(setPost({ imageOrVideo: '', description: '' }));
+
+    try {
+      const user = await getUserById(localStorage.getItem("userId"));
+
+      const userCreate = {
+        UserName: user.userName,
+        UserId: user.id,
+      }
+
+      const postToCreate = {
+        ImageUrls: post.rawFiles,
+        Likes: 0,
+        Content: describe,
+      }
+      await createPost(postToCreate, userCreate);
+    } catch (error) {
+      console.log(error);
+    }
+
+    dispatch(setPost({ media: [], description: '' }));
+
   };
 
 
@@ -77,13 +101,21 @@ const Step2 = () => {
             </div>
           </div>
           <div className='right-content-step2'>
-            {
-              post.fileType === 'image' ? (
-                <img src={post.imageOrVideo} />
-              ) : (
-                <video src={post.imageOrVideo} />
-              )
-            }
+            <Carousel arrows infinite={false} >
+              {
+                post.media.map((item, index) => (
+                  <div key={index} className='gr-img'>
+                    {
+                      item.type === 'image' ? (
+                        <img src={item.data} alt='image' />
+                      ) : (
+                        <video src={item.data} controls />
+                      )
+                    }
+                  </div>
+                ))
+              }
+            </Carousel>
           </div>
         </div>
       </div>

@@ -1,32 +1,31 @@
 /* eslint-disable */
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import '@/i18n';
+import { useDispatch } from 'react-redux';
 
-import { setProfile } from '@/store/formSlice';
+import { updateAvatar } from '@/store/userSlice';
 
 import './ChangePhoto.scss';
 
-const ChangePhoto = ({ onCancel, handleRemovePhoto }) => {
+const ChangePhoto = ({ onCancel, handleRemovePhoto, setNewAvatar }) => {
   const { t } = useTranslation('changePhoto_profile');
 
   const dispatch = useDispatch();
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
+  const handleFileChange = async (e) => {
+    const fileToUpload = e.target.files[0];
+    if (!fileToUpload) return;
 
-    reader.onloadend = () => {
-      dispatch(setProfile({ avata: reader.result }));
-      onCancel();
+    const fileReader = new FileReader();
+    fileReader.onloadend = () => {
+      const base64 = fileReader.result;
+      setNewAvatar(base64);
     };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-
-    console.log(reader.result);
+    fileReader.readAsDataURL(fileToUpload);
+    
+    dispatch(updateAvatar({ fileToUpload, userId: localStorage.getItem('userId') }));
+    onCancel();
   };
 
 

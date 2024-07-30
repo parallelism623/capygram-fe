@@ -1,34 +1,53 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setProfile } from '@/store/formSlice';
+import { fetchUser, updateProfile } from '@/store/userSlice';
+import ChangePhoto from './changePhoto';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
 import account from '@/assets/images/account.png';
 
 import './EditProfile.scss';
-import ChangePhoto from './changePhoto';
-import { setProfile } from '@/store/formSlice';
-import { editProfile } from '@/api/authApi/auth';
 
 const EditProfile = () => {
   const { t } = useTranslation('edit_profile');
   const [toogle, setToogle] = useState('ON');
   const [avata, setAvata] = useState(true);
   const [showChangePhoto, setShowChangePhoto] = useState(false);
+  const [newAvatar, setNewAvatar] = useState('');
+  // const [me, setMe] = useState({});
+  const me = useSelector((state) => state.user.user);
 
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.form.profile);
-  const user = useSelector((state) => state.form.user);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchUser(localStorage.getItem('userId')));
+    // const getUser = async () => {
+    //   const user = await getUserById(localStorage.getItem("userId"));
+    //   setMe({
+    //     id: user.id,
+    //     email: user.email,
+    //     fullname: user.profile.fullName,
+    //     username: user.userName,
+    //     avatarUrl: user.profile.avatarUrl
+    //   })
+    // }
+    // getUser();
+  }, [dispatch]);
+
   const handleRemovePhoto = () => {
     setAvata(false);
     dispatch(setProfile({ avata: '' }));
     handleCancel();
+    setNewAvatar('');
   };
 
   const handleToogle = () => {
@@ -36,21 +55,16 @@ const EditProfile = () => {
     dispatch(setProfile({ isShow: toogle === 'ON' ? false : true }));
   };
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     dispatch(setProfile({ [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(setProfile(profile));
-    console.log(profile);
-    try {
-      await editProfile(profile);
-      navigate('/profile');
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(updateProfile(profile))
+      .then(() => navigate('/profile'))
+      .catch((error) => console.log(error));
   };
 
   const handleCancel = () => {
@@ -62,10 +76,10 @@ const EditProfile = () => {
         <p className='title'><b>{t('title')}</b> </p>
 
         <div className='group-profile'>
-          {(profile.avata !== '') ? (<img src={profile.avata} alt='avata' />) : (<img src={account} alt='avata' />)}
+          {newAvatar !== '' ? <img src={newAvatar} /> : (me.avatarUrl !== ('string' && "")) ? (<img src={me.avatarUrl} alt='avata' />) : (<img src={account} alt='avata' />)}
           <div className='name'>
-            <p className='p1'><b>{user.fullname !== '' ? user.fullname : 'Hanglazy'}</b></p>
-            <p className='p2'>{user.username !== '' ? user.username : 'Hangcute'}</p>
+            <p className='p1'><b>{me.fullname !== '' ? me.fullname : 'Hanglazy'}</b></p>
+            <p className='p2'>{me.username !== '' ? me.username : 'Hangcute'}</p>
           </div>
           <button className='edit-avata' onClick={() => setShowChangePhoto(true)}><b>{t('btn1')}</b></button>
         </div>
@@ -113,7 +127,11 @@ const EditProfile = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
           >
-            <ChangePhoto onCancel={handleCancel} handleRemovePhoto={ handleRemovePhoto} />
+            <ChangePhoto
+              onCancel={handleCancel}
+              handleRemovePhoto={handleRemovePhoto}
+              setNewAvatar={setNewAvatar}
+            />
           </motion.div>
         </div>
       )}
