@@ -9,5 +9,7 @@
   "Embed": "Nhúng",
   "Cancel": "Huỷ",
   "deletePost": "Xoá bài viết?",
-  "isSure": "Bạnc có chắc chắn muốn xoá bài viết này không?"
+  "isSure": "Bạnc có chắc chắn muốn xoá bài viết này không?",
+  "editInfo": "Chỉnh sửa thông tin",
+  "done": "Xong"
 }
