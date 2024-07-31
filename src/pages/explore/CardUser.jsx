@@ -22,8 +22,8 @@ const CardUser = ({ user, Follow }) => {
   return (
     <div className='container'>
       <div className='info'>
-        <img src={user.avatarUrl} alt='avata' />
-        <p><b>{user.name}</b></p>
+        <img src={user.profile.avatarUrl} alt='avata' />
+        <p><b>{user.userName}</b></p>
       </div>
 
       <div className='count'>

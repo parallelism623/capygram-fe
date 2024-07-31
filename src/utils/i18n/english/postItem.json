@@ -1,0 +1,15 @@
+{
+  "delete": "Delete",
+  "edit": "Edit",
+  "hideLike": "Hide like count to others",
+  "turnOff": "Turn off commenting",
+  "goToPost": "Go to post",
+  "ShareTo": "Share to...",
+  "CopyLink": "Copy link",
+  "Embed": "Embed",
+  "Cancel": "Cancel",
+  "deletePost": "Delete post?",
+  "isSure": "Are you sure you want to delete this post?",
+  "editInfo": "Edit info",
+  "done": "Done"
+}

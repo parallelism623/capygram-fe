@@ -59,6 +59,9 @@ import messages_vi from '@/utils/i18n/vietnamese/messages.json';
 import explore_en from '@/utils/i18n/english/explore.json';
 import explore_vi from '@/utils/i18n/vietnamese/explore.json';
 
+import postItem_en from '@/utils/i18n/english/postItem.json';
+import postItem_vi from '@/utils/i18n/vietnamese/postItem.json';
+
 const resources = {
   en: {
     step1Register: step1Register_en,
@@ -80,6 +83,7 @@ const resources = {
     createPost: createPost_en,
     messages: messages_en,
     explore: explore_en,
+    postItem: postItem_en,
 
   },
   vi: {
@@ -102,6 +106,7 @@ const resources = {
     createPost: createPost_vi,
     messages: messages_vi,
     explore: explore_vi,
+    postItem: postItem_vi,
     
   }
 };

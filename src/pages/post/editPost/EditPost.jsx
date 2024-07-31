@@ -1,60 +1,54 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
-import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
 import { Carousel } from 'antd';
+import { useSelector } from 'react-redux';
 
-import { setPost, setStep } from '@/store/formSlice';
-import { createPost } from '@/api/authApi/post';
+import { updatePost } from '@/api/authApi/post';
 
-import muiTen from '@/assets/images/muiTen.png';
-import avataxinh from '@/assets/images/avataxinh.jpg';
 import icon from '@/assets/images/icon.png';
 import map from '@/assets/images/map.png';
 
-import './Step2.scss';
-import { getUserById } from '@/api/authApi/auth';
+import './EditPost.scss';
 
-const Step2 = () => {
-  const [describe, setDescribe] = useState('');
+const EditPost = ({ postEdit, onCancel, setIscall, onCancelItem, onCancelMore }) => {
+  const [describe, setDescribe] = useState(postEdit.content);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
-  const { t } = useTranslation('createPost');
-  const dispatch = useDispatch();
-  const post = useSelector((state) => state.form.post);
-  const user = useSelector((state) => state.user.user);
-
+  const { t } = useTranslation('postItem');
   const inputRef = React.createRef();
+
+  const user = useSelector(state => state.user.user);
+
   const handleChange = (e) => {
     setDescribe(e.target.value);
-    dispatch(setPost({ description: describe }));
   };
 
-  const handleShare = async () => {
-    dispatch(setStep(3));
-    console.log(post);
+  const handleEdit = async () => {
 
     try {
-      // const user = await getUserById(localStorage.getItem("userId"));
-
-      const userCreate = {
+      const userEdit = {
         UserName: user.username,
         UserId: user.id,
-      }
-
-      const postToCreate = {
-        ImageUrls: post.rawFiles,
-        Likes: 0,
+      };
+      const postToEdit = {
+        Id: postEdit.id,
+        ImageUrls: postEdit.imageUrls,
+        Likes: postEdit.likes,
         Content: describe,
-      }
-      await createPost(postToCreate, userCreate);
+      };
+
+      await updatePost(postToEdit, userEdit);
+
+      setIscall(true);
+      onCancel();
+      onCancelMore();
+      onCancelItem();
     } catch (error) {
       console.log(error);
     }
-
-    dispatch(setPost({ media: [], description: '' }));
 
   };
 
@@ -65,17 +59,22 @@ const Step2 = () => {
     const start = describe.substring(0, selectionStart);
     const end = describe.substring(selectionEnd, describe.length);
     const newDescribe = start + emoji + end;
+    inputRef.current.focus();
     setDescribe(newDescribe);
-    dispatch(setPost({ description: newDescribe }));
+  };
+
+  const handleCancel = () => {
+    onCancel();
+    onCancelMore();
   };
 
   return (
     <div className='body-step2'>
       <div className='step2'>
         <div className='top-tep2-create-post'>
-          <img src={muiTen} alt='back' onClick={() => dispatch(setStep(1))} />
-          <p className='p1'>{t('createPost')}</p>
-          <p className='p2' onClick={handleShare}>{t('share')}</p>
+          <p onClick={handleCancel}>{t('Cancel')}</p>
+          <p className='p1'><b>{t('editInfo')}</b></p>
+          <p className='p2' onClick={handleEdit}>{t('done')}</p>
         </div>
         <div className='content-step2'>
           <div className='left-content-step2'>
@@ -103,15 +102,9 @@ const Step2 = () => {
           <div className='right-content-step2'>
             <Carousel arrows infinite={false} >
               {
-                post.media.map((item, index) => (
+                postEdit.imageUrls.map((item, index) => (
                   <div key={index} className='gr-img'>
-                    {
-                      item.type === 'image' ? (
-                        <img src={item.data} alt='image' />
-                      ) : (
-                        <video src={item.data} controls />
-                      )
-                    }
+                    <img src={item} alt='image' />
                   </div>
                 ))
               }
@@ -123,4 +116,4 @@ const Step2 = () => {
   )
 }
 
-export default Step2;
+export default EditPost;

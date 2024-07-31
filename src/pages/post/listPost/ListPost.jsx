@@ -11,6 +11,7 @@ import "./ListPost.scss";
 const ListPost = () => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
+  const [iscall, setIscall] = useState(false);
 
   useEffect(() => {
     const getPost = async () => {
@@ -19,7 +20,7 @@ const ListPost = () => {
       setPosts(response);
     };
     getPost();
-  }, []);
+  }, [iscall]);
 
   const handleClickItem = (post) => {
     setSelectedPost(post);
@@ -57,7 +58,7 @@ const ListPost = () => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.3 }}
           >
-            <PostItem onCancel={handleCancel} post={selectedPost} />
+            <PostItem onCancel={handleCancel} post={selectedPost} setIscall={setIscall} />
           </motion.div>
         </div>
 
