@@ -20,7 +20,7 @@ const EditPost = ({ postEdit, onCancel, setIscall, onCancelItem, onCancelMore })
   const { t } = useTranslation('postItem');
   const inputRef = React.createRef();
 
-  const user = useSelector(state => state.user.user);
+  const user = useSelector(state => state.form.user);
 
   const handleChange = (e) => {
     setDescribe(e.target.value);
@@ -30,14 +30,14 @@ const EditPost = ({ postEdit, onCancel, setIscall, onCancelItem, onCancelMore })
 
     try {
       const userEdit = {
-        UserName: user.username,
-        UserId: user.id,
+        userName: user.username,
+        userId: user.id,
       };
       const postToEdit = {
-        Id: postEdit.id,
-        ImageUrls: postEdit.imageUrls,
-        Likes: postEdit.likes,
-        Content: describe,
+        id: postEdit.id,
+        imageUrls: postEdit.imageUrls,
+        likes: postEdit.likes,
+        content: describe,
       };
 
       await updatePost(postToEdit, userEdit);

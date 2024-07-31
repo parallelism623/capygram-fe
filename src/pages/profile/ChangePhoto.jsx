@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch } from 'react-redux';
 
-import { updateAvatar } from '@/store/userSlice';
+import { setUser } from '@/store/formSlice';
+import { uploadAvatar } from '@/api/authApi/auth';
 
 import './ChangePhoto.scss';
 
@@ -21,11 +22,16 @@ const ChangePhoto = ({ onCancel, handleRemovePhoto, setNewAvatar }) => {
     fileReader.onloadend = () => {
       const base64 = fileReader.result;
       setNewAvatar(base64);
+      dispatch(setUser({ avatarUrl: base64 }));
     };
     fileReader.readAsDataURL(fileToUpload);
     
-    dispatch(updateAvatar({ fileToUpload, userId: localStorage.getItem('userId') }));
-    onCancel();
+    try {
+      await uploadAvatar(fileToUpload, localStorage.getItem('userId'));
+      onCancel();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 

@@ -5,7 +5,7 @@ import '@/i18n';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStep } from '@/store/formSlice';
+import { setStep, setUser } from '@/store/formSlice';
 
 import setting from '@/assets/images/setting.png';
 import Add from '@/assets/images/Add.png';
@@ -18,38 +18,36 @@ import LayoutFooter from '@/layouts/LayoutFooter';
 import Note from './Note';
 import Setting from './Setting';
 import HotStory from './HotStory';
-import { fetchUser } from '@/store/userSlice';
 import ListPost from '../post/listPost/ListPost';
+import { getUserById } from '@/api/authApi/auth';
 
 import './Profile.scss';
-import { getUserById } from '@/api/authApi/auth';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showFormHotStory, setShowFormHotStory] = useState(false);
-  // const [me, setMe] = useState({});
 
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
-  const me = useSelector((state) => state.user.user);
+  const me = useSelector((state) => state.form.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser(localStorage.getItem('userId')));
-    // const getUser = async () => {
-    //   const user = await getUserById(localStorage.getItem("userId"));
-    //   setMe({
-    //     id: user.id,
-    //     email: user.email,
-    //     fullname: user.profile.fullName,
-    //     username: user.userName,
-    //     avatarUrl: user.profile.avatarUrl
-    //   })
-    //   // console.log(me);
-    // }
-    // getUser();
+    const fetchUser = async () => {
+      const userId = localStorage.getItem('userId');
+      const me = await getUserById(userId);
+      dispatch(setUser({
+        id: me.id,
+        email: me.email,
+        fullname: me.profile.fullName,
+        username: me.userName,
+        avatarUrl: me.profile.avatarUrl
+      }));
+    };
+
+    fetchUser();
   }, [dispatch]);
 
   const handleCancel = () => {

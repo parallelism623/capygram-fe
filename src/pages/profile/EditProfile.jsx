@@ -5,10 +5,10 @@ import '@/i18n';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setProfile } from '@/store/formSlice';
-import { fetchUser, updateProfile } from '@/store/userSlice';
+import { setProfile, setUser } from '@/store/formSlice';
 import ChangePhoto from './changePhoto';
 
+import { editProfile, getUserById } from '@/api/authApi/auth';
 import LayoutFooter from '@/layouts/LayoutFooter';
 import account from '@/assets/images/account.png';
 
@@ -20,8 +20,8 @@ const EditProfile = () => {
   const [avata, setAvata] = useState(true);
   const [showChangePhoto, setShowChangePhoto] = useState(false);
   const [newAvatar, setNewAvatar] = useState('');
-  // const [me, setMe] = useState({});
-  const me = useSelector((state) => state.user.user);
+  
+  const me = useSelector((state) => state.form.user);
 
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.form.profile);
@@ -29,18 +29,19 @@ const EditProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(fetchUser(localStorage.getItem('userId')));
-    // const getUser = async () => {
-    //   const user = await getUserById(localStorage.getItem("userId"));
-    //   setMe({
-    //     id: user.id,
-    //     email: user.email,
-    //     fullname: user.profile.fullName,
-    //     username: user.userName,
-    //     avatarUrl: user.profile.avatarUrl
-    //   })
-    // }
-    // getUser();
+    const fetchUser = async () => {
+      const userId = localStorage.getItem('userId');
+      const me = await getUserById(userId);
+      dispatch(setUser({
+        id: me.id,
+        email: me.email,
+        fullname: me.profile.fullName,
+        username: me.userName,
+        avatarUrl: me.profile.avatarUrl
+      }));
+    };
+
+    fetchUser();
   }, [dispatch]);
 
   const handleRemovePhoto = () => {
@@ -62,9 +63,12 @@ const EditProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(updateProfile(profile))
-      .then(() => navigate('/profile'))
-      .catch((error) => console.log(error));
+    try {
+      await editProfile(profile, localStorage.getItem('userId'));
+      navigate('/profile');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {
