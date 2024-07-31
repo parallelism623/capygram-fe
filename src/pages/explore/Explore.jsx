@@ -3,15 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { motion } from 'framer-motion';
 
-import explores from "./fakeExplore.json";
-
-import video from '@/assets/images/video.png';
 import images from '@/assets/images/images.png';
 import heart from '@/assets/images/heart.png';
 import comment from '@/assets/images/comment.png';
 
 import './Explore.scss';
 import ExploreItem from './ExploreItem';
+import { getAllPosts } from '@/api/authApi/post';
 
 const Explore = () => {
   const [exploreData, setExploreData] = useState([]);
@@ -19,112 +17,55 @@ const Explore = () => {
   const [showItem, setShowItem] = useState(false);
   const [item, setItem] = useState(undefined);
   const [idItem, setIdItem] = useState(undefined);
-
-  const videoRef = useRef([]);
-
-  useEffect(() => {
-    //api
-    const loadData = () => {
-      const exploreData = explores.explores;
-      setExploreData(exploreData);
-    };
-
-    loadData();
-  }, [page]);
-
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.play();
-        } else {
-          entry.target.pause();
-        }
-      });
-    }, { threshold: 0.5 });
-
-    videoRef.current.forEach(video => {
-      if (video) {
-        observer.observe(video);
+    const getPosts = async () => {
+      try {
+        const post = await getAllPosts();
+        setExploreData(post);
+      } catch (error) {
+        console.log(error);
       }
-    });
-
-    return () => {
-      videoRef.current.forEach(video => {
-        if (video) {
-          observer.unobserve(video);
-        }
-      });
-    };
-  }, [exploreData]);
-
-  const fetchMoreData = () => {
-    setPage(prevPage => prevPage + 1);
-  };
+    }
+    getPosts();
+  }, [page]);
 
   const handleCancel = () => {
     setShowItem(false);
   };
 
-  const handleClick = (explore, index) => {
+  const handleClick = (explore) => {
     setItem(explore);
-    setIdItem(index);
+    setIdItem(explore.id);
     setShowItem(true);
   }
   return (
     <InfiniteScroll
       dataLength={exploreData.length}
-      next={fetchMoreData}
+      // next={fetchMoreData}
       hasMore={true}
-      loader={<h4>Loading...</h4>}
+      // loader={<h4>Loading...</h4>}
     >
       <div className='body-explore'>
         {
-          (exploreData && exploreData.length > 0) && exploreData.map((explore, index) => (
+          (exploreData && exploreData.length > 0) && exploreData.map((explore) => (
             <>
-              <div key={index} className='item' onClick={() => handleClick(explore, index)}>
-                {
-                  explore.media.type === 'video' ? (
-                    <div className='i'>
-                      <video
-                        src={explore.media.url}
-                        controls
-                        ref={el => (videoRef.current[index] = el)}
-                        className='video' 
-                        autoPlay
-                        muted
-                        loop
-                        />
-                      <img src={video} alt='video' className='icon1' />
-                      <div className='hover'>
-                        <div className='icon2'>
-                          <img src={heart} alt='heart' />
-                          <p>{explore.likes}</p>
-                        </div>
-                        <div className='icon3'>
-                          <img src={comment} alt='comment' />
-                          <p>{explore.comments}</p>
-                        </div>
-                      </div>
+              <div key={explore.id} className='item' onClick={() => handleClick(explore)}>
+                <div className='i'>
+                  <img src={explore.imageUrls[0]} alt='explore' className='img' />
+                  <img src={images} alt='images' className='icon1' />
+                  <div className='hover'>
+                    <div className='icon2'>
+                      <img src={heart} alt='heart' />
+                      <p>{explore.likes}</p>
                     </div>
-                  ) : (
-                    <div className='i'>
-                      <img src={explore.media.url[0]} alt='explore' className='img' />
-                      <img src={images} alt='images' className='icon1' />
-                      <div className='hover'>
-                        <div className='icon2'>
-                          <img src={heart} alt='heart' />
-                          <p>{explore.likes}</p>
-                        </div>
-                        <div className='icon3'>
-                          <img src={comment} alt='comment' />
-                          <p>{explore.comments}</p>
-                        </div>
-                      </div>
+                    <div className='icon3'>
+                      <img src={comment} alt='comment' />
+                      <p>{explore.comments ? explore.comments : 0}</p>
                     </div>
-                  )
-                }
+                  </div>
+                </div>
               </div>
 
               {showItem && (
