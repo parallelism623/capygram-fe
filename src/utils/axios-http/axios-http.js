@@ -1,4 +1,5 @@
 /* eslint-disable */
+import {  refreshToken } from '@/api/authApi/auth';
 import axios from 'axios';
 
 //tao ra instance axios cho cac request khong can token
@@ -13,40 +14,31 @@ const createAuthInstance = (baseURL) => {
     baseURL,
   });
 
-  // instance.interceptors.response.use(
-  //   (response) => response, async (error) => {
-  //     // console.log(error.response.data);
-  //     // let originalRequest = error.response.data.success;
-  //     const originalRequest = error.config;
-  //     // console.log(originalRequest);
+  instance.interceptors.response.use(
+    (response) => response, async (error) => {
 
-  //     if (error?.response?.code === 401 && !originalRequest._retry) {
-  //       originalRequest._retry = true;
-
-  //       const refreshToken = localStorage.getItem('refreshToken');
-  //       const accessToken = localStorage.getItem('accessToken');
+      if (error.response.status === 500 ) {
         
-  //       const userId = localStorage.getItem('userId');
-
-  //       try {
-  //         const { data } = await axios.post(`${import.meta.env.VITE_APP_URL_BE}/api/Users/refresh-token`, { refreshToken, accessToken, id: userId });
+        try {
+          const { data } = await refreshToken();
           
-  //         localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('accessToken', data.accessToken);
+          localStorage.setItem('refreshToken', data.refreshToken);
 
-  //         instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-  //         originalRequest.headers['Authorization'] = `Bearer ${data.accessToken}`;
+          //gắn accessToken cho instance
+          instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
 
-  //         return instance(originalRequest);
-          
-  //       } catch (error) {
-  //         console.error(error);
-  //         //truong hop khong refresh duoc token
-  //         return Promise.reject(error);
-  //       }
-  //     }
-  //     return Promise.reject(error);
-  //   }
-  // );
+        } catch (error) {
+          console.error(error);
+          //truong hop khong refresh duoc token
+          // localStorage.removeItem('accessToken');
+          // localStorage.removeItem('refreshToken');
+          return Promise.reject(error);
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
   
   return instance;
 };

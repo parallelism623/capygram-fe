@@ -10,12 +10,10 @@ import { setPost, setStep } from '@/store/formSlice';
 import { createPost } from '@/api/authApi/post';
 
 import muiTen from '@/assets/images/muiTen.png';
-import avataxinh from '@/assets/images/avataxinh.jpg';
 import icon from '@/assets/images/icon.png';
 import map from '@/assets/images/map.png';
 
 import './Step2.scss';
-import { getUserById } from '@/api/authApi/auth';
 
 const Step2 = () => {
   const [describe, setDescribe] = useState('');
@@ -24,7 +22,7 @@ const Step2 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
-  const user = useSelector((state) => state.user.user);
+  const user = useSelector((state) => state.form.user);
 
   const inputRef = React.createRef();
   const handleChange = (e) => {
@@ -37,8 +35,6 @@ const Step2 = () => {
     console.log(post);
 
     try {
-      // const user = await getUserById(localStorage.getItem("userId"));
-
       const userCreate = {
         UserName: user.username,
         UserId: user.id,
