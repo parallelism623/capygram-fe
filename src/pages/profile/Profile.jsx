@@ -28,7 +28,7 @@ const Profile = () => {
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showFormHotStory, setShowFormHotStory] = useState(false);
-
+  // const [me, setMe] = useState({});
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
   const me = useSelector((state) => state.form.user);
@@ -45,6 +45,15 @@ const Profile = () => {
         username: me.userName,
         avatarUrl: me.profile.avatarUrl
       }));
+      // setMe(
+      //   {
+      //     id: me.id,
+      //       email: me.email,
+      //       fullname: me.profile.fullName,
+      //       username: me.userName,
+      //       avatarUrl: me.profile.avatarUrl
+      //   }
+      // );
     };
 
     fetchUser();
