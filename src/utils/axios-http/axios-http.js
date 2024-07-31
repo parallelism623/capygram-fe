@@ -20,8 +20,9 @@ const createAuthInstance = (baseURL) => {
       if (error.response.status === 500 ) {
         
         try {
-          const { data } = await refreshToken();
+          const data = await refreshToken();
           
+          console.log(data);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
 
