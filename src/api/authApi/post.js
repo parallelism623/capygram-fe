@@ -82,3 +82,16 @@ export const updatePost = async (post, user) => {
     throw error;
   }
 };
+
+export const getAllPosts = async () => {
+  try {
+    const response = await requestWithToken(postInstance, {
+      method: "get",
+      url: "/api/Posts/GetAll"
+    });
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

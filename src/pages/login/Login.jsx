@@ -65,7 +65,8 @@ const Login = () => {
                     id: me.id,
                     email: me.email,
                     fullname: me.profile.fullName,
-                    username: me.userName
+                    username: me.userName,
+                    avatarUrl: me.profile.avatarUrl
                   }));
                   
                   navigate("/");

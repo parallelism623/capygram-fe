@@ -5,14 +5,17 @@ import "@/i18n";
 import { Carousel } from 'antd';
 import { motion } from 'framer-motion';
 import EmojiPicker from 'emoji-picker-react';
+import { useSelector } from 'react-redux';
+
+import { getUserById } from '@/api/authApi/auth';
+import ShowMoreOption from './ShowMoreOption';
+import CardUser from './CardUser';
+import ShareTo from './ShareTo';
 
 import more from '@/assets/images/more.png';
 import icon from '@/assets/images/icon.png';
 
 import './ExploreItem.scss';
-import CardUser from './CardUser';
-import ShowMoreOption from './ShowMoreOption';
-import ShareTo from './ShareTo';
 
 const ExploreItem = ({ explore, onCancel, id }) => {
   const [showCardUser, setShowCardUser] = useState(false);
@@ -25,46 +28,12 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [like, setLike] = useState(false);
   const [loved, setLoved] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [user, setUser] = useState({});
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
   const inputRef = React.createRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.play();
-        } else {
-          entry.target.pause();
-        }
-      });
-    }, { threshold: 0.5 });
-
-    videoRef.current.forEach(video => {
-      if (video) {
-        observer.observe(video);
-      }
-    });
-
-    return () => {
-      videoRef.current.forEach(video => {
-        if (video) {
-          observer.unobserve(video);
-        }
-      });
-    };
-  }, [explore]);
-
-  const handleVideoClick = (index) => {
-    const video = videoRef.current[index];
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  };
-
+  const me = useSelector((state) => state.user.user);
 
   const handleMouseEnter = () => {
     setHovering(true);
@@ -92,17 +61,25 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
 
   useEffect(() => {
-    const getComments = JSON.parse(localStorage.getItem('comments')) || [];
+    const getData = async () => {
+      const getComments = JSON.parse(localStorage.getItem('comments')) || [];
 
-    const exploreComments = getComments.filter(comment => comment.exploreId === explore.id);
+      const exploreComments = getComments.filter(comment => comment.exploreId === explore.id);
 
-    setComments(exploreComments);
-  }, [explore.id]);
+      setComments(exploreComments);
+
+      const res = await getUserById(explore.userId);
+      setUser(res);
+      console.log(user);
+    }
+
+    getData();
+  }, [explore.id, id]);
 
   const handleSend = () => {
     if (input.trim() !== '') {
       const newComment = {
-        user: explore.user,
+        user: me,
         comment: input.trim(),
         exploreId: explore.id,
       };
@@ -133,44 +110,28 @@ const ExploreItem = ({ explore, onCancel, id }) => {
       <div className='item-explore'>
 
         <div className='image-video'>
-          {
-            explore.media.type === 'video' ? (
-              <div className='i'>
-                <video
-                  src={explore.media.url}
-                  className='video'
-                  ref={el => (videoRef.current[id] = el)}
-                  onClick={() => handleVideoClick(id)}
-                  autoPlay
-                  muted
-                  loop
-                />
-              </div>
-            ) : (
-              <div className='i'>
-                <Carousel arrows infinite={false} >
-                  {
-                    explore.media.url.map((url, index) => (
-                      <div className='image-slider'>
-                        <img src={url} alt='image' key={index} className='img-item' />
-                      </div>
-                    ))
-                  }
-                </Carousel>
-              </div>
-            )
-          }
+          <div className='i'>
+            <Carousel arrows infinite={false} >
+              {
+                explore.imageUrls.map((url, index) => (
+                  <div className='image-slider'>
+                    <img src={url} alt='image' key={index} className='img-item' />
+                  </div>
+                ))
+              }
+            </Carousel>
+          </div>
         </div>
 
         <div className='content-explore'>
           <div className='top-content-explore'>
             <div className='info-user'>
-              <img src={explore.user.avatarUrl} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
-              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{explore.user.name}</b></p>
+              <img src={user?.profile?.avatarUrl} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{user.userName}</b></p>
               <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={() => setIsFollow(true)}>{t('follow')}</p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
-                <CardUser user={explore.user} Follow={isFollow} />
+                <CardUser user={user} Follow={isFollow} />
               </div>}
 
               {showMore && (
@@ -201,7 +162,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                     <img src={comment.user.avatarUrl} alt='avatar-info-user-comment' />
                   </div>
                   <div className='content-comment'>
-                    <p><b>{comment.user.name}</b></p>
+                    <p><b>{comment.user.username}</b></p>
                     <p>{comment.comment}</p>
                   </div>
                 </div>
