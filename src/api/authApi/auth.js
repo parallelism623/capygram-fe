@@ -6,6 +6,7 @@ export const register = async (data) => {
     const date = new Date(year, month - 1, day);
     const birthday = date.toISOString();
 
+
     await request(publicInstance, {
       data: {
         fullName: fullname,
@@ -33,7 +34,7 @@ export const active_account = async (data) => {
     const birthday = date.toISOString();
 
     //gọi API và chờ phản hồi
-    const response = await request(authInstance,{
+    const response = await request(authInstance, {
       data: {
         fullName: fullname,
         email,
@@ -47,7 +48,7 @@ export const active_account = async (data) => {
       url: "/api/Users/active-account"
     });
 
-    
+
 
     //lấy refreshToken và accessToken từ phản hồi
     const { refreshToken, accessToken } = response.value;
@@ -142,7 +143,7 @@ export const editProfile = async (data) => {
         id,
         avatarUrl: avata,
         story: bio,
-        gender ,
+        gender,
       },
       method: "post",
       url: "/api/Users/edit"
