@@ -31,9 +31,11 @@
     "react-router-dom": "^6.23.1",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "sass": "^1.77.4",
     "socket.io-client": "^4.7.5",
     "use-places-autocomplete": "^4.0.1",
+    "y": "file:",
     "yup": "^1.4.0"
   },
   "devDependencies": {
