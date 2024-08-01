@@ -20,8 +20,9 @@ const createAuthInstance = (baseURL) => {
       if (error.response.status === 500 ) {
         
         try {
-          const { data } = await refreshToken();
+          const data = await refreshToken();
           
+          console.log(data);
           localStorage.setItem('accessToken', data.accessToken);
           localStorage.setItem('refreshToken', data.refreshToken);
 
@@ -46,6 +47,8 @@ const createAuthInstance = (baseURL) => {
 const publicInstance = createAxiosInstance(import.meta.env.VITE_APP_URL_BE);
 const authInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE);
 const postInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_POST);
+const graphInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_GRAPH);
+const newsFeedInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_NEWSFEED);
 
 const request = (instance, config) => {
   return instance({ ...config });
@@ -59,4 +62,4 @@ const requestWithToken = (instance, config) => {
   return instance({ ...config, headers: { Authorization: `Bearer ${accessToken}` } });
 };
 
-export { request, requestWithToken, authInstance, publicInstance, postInstance };
+export { request, requestWithToken, authInstance, publicInstance, postInstance, graphInstance, newsFeedInstance };
