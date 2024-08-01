@@ -30,7 +30,9 @@ const RegisterOTP = () => {
       await active_account(values);
       // toast.success('Đăng ký tài khoản thành công');
       // console.log(values);
+      console.log("truocws");
       navigate('/ft/login');
+      console.log("sau");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);

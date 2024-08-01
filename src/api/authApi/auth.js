@@ -33,7 +33,7 @@ export const active_account = async (data) => {
     const birthday = date.toISOString();
 
     //gọi API và chờ phản hồi
-    const response = await request(authInstance,{
+    await request(authInstance,{
       data: {
         fullName: fullname,
         email,
@@ -47,12 +47,6 @@ export const active_account = async (data) => {
       url: "/api/Users/active-account"
     });
 
-    
-
-    //lấy refreshToken và accessToken từ phản hồi
-    const { refreshToken, accessToken } = response.value;
-    localStorage.setItem("refreshToken", refreshToken);
-    localStorage.setItem("accessToken", accessToken);
 
   } catch (error) {
     console.log(error);
