@@ -10,10 +10,12 @@ import { useSelector } from 'react-redux';
 import { getUserById } from '@/api/authApi/auth';
 import ShowMoreOption from './ShowMoreOption';
 import CardUser from './CardUser';
+import { follow, getFollowing, unFollow } from '@/api/authApi/graph';
 import ShareTo from './ShareTo';
 
 import more from '@/assets/images/more.png';
 import icon from '@/assets/images/icon.png';
+import account from '@/assets/images/account.png';
 
 import './ExploreItem.scss';
 
@@ -71,6 +73,16 @@ const ExploreItem = ({ explore, onCancel, id }) => {
       const res = await getUserById(explore.userId);
       setUser(res);
       console.log(user);
+
+      const userId = localStorage.getItem('userId');
+
+      const followings = await getFollowing(userId);
+
+      // console.log("followings:", followings);
+
+      const isFollow = followings.some(followingId => followingId === explore.userId);
+
+      setIsFollow(isFollow ? true : false);
     }
 
     getData();
@@ -105,6 +117,22 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     setShowShare(false);
   }
 
+  const handleClickFollow = async () => {
+    const userId = localStorage.getItem('userId');
+
+    if (isFollow) {
+      // Unfollow
+      // await unFollow(userId, explore.userId);
+      setIsFollow(false);
+      await unFollow(userId, explore.userId);
+    } else {
+      // Follow
+      // await follow(userId, explore.userId);
+      setIsFollow(true);
+      await follow(userId, explore.userId);
+    }
+  }
+
   return (
     <div className='body-item'>
       <div className='item-explore'>
@@ -126,9 +154,9 @@ const ExploreItem = ({ explore, onCancel, id }) => {
         <div className='content-explore'>
           <div className='top-content-explore'>
             <div className='info-user'>
-              <img src={user?.profile?.avatarUrl} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{user.userName}</b></p>
-              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={() => setIsFollow(true)}>{t('follow')}</p>
+              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ?  t('follow') : t('unfollow') }</p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
                 <CardUser user={user} Follow={isFollow} />

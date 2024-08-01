@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 
 import addFriend from '@/assets/images/addFriend.png';
+import account from '@/assets/images/account.png';
+
 import './CardUser.scss';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +24,7 @@ const CardUser = ({ user, Follow }) => {
   return (
     <div className='container'>
       <div className='info'>
-        <img src={user.profile.avatarUrl} alt='avata' />
+        <img src={user.profile.avatarUrl !== 'string' ? user.profile.avatarUrl : account} alt='avata' />
         <p><b>{user.userName}</b></p>
       </div>
 
