@@ -6,6 +6,7 @@ import { Carousel } from 'antd';
 import { motion } from 'framer-motion';
 import EmojiPicker from 'emoji-picker-react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { getUserById } from '@/api/authApi/auth';
 import ShowMoreOption from './ShowMoreOption';
@@ -36,6 +37,8 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const videoRef = useRef([]);
   const inputRef = React.createRef();
   const me = useSelector((state) => state.form.user);
+
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     setHovering(true);
@@ -131,7 +134,11 @@ const ExploreItem = ({ explore, onCancel, id }) => {
       setIsFollow(true);
       await follow(userId, explore.userId);
     }
-  }
+  };
+
+  const handleClickProfileUser = (id) => {
+    navigate(`/profile/${id}`);
+  };
 
   return (
     <div className='body-item'>
@@ -155,7 +162,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
           <div className='top-content-explore'>
             <div className='info-user'>
               <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
-              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}><b>{user.userName}</b></p>
+              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => handleClickProfileUser(user.id)}><b>{user.userName}</b></p>
               <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ?  t('follow') : t('unfollow') }</p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>

@@ -20,14 +20,19 @@ import Setting from './Setting';
 import HotStory from './HotStory';
 import ListPost from '../post/listPost/ListPost';
 import { getUserById } from '@/api/authApi/auth';
+import { getCountFollower, getCountFollowing } from '@/api/authApi/graph';
 
 import './Profile.scss';
+import { getPostByUserId } from '@/api/authApi/post';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [showNoteForm, setShowNoteForm] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [showFormHotStory, setShowFormHotStory] = useState(false);
+  const [follower, setFollower] = useState(0);
+  const [following, setFollowing] = useState(0);
+  const [post, setPost] = useState(0);
   // const [me, setMe] = useState({});
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
@@ -54,6 +59,14 @@ const Profile = () => {
       //       avatarUrl: me.profile.avatarUrl
       //   }
       // );
+
+      const follower = await getCountFollower(localStorage.getItem('userId'));
+      setFollower(follower);
+      const following = await getCountFollowing(localStorage.getItem('userId'));
+      setFollowing(following);
+
+      const posts = await getPostByUserId(localStorage.getItem('userId'));
+      setPost(posts.length);
     };
 
     fetchUser();
@@ -95,7 +108,7 @@ const Profile = () => {
       <div className='content-top'>
         <div className='group-avata'>
           <div className='avata'>
-            <img src={(me.avatarUrl === 'string' || me.avatarUrl === '')  ? account : me.avatarUrl} alt='avata' />
+            <img src={(me.avatarUrl === 'string' || me.avatarUrl === '') ? account : me.avatarUrl} alt='avata' />
             <div className='note'>
               <div className='content-note' onClick={() => setShowNoteForm(true)}>{note.describe === '' ? t('note') : note.describe}</div>
               <div className='cham-to'></div>
@@ -132,9 +145,9 @@ const Profile = () => {
           </div>
 
           <div className='data'>
-            <p><b>0</b> {t('posts')}</p>
-            <p><b>4</b> {t('followers')}</p>
-            <p><b>4</b> {t('following')}</p>
+            <p><b>{post}</b> {t('posts')}</p>
+            <p><b>{follower}</b> {t('followers')}</p>
+            <p><b>{following}</b> {t('following')}</p>
           </div>
 
         </div>

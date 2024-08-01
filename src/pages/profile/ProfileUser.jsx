@@ -1,16 +1,20 @@
 /* eslint-disable */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { motion } from 'framer-motion';
+import { useParams } from 'react-router-dom';
 
 import account from '@/assets/images/account.png';
-import post from '@/assets/images/post.png';
+import postIcon from '@/assets/images/post.png';
 import tagged from '@/assets/images/tagged.png';
 
+import { getUserById } from '@/api/authApi/auth';
 import LayoutFooter from '@/layouts/LayoutFooter';
 import FollowUserOption from '@/components/followUserOption/FollowUserOption';
 import MoreOption from '@/components/followUserOption/MoreOption';
+import { getCountFollower, getCountFollowing } from '@/api/authApi/graph';
+import { getPostByUserId } from '@/api/authApi/post';
 
 import cute from '@/assets/images/cute.gif';
 import down from '@/assets/images/down.png';
@@ -20,11 +24,32 @@ import more from '@/assets/images/more.png';
 import './ProfileUser.scss';
 
 const ProfileUser = () => {
+  const { id } = useParams();
   const [activeItem, setActiveItem] = useState(null);
   const [showOption, setShowOption] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [user, setUser] = useState({});
+  const [post, setPost] = useState(0);
+  const [follower, setFollower] = useState(0);
+  const [following, setFollowing] = useState(0);
 
   const { t } = useTranslation('profile');
+
+  useEffect(() => {
+    const getInfo = async () => {
+      console.log(id);
+      const user = await getUserById(id);
+      setUser(user);
+      const posts = await getPostByUserId(id);
+      setPost(posts.length);
+      const follower = await getCountFollower(id);
+      setFollower(follower);
+      const following = await getCountFollowing(id);
+      setFollowing(following);
+    }
+
+    getInfo();
+  }, []);
 
   const handleClick = (item) => {
     setActiveItem(item);
@@ -73,7 +98,7 @@ const ProfileUser = () => {
       <div className='content-top'>
         <div className='group-avata'>
           <div className='avata'>
-            <img src={account} alt='avata' />
+            <img src={user?.profile?.avatarUrl ? user?.profile?.avatarUrl : account} alt='avata' />
           </div>
 
           <div className='hot-story'>
@@ -92,7 +117,7 @@ const ProfileUser = () => {
 
         <div className='right'>
           <div className='action'>
-            <p className='name'><b>hanglazy4</b></p>
+            <p className='name'><b>{user?.profile?.fullName}</b></p>
             <div className='group-btn'>
               <button className='btn-action-1' onClick={() => setShowOption(true)}>
                 <p><b>{t('following')}</b></p>
@@ -109,9 +134,9 @@ const ProfileUser = () => {
           </div>
 
           <div className='data'>
-            <p><b>0</b> {t('posts')}</p>
-            <p><b>4</b> {t('followers')}</p>
-            <p><b>4</b> {t('following')}</p>
+            <p><b>{post}</b> {t('posts')}</p>
+            <p><b>{follower}</b> {t('followers')}</p>
+            <p><b>{following}</b> {t('following')}</p>
           </div>
 
         </div>
@@ -120,7 +145,7 @@ const ProfileUser = () => {
       <div className='content-bottom'>
         <div className='menu-profile'>
           <div className={`menu-item ${activeItem === 'post' ? 'active' : ''}`} onClick={() => handleClick('post')}>
-            <img src={post} alt='post' />
+            <img src={postIcon} alt='post' />
             <p>{t('post')}</p>
           </div>
 
