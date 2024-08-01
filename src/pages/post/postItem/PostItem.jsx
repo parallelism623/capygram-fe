@@ -26,7 +26,7 @@ const PostItem = ({ post, onCancel, setIscall }) => {
   const { t } = useTranslation('explore');
   const inputRef = React.createRef();
 
-  const user = useSelector(state => state.user.user);
+  const user = useSelector(state => state.form.user);
 
   const addEmoji = (event, emojiObject) => {
     const emoji = event.emoji;

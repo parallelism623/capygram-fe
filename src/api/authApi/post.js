@@ -56,25 +56,20 @@ export const deletePostByPostId = async (postId) => {
 
 export const updatePost = async (post, user) => {
   try {
-    const formData = new FormData();
-    const { ImageUrls, Likes, Content, Id } = post;
-    const { UserName, UserId } = user;
-    formData.append('Id', Id);
-    ImageUrls.forEach((image) => {
-      formData.append('ImageUrls', image);
-    });
-    formData.append('Likes', Likes);
-    formData.append('Content', Content);
-    formData.append('UserName', UserName);
-    formData.append('UserId', UserId);
+    const { imageUrls, likes, content, id } = post;
+    const { userName, userId } = user;
 
     await requestWithToken(postInstance, {
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
+      data: {
+        id,
+        imageUrls,
+        likes,
+        content,
+        userName,
+        userId
       },
       method: "put",
-      url: `/api/Posts/Update/${Id}`
+      url: "/api/Posts/Update"
     });
 
   } catch (error) {

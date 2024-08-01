@@ -34,7 +34,8 @@ export const active_account = async (data) => {
     const birthday = date.toISOString();
 
     //gọi API và chờ phản hồi
-    const response = await request(authInstance, {
+
+    await request(authInstance,{
       data: {
         fullName: fullname,
         email,
@@ -47,14 +48,6 @@ export const active_account = async (data) => {
       method: "post",
       url: "/api/Users/active-account"
     });
-
-
-
-    //lấy refreshToken và accessToken từ phản hồi
-    const { refreshToken, accessToken } = response.value;
-    localStorage.setItem("refreshToken", refreshToken);
-    localStorage.setItem("accessToken", accessToken);
-
   } catch (error) {
     console.log(error);
     throw error;
@@ -124,7 +117,7 @@ export const logout = async () => {
 export const editProfile = async (data) => {
   //cần xoá avatarUrl
   try {
-    const { avata, bio, sex } = data;
+    const { bio, sex } = data;
     //se thay doi cach lay id sau
     const id = localStorage.getItem("userId");
 
@@ -141,7 +134,6 @@ export const editProfile = async (data) => {
     await requestWithToken(authInstance, {
       data: {
         id,
-        avatarUrl: avata,
         story: bio,
         gender,
       },
@@ -176,3 +168,24 @@ export const uploadAvatar = async (data, userId) => {
     throw error;
   }
 }
+
+export const refreshToken = async () => {
+  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = localStorage.getItem("accessToken");
+  const userId = localStorage.getItem("userId");
+  try {
+    const response = await request(authInstance, {
+      data: {
+        refreshToken,
+        accessToken,
+        id: userId
+      },
+      method: "post",
+      url: "/api/Users/refresh-token"
+    });
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
