@@ -47,6 +47,8 @@ const createAuthInstance = (baseURL) => {
 const publicInstance = createAxiosInstance(import.meta.env.VITE_APP_URL_BE);
 const authInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE);
 const postInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_POST);
+const graphInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_GRAPH);
+const newsFeedInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_NEWSFEED);
 
 const request = (instance, config) => {
   return instance({ ...config });
@@ -60,4 +62,4 @@ const requestWithToken = (instance, config) => {
   return instance({ ...config, headers: { Authorization: `Bearer ${accessToken}` } });
 };
 
-export { request, requestWithToken, authInstance, publicInstance, postInstance };
+export { request, requestWithToken, authInstance, publicInstance, postInstance, graphInstance, newsFeedInstance };
