@@ -95,10 +95,9 @@ const Login = () => {
           </div>
           <div className="register">
             <p onClick={() => navigate("/ft/register")}>{t('register')}</p>
-          </div>
+          </div> 
         </div>
       </div>
-
     </div>
   )
 }
