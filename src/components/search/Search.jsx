@@ -12,11 +12,35 @@ const Search = () => {
   const { t } = useTranslation('search');
   const [input, setInput] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
     const storedSearch = JSON.parse(localStorage.getItem('recentSearches')) || [];
     setRecentSearches(storedSearch);
+
+    const fetchUsers = async () => {
+      try {
+        // const response = await 
+        // setUsers(response);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchUsers();
   }, []);
+
+  useEffect(() => {
+    if(input.trim()) {
+      const results = users.filter(user =>
+        user.profile.fullName.toLowerCase().includes(input.toLowerCase()) ||
+        user.userName.toLowerCase().includes(input.toLowerCase())
+      );
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  }, [input, users]);
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
