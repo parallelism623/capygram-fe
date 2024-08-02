@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 import Options from './Options'
 import Comment from './Comment';
-import Share from './Share';
 import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
+import { newsFeed } from '@/api/authApi/newsfeed';
+import ShareTo from '../explore/ShareTo';
 
 import { setPost, setStep, addComments } from '@/store/formSlice';
 
@@ -19,7 +20,9 @@ const Post = () => {
     const [describe, setDescribe] = useState('');
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [post, setPost] = useState([]);
+    const [iscall, setIscall] = useState(false);
     const dispatch = useDispatch();
+    const [currentPost, setCurrentPost] = useState(null);
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -41,38 +44,43 @@ const Post = () => {
     const handleChange = (e) => {
         setDescribe(e.target.value);
     };
+
     const addEmoji = (event, emojiObject) => {
         const emoji = event.emoji;
         const newDescribe = describe + emoji;
         setDescribe(newDescribe);
         dispatch(setPost({ description: newDescribe }));
     };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (describe.trim()) {
             dispatch(addComments(describe));
             setDescribe('');
         }
-    }
-
-
+    };
 
     const handleShowShare = () => {
         setShowShare(true);
     }
+
     const cancelShowShare = () => {
         setShowShare(false);
     }
 
-    const handleShowComment = () => {
+    const handleShowComment = (item) => {
         setShowComment(true);
+        setCurrentPost(item);
     }
+
     const cancelShowComment = () => {
         setShowComment(false);
     }
+
     const handleshowOptions = () => {
         setShowOptions(true);
     }
+
     const cancelShowOptions = () => {
         setShowOptions(false);
     }
@@ -80,9 +88,11 @@ const Post = () => {
     const handleChangeIcons = () => {
         setIcons(!icons);
     }
+
     const handleChangeBookmark = () => {
         setBookmark(!bookmark);
     }
+
     return (
         <div className="post">
             {post.map((item, id) => (
@@ -123,7 +133,7 @@ const Post = () => {
 
                                 </span>
                                 <span>
-                                    <i onClick={handleShowComment} className="fa-regular fa-comment"></i>
+                                    <i onClick={() => handleShowComment(item)} className="fa-regular fa-comment"></i>
                                 </span>
                                 <span>
                                     <i onClick={handleShowShare} className="fa-regular fa-paper-plane"></i>
@@ -157,18 +167,14 @@ const Post = () => {
                         <p className="post-caption-time">
                             <span>{item.day}</span> ngày trước
                         </p>
-                        <p onClick={handleShowComment} className='post-caption-comment'>Xem tất cả <span>{item.cmt}</span> bình luận</p>
                     </div>
-                    {/* comments */}
                     <div className="post-comment">
                         <form onSubmit={handleSubmit}>
                             <span style={{ position: 'relative' }}>
                                 <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
-                                {
-                                    showEmojiPicker && (
-                                        <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
-                                    )
-                                }
+                                {showEmojiPicker && (
+                                    <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                                )}
                             </span>
                             <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
                             <button type='submit' className="btn-post-comment">Đăng</button>
@@ -176,6 +182,19 @@ const Post = () => {
                     </div>
                 </div>
             ))}
+            {showComment && currentPost && (
+                <div className='overlay' onClick={cancelShowComment}>
+                    <motion.div
+                        className='note-container'
+                        onClick={(e) => e.stopPropagation()}
+                        animate={{ opacity: 1, scale: 1 }}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <Comment post={currentPost} />
+                    </motion.div>
+                </div>
+            )}
             {showOptions && (
                 <div className='overlay' onClick={cancelShowOptions}>
                     <motion.div
@@ -189,21 +208,6 @@ const Post = () => {
                     </motion.div>
                 </div>
             )}
-
-            {showComment && (
-                <div className='overlay' onClick={cancelShowComment}>
-                    <motion.div
-                        className='note-container'
-                        onClick={(e) => e.stopPropagation()}
-                        animate={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <Comment oncancel={cancelShowComment} />
-                    </motion.div>
-                </div>
-            )}
-
             {showShare && (
                 <div className='overlay' onClick={cancelShowShare}>
                     <motion.div
@@ -213,14 +217,12 @@ const Post = () => {
                         initial={{ opacity: 0, scale: 0.5 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <Share oncancel={cancelShowShare} />
+                        <ShareTo oncancel={cancelShowShare} />
                     </motion.div>
                 </div>
             )}
         </div>
-
-
-
     )
 }
-export default Post
+
+export default Post;

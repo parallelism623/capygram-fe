@@ -41,14 +41,15 @@ const Explore = () => {
     setShowItem(true);
   }
   return (
-    <div className='body-list-explore'>
-      <InfiniteScroll
-        dataLength={exploreData.length}
-        // next={fetchMoreData}
-        hasMore={true}
-      // loader={<h4>Loading...</h4>}
-      >
-        <div className='body-explore'>
+    <InfiniteScroll
+      dataLength={exploreData.length}
+      // next={fetchMoreData}
+      hasMore={true}
+    // loader={<h4>Loading...</h4>}
+    >
+      <div className='body-list-explore' style={{ position: "absolute", left: "16%" }}>
+
+        <div className='body-explore' >
           {
             (exploreData && exploreData.length > 0) && exploreData.map((explore) => (
               <>
@@ -86,8 +87,8 @@ const Explore = () => {
             </div>
           )}
         </div>
-      </InfiniteScroll>
-    </div>
+      </div >
+    </InfiniteScroll>
   )
 }
 

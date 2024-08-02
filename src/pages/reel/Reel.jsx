@@ -2,9 +2,12 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './Reel.scss'
 import avt from '../../assets/images/account.png'
+import { motion } from 'framer-motion';
+import CommentReel from './CommentReel';
 
 const Reel = () => {
   const [reel, setReel] = useState([]);
+  const [showComment, setShowComment] = useState(false);
   const videoRefs = useRef([]);
   useEffect(() => {
     const fakeReel = async () => {
@@ -65,7 +68,7 @@ const Reel = () => {
                 <p>{item.like}</p>
               </li>
               <li className='action-list'>
-                <i className="fa-regular fa-comment"></i>
+                <i className="fa-regular fa-comment" onClick={() => setShowComment(true)}></i>
                 <p>{item.cmt}</p>
               </li>
               <li className='action-list'>
@@ -82,9 +85,20 @@ const Reel = () => {
           </div>
         </div>
       ))}
+      {showComment && (
+        <div className='overlay' onClick={() => setShowComment(false)}>
+          <motion.div
+            className='note-container'
+            onClick={(e) => e.stopPropagation()}
+            animate={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+          >
+            <CommentReel />
+          </motion.div>
+        </div>
+      )}
     </div>
-
-
 
   )
 }
