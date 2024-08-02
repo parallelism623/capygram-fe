@@ -1,0 +1,389 @@
+.body-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .item-explore{
+    width: 80%;
+    height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+
+    .image-video{
+      width: 50%;
+      height: 100% ;
+
+      .i{
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        video{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .ant-carousel{
+          width: 100%;
+          height: 100% !important;
+
+          .slick-slider{
+            width: 100%;
+            height: 100%;
+
+            button{
+              color: black;
+            }
+
+            .slick-dots{
+              li{
+                button{
+                  background-color: black;
+                }
+              }
+            }
+
+            .slick-list{
+              width: 100%;
+              height: 100%;
+
+              .slick-track{
+                width: 100%;
+                height: 100%;
+
+                .slick-slide{
+                  width: 100%;
+                  height: 100%;
+
+                  div{
+                    width: 100%;
+                    height: 100%;
+                    .image-slider{
+                      width: 100%;
+                      height: 100% !important;
+                      object-fit: cover;
+
+                      img{
+                        width: 100%;
+                        height: 100%;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .content-explore{
+      position: relative;
+      width: 50%;
+      height: 100%;
+      background-color: white;
+      padding: 10px 20px;
+
+      .top-content-explore{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgb(240, 236, 236);
+
+        .info-user{
+          height: 100%;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .avatar-info{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgb(24, 24, 24);
+          }
+
+          .fl{
+            color: rgb(64, 64, 249);
+          }
+
+          .isFollow{
+            display: none;
+          }
+
+        }
+
+        .icon-loadMore{
+          height: 100%;
+          display: flex;
+          align-items: center;
+
+          img{
+            width: 20px;
+            height: 20px;
+          }
+        }
+
+        .overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 4;
+
+          .item-explore-container {
+            position: relative;
+            width: 80%;
+            z-index: 5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+
+      .comment-explore{
+        width: 100%;
+        height: 300px;
+      }
+
+      .bottom-explore{
+        position: absolute;
+        width: 90%;
+        right: 20px;
+        bottom: 20px;
+        background-color: white;
+
+        .bottom1-explore{
+          width: 100%;
+          height: 100px;
+          border-top: 1px solid rgb(240, 236, 236);
+          border-bottom: 1px solid rgb(240, 236, 236);
+
+          .gr-icon{
+            width: 100%;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .gr-icon1{
+              height: 100%;
+              display: flex;
+              align-items: center;
+              gap: 10px;
+
+              span{
+                width: 20px;
+                height: 20px;
+                transition: all 0.5s ease;
+
+                i{
+                  font-size: 23px;
+                }
+                
+                &:hover{
+                  opacity: 0.8;
+                }
+
+                .fa-heart:hover,
+                .fa-paper-plane:hover,
+                .fa-comment:hover {
+                    color: gray;
+                }
+
+                .fa-solid{
+                  color: red;
+                }
+              }
+
+              img{
+                width: 20px;
+                height: 20px;
+              }
+            }
+
+            .overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,0.5);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 4;
+
+              .item-explore-container {
+                position: relative;
+                width: 80%;
+                z-index: 5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+            
+            .gr-icon2{
+              height: 100%;
+              display: flex;
+              align-items: center;
+
+              span{
+                width: 20px;
+                height: 20px;
+                transition: all 0.5s ease;
+
+                i{
+                  font-size: 20px;
+                }
+
+                &:hover{
+                  opacity: 0.8;
+                }
+
+                .fa-bookmark:hover {
+                    color: gray;
+                }
+              }
+
+
+            }
+          }
+        }
+
+        .bottom2-explore{
+          width: 100%;
+          height: 50px;
+          display: flex;
+          align-items: center;
+
+          img{
+            width: 30px;
+            height: 30px;
+          }
+
+          textarea{
+            width: 90%;
+            height: 100%;
+            margin-top: 30px;
+            word-wrap: break-word;
+            border: none;
+            resize: none;
+            overflow-y: hidden;
+
+            &:focus{
+              outline: none;
+            }
+          }
+
+          .send{
+            color: rgb(5, 5, 244);
+          }
+
+          .notSend{
+            color: rgb(157, 196, 249);
+          }
+        }
+
+        .emoji-picker-react{
+          position: absolute;
+          bottom: 70px;
+          height: 300px !important;
+          width: 250px !important;
+        }
+      }
+
+      .comment-explore{
+        width: 100%;
+        max-height: 400px;
+        overflow-y: auto;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .comment-item{
+          width: 100%;
+          display: flex;
+          gap: 10px;
+
+          .info-user-comment{
+            display: flex;
+            height: 50px;
+            gap: 10px;
+
+            img{
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              border: 1px solid rgb(24, 24, 24);
+            }
+          }
+
+          .content-comment{
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            background-color: rgb(228, 227, 227);
+            border-radius: 12px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .body-item{
+    .item-explore{
+      width: 90%;
+      height: 600px;
+      .content-explore{
+        .comment-explore{
+          max-height: 400px;
+        }
+      }
+    }
+  }
+  
+}
+
+@media (min-width: 1024px) {
+  .body-item{
+    .item-explore{
+      width: 90%;
+      height: 600px;
+      .content-explore{
+        .comment-explore{
+          max-height: 500px;
+        }
+      }
+    }
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .body-item{
+    .item-explore{
+      width: 90%;
+      height: 500px;
+    }
+  }
+  
+}

@@ -22,6 +22,7 @@ import addFriend from '@/assets/images/addFriend.png';
 import more from '@/assets/images/more.png';
 
 import './ProfileUser.scss';
+import PostInProfileUser from './PostInProfileUser';
 
 const ProfileUser = () => {
   const { id } = useParams();
@@ -30,6 +31,7 @@ const ProfileUser = () => {
   const [showMore, setShowMore] = useState(false);
   const [user, setUser] = useState({});
   const [post, setPost] = useState(0);
+  const [posts, setPosts] = useState([]);
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
 
@@ -37,11 +39,12 @@ const ProfileUser = () => {
 
   useEffect(() => {
     const getInfo = async () => {
-      console.log(id);
+      // console.log(id);
       const user = await getUserById(id);
       setUser(user);
       const posts = await getPostByUserId(id);
       setPost(posts.length);
+      setPosts(posts);
       const follower = await getCountFollower(id);
       setFollower(follower);
       const following = await getCountFollowing(id);
@@ -154,6 +157,14 @@ const ProfileUser = () => {
             <p>{t('tagged')}</p>
           </div>
         </div>
+
+        <div className='list-post'>
+          {
+            activeItem === 'post' && (
+              <PostInProfileUser posts={posts} userId={id} />
+            )
+          }
+        </div>
       </div>
 
       {
@@ -166,7 +177,7 @@ const ProfileUser = () => {
               initial={{ opacity: 0, scale: 0.5 }}
               transition={{ duration: 0.3 }}
             >
-              <FollowUserOption onCancel={handleCancel} />
+              <FollowUserOption onCancel={handleCancel} user={user} />
             </motion.div>
           </div>
         )
