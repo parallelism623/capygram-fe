@@ -23,7 +23,8 @@ const Explore = () => {
     const getPosts = async () => {
       try {
         const post = await getAllPosts();
-        setExploreData(post);
+        console.log(post)
+        setExploreData(post.data);
       } catch (error) {
         console.log(error);
       }

@@ -143,7 +143,6 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   return (
     <div className='body-item'>
       <div className='item-explore'>
-
         <div className='image-video'>
           <div className='i'>
             <Carousel arrows infinite={false} >
