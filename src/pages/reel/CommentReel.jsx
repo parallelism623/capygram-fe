@@ -1,8 +1,8 @@
 import './CommentReel.scss'
 const CommentReel = () => {
     return (
-        <div className="comment-reel" style={{ background: 'red', width: '270px', height: '400px' }}>
-
+        <div className="comment-reel">
+            <h1>Trần Quân</h1>
         </div>
     )
 }
