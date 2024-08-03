@@ -48,15 +48,15 @@ const Post = () => {
             const id = localStorage.getItem('userId');
             try {
                 const post = await newsFeed(id, limit);
-                console.log(data);
+                console.log(post.data); // Đảm bảo post chứa dữ liệu đúng
                 setPost(post.data);
-            }
-            catch (error) {
+            } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu bài đăng", error);
             }
         }
         getPost();
-    }, [])
+    }, [limit]); // Thêm limit vào dependency array nếu cần cập nhật khi limit thay đổi
+
 
 
 
@@ -125,7 +125,7 @@ const Post = () => {
                         </div>
                         <div className="post-header-right">
                             <div className="post-header-username">
-                                <a href="/#">{item.username}</a>
+                                <a href="/#">{item.userName}</a>
                             </div>
                             <div className="post-header-option">
                                 <span>
@@ -138,7 +138,7 @@ const Post = () => {
                     <div className="post-image">
                         <div className="i">
                             <Carousel arrows infinite={false} >
-                                {item.images.map((imgSrc, imgId) => (
+                                {item.imageUrls.map((imgSrc, imgId) => (
                                     <div className="image-slider">
                                         <img key={imgId} src={imgSrc} alt="" />
                                     </div>
@@ -178,7 +178,7 @@ const Post = () => {
                             </div>
                         </div>
                         <div className="post-likes">
-                            <p><span>{item.like}</span> lượt thích</p>
+                            <p><span>{item.likes}</span> lượt thích</p>
                         </div>
                     </div>
                     {/* caption */}
@@ -188,7 +188,7 @@ const Post = () => {
                                 <p>{item.username}</p>
                             </span>
                             <span className='caption'>
-                                {item.cap}
+                                {item.content}
                             </span>
                         </div>
                         <p className="post-caption-time">

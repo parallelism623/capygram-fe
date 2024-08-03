@@ -4,9 +4,7 @@ export const newsFeed = async (id, limit) => {
   try {
     const response = await requestWithToken(newsFeedInstance, {
       method: "get",
-
-      url: `/api/Newsfeeds/GetNewsfeed?${id}&limit=${limit}`
-
+      url: `/api/Newsfeeds/GetNewsfeed?id=${id}&limit=${limit}`
     });
     return response.data.value;
   } catch (error) {
