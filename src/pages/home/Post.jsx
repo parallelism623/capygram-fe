@@ -10,6 +10,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { newsFeed } from '@/api/authApi/newsfeed';
 import ShareTo from '../explore/ShareTo';
 
+
 import { setPost, setStep, addComments } from '@/store/formSlice';
 
 const Post = () => {
@@ -24,23 +25,40 @@ const Post = () => {
     const [iscall, setIscall] = useState(false);
     const dispatch = useDispatch();
     const [currentPost, setCurrentPost] = useState(null);
+    const [limit, setLimit] = useState(3);
 
+    // useEffect(() => {
+    //     const fetchPost = async () => {
+    //         const data = [
+    //             { id: 1, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 2, cmt: 230011, avatar: avt, images: ["https://wallpaperaccess.com/full/4175212.jpg", "https://file.hstatic.net/1000061481/file/man-united-24-25-away-kit__3__ac0df580a6de4073a62b9cfd459bb8aa_grande.jpg"] },
+    //             { id: 2, username: 'Manchesterunited', name: 'Manu', like: 3266357, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.7jfuUFdK-1XeUG8EEGdkygHaEo&pid=Api&P=0&h=180"] },
+    //             { id: 3, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 24, cmt: 230011, avatar: avt, images: ["https://i.ytimg.com/vi/9NADpKUrGkk/maxresdefault.jpg"] },
+    //             { id: 4, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://wallpapercave.com/wp/wp11739637.jpg"] },
+    //             { id: 5, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 1, cmt: 230011, avatar: avt, images: ["https://tse2.mm.bing.net/th?id=OIP.F5fjhPnEFnf8AszqCztzegHaIQ&pid=Api&P=0&h=180"] },
+    //             { id: 6, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 5, cmt: 230011, avatar: avt, images: ["https://www.aljazeera.com/wp-content/uploads/2022/12/SSS10772_1.jpg?resize=1920%2C1440"] },
+    //             { id: 7, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 7, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.Nt2rigkhibkJQFb2UWWSggHaE8&pid=Api&P=0&h=180"] },
+    //             { id: 8, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 8, cmt: 230011, avatar: avt, images: ["https://media.vov.vn/sites/default/files/styles/large/public/2022-12/2022-12-18t185427z_447705602_up1eici1giod5_rtrmadp_3_soccer-worldcup-arg-fra-report.jpg"] }
+    //         ];
+    //         setPost(data);
+    //     };
+    //     fetchPost();
+    // }, []);
     useEffect(() => {
-        const fetchPost = async () => {
-            const data = [
-                { id: 1, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 2, cmt: 230011, avatar: avt, images: ["https://wallpaperaccess.com/full/4175212.jpg", "https://file.hstatic.net/1000061481/file/man-united-24-25-away-kit__3__ac0df580a6de4073a62b9cfd459bb8aa_grande.jpg"] },
-                { id: 2, username: 'Manchesterunited', name: 'Manu', like: 3266357, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.7jfuUFdK-1XeUG8EEGdkygHaEo&pid=Api&P=0&h=180"] },
-                { id: 3, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 24, cmt: 230011, avatar: avt, images: ["https://i.ytimg.com/vi/9NADpKUrGkk/maxresdefault.jpg"] },
-                { id: 4, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://wallpapercave.com/wp/wp11739637.jpg"] },
-                { id: 5, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 1, cmt: 230011, avatar: avt, images: ["https://tse2.mm.bing.net/th?id=OIP.F5fjhPnEFnf8AszqCztzegHaIQ&pid=Api&P=0&h=180"] },
-                { id: 6, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 5, cmt: 230011, avatar: avt, images: ["https://www.aljazeera.com/wp-content/uploads/2022/12/SSS10772_1.jpg?resize=1920%2C1440"] },
-                { id: 7, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 7, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.Nt2rigkhibkJQFb2UWWSggHaE8&pid=Api&P=0&h=180"] },
-                { id: 8, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 8, cmt: 230011, avatar: avt, images: ["https://media.vov.vn/sites/default/files/styles/large/public/2022-12/2022-12-18t185427z_447705602_up1eici1giod5_rtrmadp_3_soccer-worldcup-arg-fra-report.jpg"] }
-            ];
-            setPost(data);
-        };
-        fetchPost();
-    }, []);
+        const getPost = async () => {
+            const id = localStorage.getItem('userId');
+            try {
+                const post = await newsFeed(id, limit);
+                console.log(data);
+                setPost(post.data);
+            }
+            catch (error) {
+                console.error("Lỗi khi lấy dữ liệu bài đăng", error);
+            }
+        }
+        getPost();
+    }, [])
+
+
 
     const handleChange = (e) => {
         setDescribe(e.target.value);
