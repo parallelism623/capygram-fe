@@ -81,9 +81,11 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
       const followings = await getFollowing(userId);
 
-      // console.log("followings:", followings);
+      console.log("followings:", followings);
 
       const isFollow = followings.some(followingId => followingId === explore.userId);
+
+      console.log("isFollow:", isFollow);
 
       setIsFollow(isFollow ? true : false);
     }
