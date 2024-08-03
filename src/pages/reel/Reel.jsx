@@ -38,53 +38,55 @@ const Reel = () => {
     }
   };
   return (
-    <div className='reel' style={{ position: "absolute", left: "16%" }}>
-      {reel.map((item, id) => (
-        <div className="reel-container" key={id}>
-          <div className="reel-video">
-            <video ref={el => (videoRefs.current[id] = el)}
-              onClick={() => handleVideoClick(id)}
-              src={item.video_url}>
-              autoPlay
-              muted
-            </video>
-            <div className="info">
-              <div className="info-img">
-                <img src={item.img_url} alt="" />
-                <div className="info-img-content">
-                  <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>{item.username}</p>
-                  <button>Theo dõi</button>
+    <>
+      <div className='reel' style={{ position: "absolute", left: "16%" }}>
+        {reel.map((item, id) => (
+          <div className="reel-container" key={id}>
+            <div className="reel-video">
+              <video ref={el => (videoRefs.current[id] = el)}
+                onClick={() => handleVideoClick(id)}
+                src={item.video_url}>
+                autoPlay
+                muted
+              </video>
+              <div className="info">
+                <div className="info-img">
+                  <img src={item.img_url} alt="" />
+                  <div className="info-img-content">
+                    <p style={{ marginRight: '10px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer' }}>{item.username}</p>
+                    <button>Theo dõi</button>
+                  </div>
+                </div>
+                <div className="info-caption">
+                  <p style={{ color: 'white' }}>{item.cap}</p>
                 </div>
               </div>
-              <div className="info-caption">
-                <p style={{ color: 'white' }}>{item.cap}</p>
-              </div>
+            </div>
+            <div className="reel-action">
+              <ul>
+                <li className='action-list'>
+                  <i className="fa-regular fa-heart"  ></i>
+                  <p>{item.like}</p>
+                </li>
+                <li className='action-list' >
+                  <i className="fa-regular fa-comment" onClick={() => { console.log("ksadsd"); setShowComment(true); }} ></i>
+                  <p>{item.cmt}</p>
+                </li>
+                <li className='action-list'>
+                  <i className="fa-regular fa-paper-plane"></i>
+                </li>
+                <li className='action-list'>
+                  <i className="fa-regular fa-bookmark"></i>
+                </li>
+                <li className='action-list'>
+                  <i className="fa-solid fa-ellipsis"></i>
+                </li>
+                <li className='action-list'></li>
+              </ul>
             </div>
           </div>
-          <div className="reel-action">
-            <ul>
-              <li className='action-list'>
-                <i className="fa-regular fa-heart" ></i>
-                <p>{item.like}</p>
-              </li>
-              <li className='action-list'>
-                <i className="fa-regular fa-comment" onClick={() => setShowComment(true)}></i>
-                <p>{item.cmt}</p>
-              </li>
-              <li className='action-list'>
-                <i className="fa-regular fa-paper-plane"></i>
-              </li>
-              <li className='action-list'>
-                <i className="fa-regular fa-bookmark"></i>
-              </li>
-              <li className='action-list'>
-                <i className="fa-solid fa-ellipsis"></i>
-              </li>
-              <li className='action-list'></li>
-            </ul>
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
       {showComment && (
         <div className='overlay' onClick={() => setShowComment(false)}>
           <motion.div
@@ -98,8 +100,7 @@ const Reel = () => {
           </motion.div>
         </div>
       )}
-    </div>
-
+    </>
   )
 }
 
