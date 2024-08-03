@@ -9,7 +9,7 @@ import { setStep, setUser } from '@/store/formSlice';
 
 import setting from '@/assets/images/setting.png';
 import Add from '@/assets/images/Add.png';
-import post from '@/assets/images/post.png';
+import postIcon from '@/assets/images/post.png';
 import saved from '@/assets/images/saved.png';
 import tagged from '@/assets/images/tagged.png';
 import account from '@/assets/images/account.png';
@@ -156,7 +156,7 @@ const Profile = () => {
       <div className='content-bottom'>
         <div className='menu-profile'>
           <div className={`menu-item ${activeItem === 'post' ? 'active' : ''}`} onClick={() => handleClick('post')}>
-            <img src={post} alt='post' />
+            <img src={postIcon} alt='post' />
             <p>{t('post')}</p>
           </div>
 
