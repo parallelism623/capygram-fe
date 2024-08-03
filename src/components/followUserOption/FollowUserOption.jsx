@@ -10,7 +10,7 @@ import next from '@/assets/images/next.png';
 import exit from '@/assets/images/exit.png';
 
 import './FollowUserOption.scss';
-const FollowUserOption = ({ onCancel }) => {
+const FollowUserOption = ({ onCancel, user }) => {
   const { t } = useTranslation('profile');
 
   return (
@@ -21,9 +21,9 @@ const FollowUserOption = ({ onCancel }) => {
             <img src={exit} alt='exit' onClick={onCancel} />
           </div>
           <div className='avatar'>
-            <img src={account} />
+            <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} />
           </div>
-          <div className='username'><b>lazy</b></div>
+          <div className='username'><b>{ user.userName}</b></div>
         </div>
         <div className='center-option'>
           <div className='item-option'>

@@ -1,26 +1,25 @@
 /* eslint-disable */
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import "@/i18n";
 import { Carousel } from 'antd';
 import { motion } from 'framer-motion';
 import EmojiPicker from 'emoji-picker-react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import { getUserById } from '@/api/authApi/auth';
-import ShowMoreOption from './ShowMoreOption';
-import CardUser from './CardUser';
 import { follow, getFollowing, unFollow } from '@/api/authApi/graph';
-import ShareTo from './ShareTo';
 
 import more from '@/assets/images/more.png';
 import icon from '@/assets/images/icon.png';
 import account from '@/assets/images/account.png';
 
-import './ExploreItem.scss';
+import './PostItemInProfile.scss';
+import CardUser from '../explore/CardUser';
+import ShowMoreOption from '../explore/ShowMoreOption';
+import ShareTo from '../explore/ShareTo';
+import { useSelector } from 'react-redux';
 
-const ExploreItem = ({ explore, onCancel, id }) => {
+const PostItemInProfile = ({ onCancel, post, userId }) => {
   const [showCardUser, setShowCardUser] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [input, setInput] = useState('');
@@ -34,12 +33,9 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [user, setUser] = useState({});
 
   const { t } = useTranslation('explore');
-  const videoRef = useRef([]);
-  const inputRef = React.createRef();
   const me = useSelector((state) => state.form.user);
 
-  const navigate = useNavigate();
-
+  const inputRef = React.createRef();
   const handleMouseEnter = () => {
     setHovering(true);
     setShowCardUser(true);
@@ -69,41 +65,38 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     const getData = async () => {
       const getComments = JSON.parse(localStorage.getItem('comments')) || [];
 
-      const exploreComments = getComments.filter(comment => comment.exploreId === explore.id);
+      const exploreComments = getComments.filter(comment => comment.exploreId === post.id);
 
       setComments(exploreComments);
 
-      const res = await getUserById(explore.userId);
+      const res = await getUserById(userId);
       setUser(res);
-      console.log(user);
 
-      const userId = localStorage.getItem('userId');
-
-      const followings = await getFollowing(userId);
+      const followings = await getFollowing(localStorage.getItem('userId'));
 
       // console.log("followings:", followings);
 
-      const isFollow = followings.some(followingId => followingId === explore.userId);
+      const isFollow = followings.some(followingId => followingId === userId);
 
       setIsFollow(isFollow ? true : false);
     }
 
     getData();
-  }, [explore.id, id]);
+  }, [post.is]);
 
   const handleSend = () => {
     if (input.trim() !== '') {
       const newComment = {
         user: me,
         comment: input.trim(),
-        exploreId: explore.id,
+        exploreId: post.id,
       };
 
       const storedComments = JSON.parse(localStorage.getItem('comments')) || [];
 
       storedComments.push(newComment);
 
-      const commentsExplore = storedComments.filter(comment => comment.exploreId === explore.id);
+      const commentsExplore = storedComments.filter(comment => comment.exploreId === post.id);
 
       localStorage.setItem('comments', JSON.stringify(storedComments));
 
@@ -121,23 +114,19 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   }
 
   const handleClickFollow = async () => {
-    const userId = localStorage.getItem('userId');
+    const id = localStorage.getItem('userId');
 
     if (isFollow) {
       // Unfollow
       // await unFollow(userId, explore.userId);
       setIsFollow(false);
-      await unFollow(userId, explore.userId);
+      await unFollow(id, userId);
     } else {
       // Follow
       // await follow(userId, explore.userId);
       setIsFollow(true);
-      await follow(userId, explore.userId);
+      await follow(id, userId);
     }
-  };
-
-  const handleClickProfileUser = (id) => {
-    navigate(`/profile/${id}`);
   };
 
   return (
@@ -148,7 +137,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
           <div className='i'>
             <Carousel arrows infinite={false} >
               {
-                explore.imageUrls.map((url, index) => (
+                post.imageUrls.map((url, index) => (
                   <div className='image-slider'>
                     <img src={url} alt='image' key={index} className='img-item' />
                   </div>
@@ -162,8 +151,8 @@ const ExploreItem = ({ explore, onCancel, id }) => {
           <div className='top-content-explore'>
             <div className='info-user'>
               <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
-              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => handleClickProfileUser(user.id)}><b>{user.userName}</b></p>
-              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ?  t('follow') : t('unfollow') }</p>
+              <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} ><b>{user.userName}</b></p>
+              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ? t('follow') : t('unfollow')}</p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
                 <CardUser user={user} Follow={isFollow} />
@@ -251,7 +240,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                 </div>
               </div>
               <div className='count-liked'>
-                <p>{explore.likes} {t('liked')}</p>
+                <p>{post.likes} {t('liked')}</p>
               </div>
             </div>
 
@@ -263,7 +252,8 @@ const ExploreItem = ({ explore, onCancel, id }) => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onClick={() => setShowEmoji(false)}
-                ref={inputRef} />
+                ref={inputRef}
+                />
               <p className={input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
             </div>
 
@@ -279,4 +269,4 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   )
 }
 
-export default ExploreItem;
+export default PostItemInProfile;
