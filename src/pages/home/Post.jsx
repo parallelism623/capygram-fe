@@ -2,6 +2,7 @@ import './Post.scss'
 import avt from '../../assets/images/account.png'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
+import { Carousel } from 'antd';
 import Options from './Options'
 import Comment from './Comment';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,19 +28,19 @@ const Post = () => {
     useEffect(() => {
         const fetchPost = async () => {
             const data = [
-                { id: 1, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 2, cmt: 230011, avatar: avt, image: "https://wallpaperaccess.com/full/4175212.jpg" },
-                { id: 2, username: 'Manchesterunited', name: 'Manu', like: 3266357, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, image: "https://tse3.mm.bing.net/th?id=OIP.7jfuUFdK-1XeUG8EEGdkygHaEo&pid=Api&P=0&h=180" },
-                { id: 3, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 24, cmt: 230011, avatar: avt, image: "https://i.ytimg.com/vi/9NADpKUrGkk/maxresdefault.jpg" },
-                { id: 4, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, image: "https://wallpapercave.com/wp/wp11739637.jpg" },
-                { id: 5, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 1, cmt: 230011, avatar: avt, image: "https://tse2.mm.bing.net/th?id=OIP.F5fjhPnEFnf8AszqCztzegHaIQ&pid=Api&P=0&h=180" },
-                { id: 6, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 5, cmt: 230011, avatar: avt, image: "https://www.aljazeera.com/wp-content/uploads/2022/12/SSS10772_1.jpg?resize=1920%2C1440" },
-                { id: 7, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 7, cmt: 230011, avatar: avt, image: "https://tse3.mm.bing.net/th?id=OIP.Nt2rigkhibkJQFb2UWWSggHaE8&pid=Api&P=0&h=180" },
-                { id: 8, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 8, cmt: 230011, avatar: avt, image: "https://media.vov.vn/sites/default/files/styles/large/public/2022-12/2022-12-18t185427z_447705602_up1eici1giod5_rtrmadp_3_soccer-worldcup-arg-fra-report.jpg" }
-            ]
+                { id: 1, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 2, cmt: 230011, avatar: avt, images: ["https://wallpaperaccess.com/full/4175212.jpg", "https://file.hstatic.net/1000061481/file/man-united-24-25-away-kit__3__ac0df580a6de4073a62b9cfd459bb8aa_grande.jpg"] },
+                { id: 2, username: 'Manchesterunited', name: 'Manu', like: 3266357, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.7jfuUFdK-1XeUG8EEGdkygHaEo&pid=Api&P=0&h=180"] },
+                { id: 3, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 24, cmt: 230011, avatar: avt, images: ["https://i.ytimg.com/vi/9NADpKUrGkk/maxresdefault.jpg"] },
+                { id: 4, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://wallpapercave.com/wp/wp11739637.jpg"] },
+                { id: 5, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 1, cmt: 230011, avatar: avt, images: ["https://tse2.mm.bing.net/th?id=OIP.F5fjhPnEFnf8AszqCztzegHaIQ&pid=Api&P=0&h=180"] },
+                { id: 6, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 5, cmt: 230011, avatar: avt, images: ["https://www.aljazeera.com/wp-content/uploads/2022/12/SSS10772_1.jpg?resize=1920%2C1440"] },
+                { id: 7, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 7, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.Nt2rigkhibkJQFb2UWWSggHaE8&pid=Api&P=0&h=180"] },
+                { id: 8, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 8, cmt: 230011, avatar: avt, images: ["https://media.vov.vn/sites/default/files/styles/large/public/2022-12/2022-12-18t185427z_447705602_up1eici1giod5_rtrmadp_3_soccer-worldcup-arg-fra-report.jpg"] }
+            ];
             setPost(data);
-        }
+        };
         fetchPost();
-    }, [])
+    }, []);
 
     const handleChange = (e) => {
         setDescribe(e.target.value);
@@ -117,7 +118,15 @@ const Post = () => {
                     </div>
                     {/* image */}
                     <div className="post-image">
-                        <img src={item.image} alt="" />
+                        <div className="i">
+                            <Carousel arrows infinite={false} >
+                                {item.images.map((imgSrc, imgId) => (
+                                    <div className="image-slider">
+                                        <img key={imgId} src={imgSrc} alt="" />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </div>
                     </div>
                     {/* group-bottom */}
                     <div className="post-group-bottom">

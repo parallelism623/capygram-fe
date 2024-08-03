@@ -24,10 +24,12 @@ const Explore = () => {
   useEffect(() => {
     const getPosts = async () => {
       try {
+
         const post = await getAllPosts(page, limit);
         (page > 1) ? setExploreData(prev => [...prev, ...post.data]) : setExploreData(post.data);
         setTotal(post.total);
         setHasMore(exploreData.length + post.data.length < post.total);
+
 
       } catch (error) {
         console.log(error);
