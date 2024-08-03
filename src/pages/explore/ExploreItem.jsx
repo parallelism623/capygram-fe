@@ -162,7 +162,11 @@ const ExploreItem = ({ explore, onCancel, id }) => {
             <div className='info-user'>
               <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => handleClickProfileUser(user.id)}><b>{user.userName}</b></p>
-              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ?  t('follow') : t('unfollow') }</p>
+              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>
+                {explore.userId === localStorage.getItem('userId') ? '' :
+                  (isFollow === false ? t('follow') : t('unfollow'))
+                }
+              </p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
                 <CardUser user={user} Follow={isFollow} />

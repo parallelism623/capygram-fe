@@ -18,19 +18,36 @@ const Explore = () => {
   const [item, setItem] = useState(undefined);
   const [idItem, setIdItem] = useState(undefined);
   const [hasMore, setHasMore] = useState(true);
+  const [total, setTotal] = useState(0);
+  const [limit, setLimit] = useState(16);
 
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const post = await getAllPosts();
-        console.log(post)
-        setExploreData(post.data);
+
+        const post = await getAllPosts(page, limit);
+        (page > 1) ? setExploreData(prev => [...prev, ...post.data]) : setExploreData(post.data);
+        setTotal(post.total);
+        setHasMore(exploreData.length + post.data.length < post.total);
+
+
       } catch (error) {
         console.log(error);
       }
     }
     getPosts();
-  }, [page]);
+  }, [page, limit]);
+
+  const fetchMoreData = () => {
+    if (exploreData.length >= total) {
+      setHasMore(false);
+      return;
+    }
+    setPage(prev => prev + 1);
+    setLimit(4);
+    console.log("page", page);
+    console.log("limit", limit);
+  };
 
   const handleCancel = () => {
     setShowItem(false);
@@ -44,7 +61,7 @@ const Explore = () => {
   return (
     <InfiniteScroll
       dataLength={exploreData.length}
-      // next={fetchMoreData}
+      next={fetchMoreData}
       hasMore={true}
     // loader={<h4>Loading...</h4>}
     >

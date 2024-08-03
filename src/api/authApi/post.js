@@ -78,11 +78,11 @@ export const updatePost = async (post, user) => {
   }
 };
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (page, limit) => {
   try {
     const response = await requestWithToken(postInstance, {
       method: "get",
-      url: "/api/Posts/GetAll"
+      url: `/api/Posts/GetAll?pageSize=${limit}&pageNumber=${page}`
     });
     return response.data.value;
   } catch (error) {
