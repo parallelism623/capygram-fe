@@ -24,29 +24,39 @@ const Explore = () => {
   useEffect(() => {
     const getPosts = async () => {
       try {
-
         const post = await getAllPosts(page, limit);
-        (page > 1) ? setExploreData(prev => [...prev, ...post.data]) : setExploreData(post.data);
-        setTotal(post.total);
-        setHasMore(exploreData.length + post.data.length < post.total);
-
-
+        // console.log("post:", post.data);
+        if(post.data.length > 0) {
+          setExploreData(prev => page === 1 ? post.data : [...prev, ...post.data]) ;
+          setTotal(post.total);
+          setHasMore(exploreData.length + post.data.length < post.total);
+        } else {
+          setHasMore(false);
+        }
       } catch (error) {
         console.log(error);
+        setHasMore(false);
       }
     }
     getPosts();
-  }, [page, limit]);
+  }, [page]);
 
   const fetchMoreData = () => {
     if (exploreData.length >= total) {
       setHasMore(false);
       return;
     }
-    setPage(prev => prev + 1);
+    if (page === 1) {
+      setPage(5);
+    }
+    else {
+      setPage(prev => prev + 1);
+    }
+    
     setLimit(4);
-    console.log("page", page);
-    console.log("limit", limit);
+    // console.log("exploreData", exploreData);
+    // console.log("page", page);
+    // console.log("limit", limit);
   };
 
   const handleCancel = () => {
