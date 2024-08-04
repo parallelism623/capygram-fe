@@ -1,3 +1,4 @@
+/* eslint-disable */
 import './Post.scss'
 import avt from '../../assets/images/account.png'
 import { useEffect, useState } from 'react'

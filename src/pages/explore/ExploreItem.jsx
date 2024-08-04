@@ -79,11 +79,14 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
       const userId = localStorage.getItem('userId');
 
+      //những người mình follow
       const followings = await getFollowing(userId);
 
       console.log("followings:", followings);
+      console.log("explore.userId:", explore.userId);
 
-      const isFollow = followings.some(followingId => followingId === explore.userId);
+      //kiểm tra xem mk đã follow người này chưa
+      const isFollow = followings.some(followingId => followingId.id === explore.userId);
 
       console.log("isFollow:", isFollow);
 
