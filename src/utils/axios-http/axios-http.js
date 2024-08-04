@@ -28,7 +28,8 @@ const createAuthInstance = (baseURL) => {
 
           //gắn accessToken cho instance
           instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
-
+          //thuc hien request bi loi
+          // return instance;
         } catch (error) {
           console.error(error);
           //truong hop khong refresh duoc token
