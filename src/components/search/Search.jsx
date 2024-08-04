@@ -2,9 +2,13 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
+import { useNavigate } from 'react-router-dom';
+
+import { getUserByName } from '@/api/authApi/auth';
 
 import exit from '@/assets/images/exit.png';
 import clock from '@/assets/images/clock.png';
+import account from '@/assets/images/account.png';
 
 import './Search.scss';
 
@@ -12,35 +16,28 @@ const Search = () => {
   const { t } = useTranslation('search');
   const [input, setInput] = useState('');
   const [recentSearches, setRecentSearches] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
+
     const storedSearch = JSON.parse(localStorage.getItem('recentSearches')) || [];
     setRecentSearches(storedSearch);
-
-    const fetchUsers = async () => {
-      try {
-        // const response = await 
-        // setUsers(response);
-      } catch (error) {
-        console.log(error)
+    
+    const search = async () => {
+      if (input.trim()) {
+        const UserName = input;
+        const results = await getUserByName(UserName);
+        setSearchResults(results);
+      } else {
+        setSearchResults({});
       }
     }
-    fetchUsers();
-  }, []);
 
-  useEffect(() => {
-    if(input.trim()) {
-      const results = users.filter(user =>
-        user.profile.fullName.toLowerCase().includes(input.toLowerCase()) ||
-        user.userName.toLowerCase().includes(input.toLowerCase())
-      );
-      setSearchResults(results);
-    } else {
-      setSearchResults([]);
-    }
-  }, [input, users]);
+    search();
+
+  }, [input]);
 
   const handleSearchKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -50,6 +47,7 @@ const Search = () => {
 
   const performSearch = () => {
     if (input.trim()) {
+      // console.log("results: ", searchResults);
       const newSearch = {
         index: recentSearches.length > 0 ? recentSearches[0].index + 1 : 1,
         name: input,
@@ -73,7 +71,11 @@ const Search = () => {
     localStorage.setItem('recentSearches', JSON.stringify(newSearches));
   };
 
-
+  const handleClickSearchResult = (id) => {
+    navigate(`/profile/${id}`);
+    setSearchResults({});
+    performSearch();
+  }
   return (
     <div className='body-search'>
       <div className='search'>
@@ -90,26 +92,49 @@ const Search = () => {
           <div className='group-exit' onClick={() => setInput('')}><img src={exit} /></div>
         </div>
         <div className='search-container'>
-          <div className='gr-title'>
-            <p><b>{t('recent')}</b></p>
-            <p className={`p2 ${recentSearches.length > 0 ? 'clear' : ''}`} onClick={clearAllRecentSearches}>{t('clear')}</p>
-          </div>
-          <ul className='recent-list'>
+          {input.trim() === '' && (
+            <>
+              <div className='gr-title'>
+                <p><b>{t('recent')}</b></p>
+                <p className={`p2 ${recentSearches.length > 0 ? 'clear' : ''}`} onClick={clearAllRecentSearches}>{t('clear')}</p>
+              </div>
+              <ul className='recent-list'>
 
-            {recentSearches.map(search => (
+                {recentSearches.map(search => (
 
-              <li key={search.index}>
-                <div className='recent'>
+                  <li key={search.index}>
+                    <div className='recent'>
+                      <div className='gr1'>
+                        <img src={clock} />
+                        <p>{search.name}</p>
+                      </div>
+                      <img src={exit} onClick={() => removeRecentSearch(search.index)} />
+                    </div>
+                  </li>
+                ))
+                }
+              </ul>
+            </>
+          )}
+
+          {
+            input.trim() !== '' && searchResults !== null && (
+              <div className='search-result'
+                key={searchResults.id}
+                onClick={() => handleClickSearchResult(searchResults.id)}
+              >
+                <div className='result'>
                   <div className='gr1'>
-                    <img src={clock} />
-                    <p>{search.name}</p>
+                    <img src={searchResults?.profile?.avatarUrl !== 'string' ? searchResults?.profile?.avatarUrl : account} alt='avatar-user' />
                   </div>
-                  <img src={exit} onClick={() => removeRecentSearch(search.index)} />
+                  <div className='gr2'>
+                    <p><b>{searchResults?.userName}</b></p>
+                    <p className='fullname'>{searchResults?.profile?.fullName}</p>
+                  </div>
                 </div>
-              </li>
-            ))
-            }
-          </ul>
+              </div>
+            )
+          }
         </div>
 
 
