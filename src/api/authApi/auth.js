@@ -189,3 +189,17 @@ export const refreshToken = async () => {
     throw error;
   }
 };
+
+export const getUserByName = async (UserName) => {
+  try {
+    const response = await requestWithToken(authInstance, {
+      method: "get",
+      url: `/api/Users/get-user-by-name?UserName=${UserName}`
+    });
+
+    return response.data.value;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
