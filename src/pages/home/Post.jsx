@@ -48,7 +48,7 @@ const Post = () => {
             const id = localStorage.getItem('userId');
             try {
                 const post = await newsFeed(id, limit);
-                console.log(post.data); // Đảm bảo post chứa dữ liệu đúng
+                console.log("newfeed",post.data); // Đảm bảo post chứa dữ liệu đúng
                 setPost(post.data);
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu bài đăng", error);
