@@ -31,6 +31,7 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
   const [loved, setLoved] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [user, setUser] = useState({});
+  const [isRender, setIsRender] = useState(false);
 
   const { t } = useTranslation('explore');
   const me = useSelector((state) => state.form.user);
@@ -76,13 +77,13 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
 
       // console.log("followings:", followings);
 
-      const isFollow = followings.some(followingId => followingId === userId);
+      const isFollow = followings.some(followingId => followingId.id === post.userId);
 
       setIsFollow(isFollow ? true : false);
     }
 
     getData();
-  }, [post.is]);
+  }, [post.id, isRender]);
 
   const handleSend = () => {
     if (input.trim() !== '') {
@@ -115,18 +116,17 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
 
   const handleClickFollow = async () => {
     const id = localStorage.getItem('userId');
-
     if (isFollow) {
       // Unfollow
-      // await unFollow(userId, explore.userId);
       setIsFollow(false);
-      await unFollow(id, userId);
+      await unFollow(id, post.userId);
     } else {
       // Follow
-      // await follow(userId, explore.userId);
       setIsFollow(true);
-      await follow(id, userId);
+      await follow(id, post.userId);
     }
+
+    setIsRender(!isRender);
   };
 
   return (
@@ -152,10 +152,14 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
             <div className='info-user'>
               <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} ><b>{user.userName}</b></p>
-              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>{isFollow === false ? t('follow') : t('unfollow')}</p>
+              <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>
+                {post.userId === localStorage.getItem('userId') ? '' :
+                  (isFollow === false ? t('follow') : t('unfollow'))
+                }
+              </p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
-                <CardUser user={user} Follow={isFollow} />
+                <CardUser user={user} Follow={isFollow} setIsRender={setIsRender} isRender={isRender} handleClickFollow={handleClickFollow} />
               </div>}
 
               {showMore && (
@@ -253,7 +257,7 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
                 onChange={(e) => setInput(e.target.value)}
                 onClick={() => setShowEmoji(false)}
                 ref={inputRef}
-                />
+              />
               <p className={input !== '' ? 'send' : "notSend"} onClick={handleSend}>{t('send')}</p>
             </div>
 

@@ -101,7 +101,7 @@ const ProfileUser = () => {
       <div className='content-top'>
         <div className='group-avata'>
           <div className='avata'>
-            <img src={user?.profile?.avatarUrl ? user?.profile?.avatarUrl : account} alt='avata' />
+            <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} alt='avata' />
           </div>
 
           <div className='hot-story'>

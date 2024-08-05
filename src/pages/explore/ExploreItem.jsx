@@ -32,6 +32,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const [loved, setLoved] = useState(false);
   const [showShare, setShowShare] = useState(false);
   const [user, setUser] = useState({});
+  const [isRender, setIsRender] = useState(false);
 
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
@@ -94,7 +95,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
     }
 
     getData();
-  }, [explore.id, id]);
+  }, [explore.id, id, isRender]);
 
   const handleSend = () => {
     if (input.trim() !== '') {
@@ -139,6 +140,8 @@ const ExploreItem = ({ explore, onCancel, id }) => {
       setIsFollow(true);
       await follow(userId, explore.userId);
     }
+
+    setIsRender(!isRender);
   };
 
   const handleClickProfileUser = (id) => {
@@ -174,7 +177,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
               </p>
 
               {showCardUser && <div onMouseEnter={handleMouseEnter} onMouseLeave={() => setShowCardUser(false)}>
-                <CardUser user={user} Follow={isFollow} />
+                <CardUser user={user} Follow={isFollow} setIsRender={setIsRender} isRender={isRender} handleClickFollow={handleClickFollow} />
               </div>}
 
               {showMore && (
