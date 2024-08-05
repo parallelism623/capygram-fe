@@ -13,6 +13,7 @@ import ShareTo from '../explore/ShareTo';
 
 
 import { setPost, setStep, addComments } from '@/store/formSlice';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Post = () => {
     const [icons, setIcons] = useState(false);
@@ -27,39 +28,38 @@ const Post = () => {
     const dispatch = useDispatch();
     const [currentPost, setCurrentPost] = useState(null);
     const [limit, setLimit] = useState(3);
+    const [total, setTotal] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
+    const [page, setPage] = useState(0);
 
-    // useEffect(() => {
-    //     const fetchPost = async () => {
-    //         const data = [
-    //             { id: 1, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 2, cmt: 230011, avatar: avt, images: ["https://wallpaperaccess.com/full/4175212.jpg", "https://file.hstatic.net/1000061481/file/man-united-24-25-away-kit__3__ac0df580a6de4073a62b9cfd459bb8aa_grande.jpg"] },
-    //             { id: 2, username: 'Manchesterunited', name: 'Manu', like: 3266357, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.7jfuUFdK-1XeUG8EEGdkygHaEo&pid=Api&P=0&h=180"] },
-    //             { id: 3, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 24, cmt: 230011, avatar: avt, images: ["https://i.ytimg.com/vi/9NADpKUrGkk/maxresdefault.jpg"] },
-    //             { id: 4, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 6, cmt: 230011, avatar: avt, images: ["https://wallpapercave.com/wp/wp11739637.jpg"] },
-    //             { id: 5, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 1, cmt: 230011, avatar: avt, images: ["https://tse2.mm.bing.net/th?id=OIP.F5fjhPnEFnf8AszqCztzegHaIQ&pid=Api&P=0&h=180"] },
-    //             { id: 6, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 5, cmt: 230011, avatar: avt, images: ["https://www.aljazeera.com/wp-content/uploads/2022/12/SSS10772_1.jpg?resize=1920%2C1440"] },
-    //             { id: 7, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 7, cmt: 230011, avatar: avt, images: ["https://tse3.mm.bing.net/th?id=OIP.Nt2rigkhibkJQFb2UWWSggHaE8&pid=Api&P=0&h=180"] },
-    //             { id: 8, username: 'Hongquan_1103', name: 'Quan0304', like: 326044, cap: 'Hellooo :)))', day: 8, cmt: 230011, avatar: avt, images: ["https://media.vov.vn/sites/default/files/styles/large/public/2022-12/2022-12-18t185427z_447705602_up1eici1giod5_rtrmadp_3_soccer-worldcup-arg-fra-report.jpg"] }
-    //         ];
-    //         setPost(data);
-    //     };
-    //     fetchPost();
-    // }, []);
     useEffect(() => {
         const getPost = async () => {
             const id = localStorage.getItem('userId');
             try {
-                const post = await newsFeed(id, limit);
-                console.log("newfeed",post.data); // Đảm bảo post chứa dữ liệu đúng
-                setPost(post.data);
+                const posts = await newsFeed(id, limit);
+                console.log("newfeed", posts.data); // Đảm bảo post chứa dữ liệu đúng
+                if (posts.data.length > 0) {
+                    setPost(prev => page ===  1 ? posts.data :  [...prev, ...posts.data]);
+                    setTotal(posts.total);
+                    setHasMore(posts.data.length + post.length < posts.total);
+                }
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu bài đăng", error);
             }
         }
         getPost();
-    }, [limit]); // Thêm limit vào dependency array nếu cần cập nhật khi limit thay đổi
+    }, [ page]); // Thêm limit vào dependency array nếu cần cập nhật khi limit thay đổi
 
 
-
+    const fetchMore = () => {
+        if (post.length >= total) {
+            setHasMore(false);
+            return;
+        }
+        else {
+            setPage(page + 1);
+        }
+    }
 
     const handleChange = (e) => {
         setDescribe(e.target.value);
@@ -114,142 +114,148 @@ const Post = () => {
     }
 
     return (
-        <div className="post">
-            {post.map((item, id) => (
-                <div className="post-container" key={id}>
-                    {/* header */}
-                    <div className="post-header">
-                        <div className="post-header-left">
-                            <div className="post-header-avt">
-                                <img src={item.avatar} alt="" />
+        <InfiniteScroll
+            dataLength={post.length}
+            next={fetchMore}
+            hasMore={true}
+        >
+            <div className="post">
+                {post.map((item, id) => (
+                    <div className="post-container" key={id}>
+                        {/* header */}
+                        <div className="post-header">
+                            <div className="post-header-left">
+                                <div className="post-header-avt">
+                                    <img src={item.avatar} alt="" />
+                                </div>
+                            </div>
+                            <div className="post-header-right">
+                                <div className="post-header-username">
+                                    <a href="/#">{item.userName}</a>
+                                </div>
+                                <div className="post-header-option">
+                                    <span>
+                                        <i onClick={handleshowOptions} className="fa-solid fa-ellipsis"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div className="post-header-right">
-                            <div className="post-header-username">
-                                <a href="/#">{item.userName}</a>
-                            </div>
-                            <div className="post-header-option">
-                                <span>
-                                    <i onClick={handleshowOptions} className="fa-solid fa-ellipsis"></i>
-                                </span>
+                        {/* image */}
+                        <div className="post-image">
+                            <div className="i">
+                                <Carousel arrows infinite={false} >
+                                    {item.imageUrls.map((imgSrc, imgId) => (
+                                        <div className="image-slider">
+                                            <img key={imgId} src={imgSrc} alt="" />
+                                        </div>
+                                    ))}
+                                </Carousel>
                             </div>
                         </div>
-                    </div>
-                    {/* image */}
-                    <div className="post-image">
-                        <div className="i">
-                            <Carousel arrows infinite={false} >
-                                {item.imageUrls.map((imgSrc, imgId) => (
-                                    <div className="image-slider">
-                                        <img key={imgId} src={imgSrc} alt="" />
-                                    </div>
-                                ))}
-                            </Carousel>
-                        </div>
-                    </div>
-                    {/* group-bottom */}
-                    <div className="post-group-bottom">
-                        <div className="icons">
-                            <div className="icons-left">
-                                <span>
-                                    {!icons ? (
-                                        <i className="fa-regular fa-heart" onClick={handleChangeIcons}></i>
-                                    ) :
-                                        (
-                                            <i className="fa-solid fa-heart" style={{ color: '#f20d0d', scale: '1.1' }} onClick={handleChangeIcons}></i>
-                                        )}
+                        {/* group-bottom */}
+                        <div className="post-group-bottom">
+                            <div className="icons">
+                                <div className="icons-left">
+                                    <span>
+                                        {!icons ? (
+                                            <i className="fa-regular fa-heart" onClick={handleChangeIcons}></i>
+                                        ) :
+                                            (
+                                                <i className="fa-solid fa-heart" style={{ color: '#f20d0d', scale: '1.1' }} onClick={handleChangeIcons}></i>
+                                            )}
 
-                                </span>
-                                <span>
-                                    <i onClick={() => handleShowComment(item)} className="fa-regular fa-comment"></i>
-                                </span>
-                                <span>
-                                    <i onClick={handleShowShare} className="fa-regular fa-paper-plane"></i>
-                                </span>
-                            </div>
-                            <div className="icons-right">
-                                <span>
-                                    {!bookmark ? (
-                                        <i className="fa-regular fa-bookmark" onClick={handleChangeBookmark}></i>
-                                    )
-                                        : (<i className="fa-solid fa-bookmark" onClick={handleChangeBookmark}></i>)
-                                    }
+                                    </span>
+                                    <span>
+                                        <i onClick={() => handleShowComment(item)} className="fa-regular fa-comment"></i>
+                                    </span>
+                                    <span>
+                                        <i onClick={handleShowShare} className="fa-regular fa-paper-plane"></i>
+                                    </span>
+                                </div>
+                                <div className="icons-right">
+                                    <span>
+                                        {!bookmark ? (
+                                            <i className="fa-regular fa-bookmark" onClick={handleChangeBookmark}></i>
+                                        )
+                                            : (<i className="fa-solid fa-bookmark" onClick={handleChangeBookmark}></i>)
+                                        }
 
-                                </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="post-likes">
+                                <p><span>{item.likes}</span> lượt thích</p>
                             </div>
                         </div>
-                        <div className="post-likes">
-                            <p><span>{item.likes}</span> lượt thích</p>
+                        {/* caption */}
+                        <div className="post-caption">
+                            <div className="pos-caption-user">
+                                <span className='username'>
+                                    <p>{item.username}</p>
+                                </span>
+                                <span className='caption'>
+                                    {item.content}
+                                </span>
+                            </div>
+                            <p className="post-caption-time">
+                                <span>{item.day}</span> ngày trước
+                            </p>
+                        </div>
+                        <div className="post-comment">
+                            <form onSubmit={handleSubmit}>
+                                <span style={{ position: 'relative' }}>
+                                    <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
+                                    {showEmojiPicker && (
+                                        <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                                    )}
+                                </span>
+                                <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
+                                <button type='submit' className="btn-post-comment">Đăng</button>
+                            </form>
                         </div>
                     </div>
-                    {/* caption */}
-                    <div className="post-caption">
-                        <div className="pos-caption-user">
-                            <span className='username'>
-                                <p>{item.username}</p>
-                            </span>
-                            <span className='caption'>
-                                {item.content}
-                            </span>
-                        </div>
-                        <p className="post-caption-time">
-                            <span>{item.day}</span> ngày trước
-                        </p>
+                ))}
+                {showComment && currentPost && (
+                    <div className='overlay' onClick={cancelShowComment}>
+                        <motion.div
+                            className='note-container'
+                            onClick={(e) => e.stopPropagation()}
+                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Comment post={currentPost} />
+                        </motion.div>
                     </div>
-                    <div className="post-comment">
-                        <form onSubmit={handleSubmit}>
-                            <span style={{ position: 'relative' }}>
-                                <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
-                                {showEmojiPicker && (
-                                    <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
-                                )}
-                            </span>
-                            <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
-                            <button type='submit' className="btn-post-comment">Đăng</button>
-                        </form>
+                )}
+                {showOptions && (
+                    <div className='overlay' onClick={cancelShowOptions}>
+                        <motion.div
+                            className='note-container'
+                            onClick={(e) => e.stopPropagation()}
+                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <Options oncancel={cancelShowOptions} />
+                        </motion.div>
                     </div>
-                </div>
-            ))}
-            {showComment && currentPost && (
-                <div className='overlay' onClick={cancelShowComment}>
-                    <motion.div
-                        className='note-container'
-                        onClick={(e) => e.stopPropagation()}
-                        animate={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <Comment post={currentPost} />
-                    </motion.div>
-                </div>
-            )}
-            {showOptions && (
-                <div className='overlay' onClick={cancelShowOptions}>
-                    <motion.div
-                        className='note-container'
-                        onClick={(e) => e.stopPropagation()}
-                        animate={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <Options oncancel={cancelShowOptions} />
-                    </motion.div>
-                </div>
-            )}
-            {showShare && (
-                <div className='overlay' onClick={cancelShowShare}>
-                    <motion.div
-                        className='note-container'
-                        onClick={(e) => e.stopPropagation()}
-                        animate={{ opacity: 1, scale: 1 }}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        transition={{ duration: 0.3 }}
-                    >
-                        <ShareTo oncancel={cancelShowShare} />
-                    </motion.div>
-                </div>
-            )}
-        </div>
+                )}
+                {showShare && (
+                    <div className='overlay' onClick={cancelShowShare}>
+                        <motion.div
+                            className='note-container'
+                            onClick={(e) => e.stopPropagation()}
+                            animate={{ opacity: 1, scale: 1 }}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                        >
+                            <ShareTo oncancel={cancelShowShare} />
+                        </motion.div>
+                    </div>
+                )}
+            </div>
+        </InfiniteScroll>
     )
 }
 
