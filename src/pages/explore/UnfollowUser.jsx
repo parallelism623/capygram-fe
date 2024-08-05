@@ -27,7 +27,7 @@ const UnfollowUser = ({ onCancel, user, setIsRender, isRender, setIsFollow }) =>
   return (
     <div className='unfollow-container'>
       <div className='avatar'>
-        <img src={user?.profile?.avatarUrl ? user?.profile?.avatarUrl : account} alt='avatar' />
+        <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} alt='avatar' />
         <p>{t('unfollow')} <b> @{user.userName}</b></p>
       </div>
       <div className='item-unfollow border' >
