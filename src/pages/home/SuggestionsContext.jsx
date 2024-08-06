@@ -1,11 +1,17 @@
+/* eslint-disable */
 // SuggestionsContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import avt from '../../assets/images/account.png'
+import { getFollowing } from '@/api/authApi/graph';
+import { getUserById } from '@/api/authApi/auth';
 
 export const SuggestionsContext = createContext();
 
 export const SuggestionsProvider = ({ children }) => {
     const [suggestions, setSuggestions] = useState([]);
+    const [followingUsers, setFollowingUsers] = useState([]);
+    const [suggestUser, setSuggestUser] = useState([]);
+
     const [follow, setFollow] = useState(
         suggestions.reduce((acc, suggestion) => {
             acc[suggestion.id] = false;
@@ -43,19 +49,34 @@ export const SuggestionsProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchSuggestions = async () => {
-            const data = [
-                { id: 1, username: 'feewwer28', name: 'Huong Thanh', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 2, username: '_n.m.cng_', name: 'nmcuong', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 3, username: 'swt.dt26', name: 'swt.dt26', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 4, username: 'ptlinnnn', name: 'ptlinnnn', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 5, username: 'truongyenhi1711', name: 'Nhi Trương', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 6, username: '_trancaocuong_', name: 'Trần Cường ©', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 7, username: 'trungkienp_29', name: 'Phạm Trung Kiên', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 8, username: '20pta', name: 'Thuy An', status: 'Gợi ý cho bạn', avatar: avt },
-                { id: 9, username: 'sunni_1709', name: 'Bông', status: 'Mới tham gia Instagram', avatar: avt },
-            ];
 
-            setSuggestions(data);
+            //folowing: những người mk follow
+            //follower: những người follow mk
+            const id = localStorage.getItem('userId');
+            const followingUsers = await getFollowing(id);
+            setFollowingUsers(followingUsers);
+            followingUsers.forEach(userId => {
+                const getFollowingUsers = async () => {
+                    const followingOfFollowing = await getFollowing(userId);
+                    return followingOfFollowing;
+                };
+                setSuggestions([...suggestions, ...getFollowingUsers()]);
+            });
+
+            //log ra mảng gồm id của susggestion
+            console.log("suggestions", suggestions);
+
+            suggestions.forEach(suggestion => {
+                const getInfoUserSuggestions = async () => {
+                    const user = await getUserById(suggestion);
+                    return user;
+                };
+                setSuggestUser([...suggestUser, getInfoUserSuggestions()]);
+            });
+
+            //log ra mảng gồm info user của suggestion
+            console.log("suggestUser", suggestUser);
+                
         };
 
         fetchSuggestions();
