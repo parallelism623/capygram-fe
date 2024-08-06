@@ -9,8 +9,6 @@ export const SuggestionsContext = createContext();
 
 export const SuggestionsProvider = ({ children }) => {
     const [suggestions, setSuggestions] = useState([]);
-    const [followingUsers, setFollowingUsers] = useState([]);
-    const [suggestUser, setSuggestUser] = useState([]);
 
     const [follow, setFollow] = useState(
         suggestions.reduce((acc, suggestion) => {
@@ -54,33 +52,33 @@ export const SuggestionsProvider = ({ children }) => {
             //follower: những người follow mk
             const Id = localStorage.getItem('userId');
             const followingUsers = await getFollowing(Id);
-            setFollowingUsers(followingUsers);
-            followingUsers.forEach(Id => {
-                const getFollowingUsers = async (Id) => {
+
+            const fetchFollowingUsers = async () => {
+                const allFollowingOfFollowing = [];
+                for (const user of followingUsers) {
+                    const Id = user.id;
                     const followingOfFollowing = await getFollowing(Id);
-                    return followingOfFollowing;
-                };
-                setSuggestions([...suggestions, ...getFollowingUsers()]);
-            });
+                    allFollowingOfFollowing.push(...followingOfFollowing);
+                }
+                return allFollowingOfFollowing;
+            };
 
-            //log ra mảng gồm id của susggestion
-            console.log("suggestions", suggestions);
+            const allSussgestions = await fetchFollowingUsers();
 
-            suggestions.forEach(id => {
-                const getInfoUserSuggestions = async (id) => {
-                    const user = await getUserById(id);
-                    return user;
-                };
-                setSuggestUser([...suggestUser, getInfoUserSuggestions()]);
-            });
+            setSuggestions(allSussgestions);
 
+<<<<<<< HEAD
+            console.log("suggestions", allSussgestions);
+=======
             //log ra mảng gồm info user của suggestion
             console.log("suggestUser", suggestUser);
 
+>>>>>>> 17183140e7aafa500f0eff85330990577086190d
         };
 
         fetchSuggestions();
     }, []);
+
     useEffect(() => {
         document.body.className = isDarkNight ? 'dark-mode' : 'light-mode';
     }, [isDarkNight]);
