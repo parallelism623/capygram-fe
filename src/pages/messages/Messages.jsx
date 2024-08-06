@@ -77,7 +77,7 @@ const Messages = () => {
         <Contacts contacts={contacts} currentUser={currentUser} changeChat={changeChat} />
         {
           currentChat === undefined ?
-            (<Welcome />) :
+            (<Welcome setCurrentChat={setCurrentChat} />) :
             (<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
         }
       </div>
