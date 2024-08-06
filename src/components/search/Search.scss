@@ -100,6 +100,44 @@
           }
         }
       }
+
+      .search-result{
+        width: 100%;
+        .result{
+          width: 100%;
+          height: 70px;
+          display: flex;
+          gap: 10px;
+
+          .gr1{
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgb(139, 139, 140);
+
+            img{
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+            }
+          }
+
+          .gr2{
+            height: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .fullname{
+              color: rgb(118, 114, 114);
+            }
+          }
+        }
+      }
     }
   }
 }
