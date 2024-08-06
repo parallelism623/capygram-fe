@@ -35,7 +35,7 @@ export const active_account = async (data) => {
 
     //gọi API và chờ phản hồi
 
-    await request(authInstance,{
+    await request(authInstance, {
       data: {
         fullName: fullname,
         email,

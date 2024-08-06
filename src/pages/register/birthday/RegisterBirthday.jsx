@@ -31,7 +31,7 @@ const RegisterBirthday = () => {
       dispatch(nextStep());
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error('Tên đăng nhập đã bị trùng. Vui lòng thử lại tên khác');
     }
   };
 

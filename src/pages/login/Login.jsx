@@ -10,8 +10,9 @@ import img3 from "../../assets/images/Screenshot 2024-06-13 164310.png"
 import '@/i18n';
 import { useTranslation } from 'react-i18next';
 import { getUserById, login } from '@/api/authApi/auth';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setUser } from '@/store/formSlice';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -68,13 +69,14 @@ const Login = () => {
                     username: me.userName,
                     avatarUrl: me.profile.avatarUrl
                   }));
-                  
-                  navigate("/");
 
+                  navigate("/");
+                  toast.success('Đăng nhập thành công')
                 }
                 catch (errors) {
                   console.error(errors);
-                } 
+                  toast.error('Đăng nhập không thành công. Vui lòng thử lại');
+                }
               }}
             >
               {({ handleSubmit, isSubmitting, touched, errors }) => (
@@ -95,7 +97,7 @@ const Login = () => {
           </div>
           <div className="register">
             <p onClick={() => navigate("/ft/register")}>{t('register')}</p>
-          </div> 
+          </div>
         </div>
       </div>
     </div>
