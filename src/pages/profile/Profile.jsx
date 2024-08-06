@@ -5,7 +5,7 @@ import '@/i18n';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStep, setUser } from '@/store/formSlice';
+import { setStep} from '@/store/formSlice';
 
 import setting from '@/assets/images/setting.png';
 import Add from '@/assets/images/Add.png';
@@ -24,6 +24,7 @@ import { getCountFollower, getCountFollowing } from '@/api/authApi/graph';
 
 import './Profile.scss';
 import { getPostByUserId } from '@/api/authApi/post';
+import { setUser } from '@/store/userSlice';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -33,10 +34,9 @@ const Profile = () => {
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
   const [post, setPost] = useState(0);
-  // const [me, setMe] = useState({});
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
-  const me = useSelector((state) => state.form.user);
+  const me = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,16 +50,7 @@ const Profile = () => {
         username: me.userName,
         avatarUrl: me.profile.avatarUrl
       }));
-      // setMe(
-      //   {
-      //     id: me.id,
-      //       email: me.email,
-      //       fullname: me.profile.fullName,
-      //       username: me.userName,
-      //       avatarUrl: me.profile.avatarUrl
-      //   }
-      // );
-
+      
       const follower = await getCountFollower(localStorage.getItem('userId'));
       setFollower(follower);
       const following = await getCountFollowing(localStorage.getItem('userId'));

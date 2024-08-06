@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import "@/i18n";
 
 import checkEmail from "@/assets/images/checkEmail.gif";
-import { setUser } from '@/store/formSlice';
+import { setStep, setUser } from '@/store/formSlice';
 import { registerOTPValidation } from '@/utils/validation/registerValidation';
 
 import './RegisterOTP.scss';
@@ -28,16 +28,12 @@ const RegisterOTP = () => {
 
     try {
       await active_account(values);
-      // toast.success('Đăng ký tài khoản thành công');
-      // console.log(values);
-      console.log("truocws");
       navigate('/ft/login');
-      console.log("sau");
+      dispatch(setStep(1));
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
     }
-    // console.log(values);
   };
 
   const handleSendOTP = async ( values) => {

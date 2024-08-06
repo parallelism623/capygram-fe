@@ -12,6 +12,7 @@ import { createPost } from '@/api/authApi/post';
 import muiTen from '@/assets/images/muiTen.png';
 import icon from '@/assets/images/icon.png';
 import map from '@/assets/images/map.png';
+import account from '@/assets/images/account.png';
 
 import './Step2.scss';
 
@@ -22,7 +23,7 @@ const Step2 = () => {
   const { t } = useTranslation('createPost');
   const dispatch = useDispatch();
   const post = useSelector((state) => state.form.post);
-  const user = useSelector((state) => state.form.user);
+  const user = useSelector((state) => state.user);
 
   const inputRef = React.createRef();
   const handleChange = (e) => {
@@ -76,7 +77,7 @@ const Step2 = () => {
         <div className='content-step2'>
           <div className='left-content-step2'>
             <div className='account'>
-              <img src={user.avatarUrl} alt='avata' />
+              <img src={user?.avatarUrl !== ('string' && '') ? user?.avatarUrl : account} alt='avata' />
               <p className='name'><b>{user.username}</b></p>
             </div>
             <textarea ref={inputRef} typeof='text' name='describe' value={describe} placeholder={t('about')} className='input' onChange={handleChange} />

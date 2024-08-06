@@ -37,7 +37,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
   const { t } = useTranslation('explore');
   const videoRef = useRef([]);
   const inputRef = React.createRef();
-  const me = useSelector((state) => state.form.user);
+  const me = useSelector((state) => state.user);
 
   const navigate = useNavigate();
 
