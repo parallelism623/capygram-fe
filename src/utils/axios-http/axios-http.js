@@ -29,12 +29,12 @@ const createAuthInstance = (baseURL) => {
           //gắn accessToken cho instance
           instance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
           //thuc hien request bi loi
-          // return instance;
+          return instance;
         } catch (error) {
           console.error(error);
           //truong hop khong refresh duoc token
-          // localStorage.removeItem('accessToken');
-          // localStorage.removeItem('refreshToken');
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
           return Promise.reject(error);
         }
       }

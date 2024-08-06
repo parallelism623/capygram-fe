@@ -60,7 +60,7 @@ const CardUser = ({ user, Follow, setIsRender, isRender, handleClickFollow }) =>
   return (
     <div className='container'>
       <div className='info'>
-        <img src={user.profile.avatarUrl !== 'string' ? user.profile.avatarUrl : account} alt='avata' />
+        <img src={user.profile.avatarUrl !== ('string' && '') ? user.profile.avatarUrl : account} alt='avata' />
         <p><b>{user.userName}</b></p>
       </div>
 
