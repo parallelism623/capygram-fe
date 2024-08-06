@@ -1,9 +1,7 @@
 /* eslint-disable */
 // SuggestionsContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import avt from '../../assets/images/account.png'
 import { getFollowing } from '@/api/authApi/graph';
-import { getUserById } from '@/api/authApi/auth';
 
 export const SuggestionsContext = createContext();
 
@@ -67,13 +65,7 @@ export const SuggestionsProvider = ({ children }) => {
 
             setSuggestions(allSussgestions);
 
-<<<<<<< HEAD
             console.log("suggestions", allSussgestions);
-=======
-            //log ra mảng gồm info user của suggestion
-            console.log("suggestUser", suggestUser);
-
->>>>>>> 17183140e7aafa500f0eff85330990577086190d
         };
 
         fetchSuggestions();
