@@ -5,7 +5,7 @@ import '@/i18n';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setProfile, setUser } from '@/store/formSlice';
+import { setProfile } from '@/store/formSlice';
 import ChangePhoto from './changePhoto';
 
 import { editProfile, getUserById } from '@/api/authApi/auth';
@@ -13,6 +13,7 @@ import LayoutFooter from '@/layouts/LayoutFooter';
 import account from '@/assets/images/account.png';
 
 import './EditProfile.scss';
+import { setUser } from '@/store/userSlice';
 
 const EditProfile = () => {
   const { t } = useTranslation('edit_profile');
@@ -21,7 +22,7 @@ const EditProfile = () => {
   const [showChangePhoto, setShowChangePhoto] = useState(false);
   const [newAvatar, setNewAvatar] = useState('');
   
-  const me = useSelector((state) => state.form.user);
+  const me = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.form.profile);

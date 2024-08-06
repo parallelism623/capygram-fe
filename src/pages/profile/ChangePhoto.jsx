@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import '@/i18n';
 import { useDispatch } from 'react-redux';
 
-import { setUser } from '@/store/formSlice';
 import { uploadAvatar } from '@/api/authApi/auth';
 
 import './ChangePhoto.scss';
+import { setUser } from '@/store/userSlice';
 
 const ChangePhoto = ({ onCancel, handleRemovePhoto, setNewAvatar }) => {
   const { t } = useTranslation('changePhoto_profile');

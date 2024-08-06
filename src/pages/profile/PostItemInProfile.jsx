@@ -34,7 +34,7 @@ const PostItemInProfile = ({ onCancel, post, userId }) => {
   const [isRender, setIsRender] = useState(false);
 
   const { t } = useTranslation('explore');
-  const me = useSelector((state) => state.form.user);
+  const me = useSelector((state) => state.user);
 
   const inputRef = React.createRef();
   const handleMouseEnter = () => {
