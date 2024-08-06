@@ -11,6 +11,7 @@ import SwitchAccount from './SwitchAccount';
 import down from '@/assets/images/down.png';
 import edit from '@/assets/images/edit.png';
 import mess from '@/assets/images/mess.png';
+import account from '@/assets/images/account.png';
 
 import './Contacts.scss';
 
@@ -73,7 +74,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
                   onClick={() => { changeCurrentChat(contact, index) }}
                 >
                   <div className='contact-avatar'>
-                    <img src={contact.avatarUrl} alt='avatar' />
+                    <img src={contact.avatarUrl !== ('string' && '') ? contact.avatarUrl : account} alt='avatar' />
                   </div>
                   <div className='contact-info'>
                     <p>{contact.fullname}</p>

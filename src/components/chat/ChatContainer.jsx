@@ -9,10 +9,11 @@ import ChatInput from './ChatInput';
 import phone from '@/assets/images/phone.png';
 import call from '@/assets/images/call.png';
 import down from '@/assets/images/down.png';
+import account from '@/assets/images/account.png';
 
 import './ChatContainer.scss';
 
-const ChatContainer = ({ currentChat, currentUser, socket }) => {
+const ChatContainer = ({ currentChat, currentUser }) => {
 
   const { t } = useTranslation('messages');
   const navigate = useNavigate();
@@ -33,19 +34,6 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
     const listMessages = JSON.parse(localStorage.getItem("messages")) || [];
     listMessages.push(message);
     localStorage.setItem("messages", JSON.stringify(listMessages));
-
-    // socket.current.emit("sendMessage", {
-    //   to: currentChat.id,
-    //   msg,
-    // });
-
-    // const msgs = [...messages];
-    // msgs.push({
-    //   fromSelf: true,
-    //   message: msg
-    // });
-
-    // setMessages(msgs);
 
     setMessages([...messages, message]);
   }
@@ -74,7 +62,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
       <div className='chat-header'>
         <div className='user-details'>
           <div className='avatar'>
-            <img src={currentChat.avatarUrl} alt='avatar' />
+            <img src={currentChat.avatarUrl !== ('string' && '') ? currentChat.avatarUrl : account} alt='avatar' />
           </div>
           <div className='username'>
             <p><b>{currentChat.fullname}</b></p>
@@ -90,7 +78,7 @@ const ChatContainer = ({ currentChat, currentUser, socket }) => {
         <div className='top-chat-message'>
           <div className='infor'>
             <div className='avatar'>
-              <img src={currentChat.avatarUrl} alt='avatar' />
+              <img src={currentChat.avatarUrl !== ('string' && '') ? currentChat.avatarUrl : account} alt='avatar' />
             </div>
             <div className='username'>
               <p><b>{currentChat.fullname}</b></p>

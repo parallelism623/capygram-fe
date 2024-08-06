@@ -1,9 +1,11 @@
 /* eslint-disable */
 import React, { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 import ChatContainer from '@/components/chat/ChatContainer';
 import Contacts from '@/components/chat/Contacts';
 import Welcome from '@/components/chat/Welcome';
+import { getFollowing } from '@/api/authApi/graph';
 
 import './Messages.scss';
 
@@ -12,17 +14,12 @@ const Messages = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [currentChat, setCurrentChat] = useState(undefined);
 
-  const socket = useRef();
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        //api user da login
-        setCurrentUser({
-          id: '1',
-          fullname: 'lazy',
-          avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-        });
+        setCurrentUser(user);
       } catch (error) {
         console.log(error);
       }
@@ -33,83 +30,15 @@ const Messages = () => {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        setContacts([
-          {
-            id: '2',
-            fullname: 'lazy 2',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '3',
-            fullname: 'lazy 3',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '4',
-            fullname: 'lazy 4',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '5',
-            fullname: 'lazy 5',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '6',
-            fullname: 'lazy 6',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '7',
-            fullname: 'lazy 7',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '8',
-            fullname: 'lazy 8',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '9',
-            fullname: 'lazy 9',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '10',
-            fullname: 'lazy 10',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '11',
-            fullname: 'lazy 11',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '12',
-            fullname: 'lazy 12',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '13',
-            fullname: 'lazy 13',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '14',
-            fullname: 'lazy 14',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '15',
-            fullname: 'lazy 15',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-          {
-            id: '16',
-            fullname: 'lazy 16',
-            avatarUrl: 'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-1/441197389_747403577551806_8731858280571738186_n.jpg?stp=dst-jpg_s200x200&_nc_cat=104&ccb=1-7&_nc_sid=0ecb9b&_nc_eui2=AeGKF8mYemSFBARw9rfoOL2Kp7KkmI5BYfinsqSYjkFh-DTB1nKId38T6QqCH4sXzlw2sfKiL_s2hwmhJ753yO1d&_nc_ohc=R--vit_h-n4Q7kNvgHk4gy4&_nc_ht=scontent.fsgn2-5.fna&oh=00_AYA-N8fdLJkhHo2KUIHuuzXafOSmjBxVxLjTpOMGC71xog&oe=66ABA8F7',
-          },
-        ]);
+        const folowingUsers = await getFollowing(user.id);
+        // console.log("folowingUsers", folowingUsers);
+        const contacts = folowingUsers.map((user) => ({
+          id: user.id,
+          fullname: user.fullName,
+          avatarUrl: user.avatarUrl,
+        }));
+
+        setContacts(contacts);
       } catch (error) {
         console.log(error)
       }
@@ -149,7 +78,7 @@ const Messages = () => {
         {
           currentChat === undefined ?
             (<Welcome />) :
-            (<ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />)
+            (<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
         }
       </div>
     </div>
