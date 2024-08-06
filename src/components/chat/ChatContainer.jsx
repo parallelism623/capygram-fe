@@ -45,6 +45,7 @@ const ChatContainer = ({ currentChat, currentUser }) => {
   useEffect(() => {
     if (currentChat) {
       const getMessage = JSON.parse(localStorage.getItem("messages"));
+      localStorage.removeItem('currentChat');
       if (getMessage) {
         const filterMessages = getMessage.filter(msg => (msg.from === currentChat.id && msg.to === currentUser.id) || (msg.from === currentUser.id && msg.to === currentChat.id));
         setMessages(filterMessages);

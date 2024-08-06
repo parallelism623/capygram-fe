@@ -19,6 +19,7 @@ const Messages = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        setCurrentChat(JSON.parse(localStorage.getItem('currentChat')) ? JSON.parse(localStorage.getItem('currentChat')) : undefined);
         setCurrentUser(user);
       } catch (error) {
         console.log(error);
@@ -52,7 +53,7 @@ const Messages = () => {
 
   useEffect(() => {
 
-    const userChat = localStorage.getItem('userChat') ? JSON.parse(localStorage.getItem('userChat')) : undefined;
+    const userChat = localStorage.getItem('userChat') ? localStorage.getItem('userChat') : undefined;
 
     localStorage.removeItem('userChat');
 

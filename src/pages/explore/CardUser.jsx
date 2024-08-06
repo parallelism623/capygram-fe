@@ -44,7 +44,15 @@ const CardUser = ({ user, Follow, setIsRender, isRender, handleClickFollow }) =>
   }, [isRender]);
 
   const handleChat = () => {
-    localStorage.setItem('userChat', JSON.stringify(user));
+    const currentChat = {
+      id: user.id,
+      username: user.userName,
+      fullname: user.profile.fullName,
+      avatarUrl: user.profile.avatarUrl
+    };
+
+    localStorage.setItem('currentChat', JSON.stringify(currentChat));
+
     navigate('/messages');
   };
 
