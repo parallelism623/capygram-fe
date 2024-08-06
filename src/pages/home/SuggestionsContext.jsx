@@ -1,9 +1,7 @@
 /* eslint-disable */
 // SuggestionsContext.js
 import React, { createContext, useState, useEffect } from 'react';
-import avt from '../../assets/images/account.png'
 import { getFollowing } from '@/api/authApi/graph';
-import { getUserById } from '@/api/authApi/auth';
 
 export const SuggestionsContext = createContext();
 
@@ -51,9 +49,11 @@ export const SuggestionsProvider = ({ children }) => {
             //folowing: những người mk follow
             //follower: những người follow mk
             const Id = localStorage.getItem('userId');
+            //những người mk follow a[]
             const followingUsers = await getFollowing(Id);
 
             const fetchFollowingUsers = async () => {
+                //lấy ra những người a[] follow
                 const allFollowingOfFollowing = [];
                 for (const user of followingUsers) {
                     const Id = user.id;
@@ -65,15 +65,15 @@ export const SuggestionsProvider = ({ children }) => {
 
             const allSussgestions = await fetchFollowingUsers();
 
-            setSuggestions(allSussgestions);
+            const uniqueSuggestions = Array.from(new Set(allSussgestions.map(user => user.id)))
+                .map(id => {
+                    return allSussgestions.find(user => (user.id === id));
+                })
+                .filter(user => user.id !== localStorage.getItem('userId'));
 
-<<<<<<< HEAD
-            console.log("suggestions", allSussgestions);
-=======
-            //log ra mảng gồm info user của suggestion
-            console.log("suggestUser", suggestUser);
+            setSuggestions(uniqueSuggestions);
 
->>>>>>> 17183140e7aafa500f0eff85330990577086190d
+            console.log("suggestions", uniqueSuggestions);
         };
 
         fetchSuggestions();
