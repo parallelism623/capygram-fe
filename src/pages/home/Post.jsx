@@ -43,7 +43,7 @@ const Post = () => {
 
                 console.log("newfeed", posts.data); // Đảm bảo post chứa dữ liệu đúng
                 if (posts.data.length > 0) {
-                    setPost(prev => page ===  1 ? posts.data :  [...prev, ...posts.data]);
+                    setPost(prev => page === 1 ? posts.data : [...prev, ...posts.data]);
                     setTotal(posts.total);
                     setHasMore(posts.data.length + post.length < posts.total);
                 }
@@ -52,7 +52,7 @@ const Post = () => {
             }
         }
         getPost();
-    }, [ page]); // Thêm limit vào dependency array nếu cần cập nhật khi limit thay đổi
+    }, [page]);
 
 
     const fetchMore = () => {

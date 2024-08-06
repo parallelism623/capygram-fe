@@ -67,7 +67,13 @@ export const SuggestionsProvider = ({ children }) => {
 
             setSuggestions(allSussgestions);
 
+<<<<<<< HEAD
             console.log("suggestions", allSussgestions);
+=======
+            //log ra mảng gồm info user của suggestion
+            console.log("suggestUser", suggestUser);
+
+>>>>>>> 17183140e7aafa500f0eff85330990577086190d
         };
 
         fetchSuggestions();
