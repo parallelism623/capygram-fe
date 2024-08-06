@@ -14,6 +14,7 @@ import ShareTo from '../explore/ShareTo';
 
 import { setPost, setStep, addComments } from '@/store/formSlice';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { getFollowing } from '@/api/authApi/graph';
 
 const Post = () => {
     const [icons, setIcons] = useState(false);
