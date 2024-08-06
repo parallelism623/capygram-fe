@@ -49,9 +49,11 @@ export const SuggestionsProvider = ({ children }) => {
             //folowing: những người mk follow
             //follower: những người follow mk
             const Id = localStorage.getItem('userId');
+            //những người mk follow a[]
             const followingUsers = await getFollowing(Id);
 
             const fetchFollowingUsers = async () => {
+                //lấy ra những người a[] follow
                 const allFollowingOfFollowing = [];
                 for (const user of followingUsers) {
                     const Id = user.id;
@@ -63,9 +65,15 @@ export const SuggestionsProvider = ({ children }) => {
 
             const allSussgestions = await fetchFollowingUsers();
 
-            setSuggestions(allSussgestions);
+            const uniqueSuggestions = Array.from(new Set(allSussgestions.map(user => user.id)))
+                .map(id => {
+                    return allSussgestions.find(user => (user.id === id));
+                })
+                .filter(user => user.id !== localStorage.getItem('userId'));
 
-            console.log("suggestions", allSussgestions);
+            setSuggestions(uniqueSuggestions);
+
+            console.log("suggestions", uniqueSuggestions);
         };
 
         fetchSuggestions();
