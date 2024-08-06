@@ -1,10 +1,12 @@
 import './Comment.scss'
 import avt from '../../assets/images/account.png'
 import { useState, useEffect } from 'react'
+import { Carousel } from 'antd';
 import Options from './Options'
 import ShareTo from '../explore/ShareTo'
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import EmojiPicker from 'emoji-picker-react';
 import { setPost, addComments } from '@/store/formSlice';
 
@@ -38,6 +40,7 @@ const Comment = ({ post }) => {
             setDescribe('');
         }
     };
+    const navigate = useNavigate();
 
     const handleshowOptions = () => {
         setShowOptions(true);
@@ -54,12 +57,23 @@ const Comment = ({ post }) => {
     const handleChangeBookmark = () => {
         setBookmark(!bookmark);
     };
+    const handleClickProfileUser = (id) => {
+        navigate(`/profile/${id}`);
+    };
 
     return (
         <>
             <div className='comment-container'>
                 <div className="comment-image">
-                    <img src={post.image} alt="" />
+                    <div className="i">
+                        <Carousel arrows infinite={false} >
+                            {post.imageUrls.map((imgSrc, imgId) => (
+                                <div className="image-slider">
+                                    <img key={imgId} src={imgSrc} alt="" />
+                                </div>
+                            ))}
+                        </Carousel>
+                    </div>
                 </div>
                 <div className="comment-content">
                     <div className="comment-content-header">
@@ -70,7 +84,7 @@ const Comment = ({ post }) => {
                         </div>
                         <div className="comment-header-right">
                             <div className="comment-header-username">
-                                <a href="/#">{post.username}</a>
+                                <p onClick={() => handleClickProfileUser(post.id)}>{post.userName}</p>
                             </div>
                             <div className="comment-header-option">
                                 <span>
@@ -133,7 +147,8 @@ const Comment = ({ post }) => {
                                 </div>
                             </div>
                             <div className="comment-likes">
-                                <p><span>{post.like}</span> lượt thích</p>
+                                <p>{post.content}</p>
+                                <p><span>{post.likes}</span> lượt thích</p>
                             </div>
                             <p style={{ fontSize: '14px', color: 'gray' }} className="comment-caption-time">
                                 <span>{post.day}</span> ngày trước

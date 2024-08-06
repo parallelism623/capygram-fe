@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import EmojiPicker from 'emoji-picker-react';
 import { newsFeed } from '@/api/authApi/newsfeed';
 import ShareTo from '../explore/ShareTo';
+import { useNavigate } from 'react-router-dom';
 
 
 import { setPost, setStep, addComments } from '@/store/formSlice';
@@ -64,6 +65,7 @@ const Post = () => {
             setPage(page + 1);
         }
     }
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setDescribe(e.target.value);
@@ -116,6 +118,9 @@ const Post = () => {
     const handleChangeBookmark = () => {
         setBookmark(!bookmark);
     }
+    const handleClickProfileUser = (id) => {
+        navigate(`/profile/${id}`);
+    };
 
     return (
         <InfiniteScroll
@@ -135,7 +140,7 @@ const Post = () => {
                             </div>
                             <div className="post-header-right">
                                 <div className="post-header-username">
-                                    <a href="/#">{item.userName}</a>
+                                    <p onClick={() => handleClickProfileUser(post.id)}>{item.userName}</p>
                                 </div>
                                 <div className="post-header-option">
                                     <span>

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SuggestionsContext, SuggestionsProvider } from './SuggestionsContext';
 import './SeeAll.scss'
+import { useNavigate } from 'react-router-dom';
 
 import LayoutFooter from '@/layouts/LayoutFooter';
 const SeeAll = () => {
@@ -12,10 +13,13 @@ const SeeAll = () => {
         hoveredProfile,
         handleMouseProfileEnter,
         handleMouseProfileLeave,
-        follow,
-        handleFollowClick
+        isfollow,
+        handleFollowClick, follower, post, following
     } = useContext(SuggestionsContext);
-
+    const navigate = useNavigate();
+    const handleClickProfileUser = (id) => {
+        navigate(`/profile/${id}`);
+    };
 
     return (
         <div className='see-all'>
@@ -31,24 +35,24 @@ const SeeAll = () => {
                                         <div className="profile-header">
                                             <div className="header-up">
                                                 <div className="header-up-image">
-                                                    <img src={item.avatarUrl} alt="" />
+                                                    <img src={item.avatarUrl} onClick={() => handleClickProfileUser(item.id)} alt="" />
                                                 </div>
                                                 <div className="header-up-right">
-                                                    <p style={{ fontWeight: 'bold' }}>{item.displayName}</p>
+                                                    <p style={{ fontWeight: 'bold', cursor: 'pointer' }} onClick={() => handleClickProfileUser(item.id)}>{item.displayName}</p>
                                                     <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
                                                 </div>
                                             </div>
                                             <div className="header-down">
                                                 <div className="header-down-content">
-                                                    <p style={{ fontWeight: 'bold' }}>0</p>
+                                                    <p style={{ fontWeight: 'bold' }}>{post}</p>
                                                     <p>bài viết</p>
                                                 </div>
                                                 <div className="header-down-content">
-                                                    <p style={{ fontWeight: 'bold' }}>63</p>
+                                                    <p style={{ fontWeight: 'bold' }}>{follower}</p>
                                                     <p>người theo dõi</p>
                                                 </div>
                                                 <div className="header-down-content">
-                                                    <p style={{ fontWeight: 'bold' }}>30</p>
+                                                    <p style={{ fontWeight: 'bold' }}>{following}</p>
                                                     <p>đang theo dõi</p>
                                                 </div>
                                             </div>
@@ -57,7 +61,7 @@ const SeeAll = () => {
 
                                         </div>
                                         <div className="profile-footer">
-                                            {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
+                                            {!isfollow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
                                                 : (<div className='profile-footer-container'>
                                                     <button className='button2'>Nhắn tin</button>
                                                     <button className='button3' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
@@ -78,24 +82,24 @@ const SeeAll = () => {
                                                 <div className="profile-header">
                                                     <div className="header-up">
                                                         <div className="header-up-image">
-                                                            <img src={item.avatarUrl} alt="" />
+                                                            <img src={item.avatarUrl} style={{ cursor: 'pointer' }} onClick={() => handleClickProfileUser(item.id)} alt="" />
                                                         </div>
                                                         <div className="header-up-right">
-                                                            <p style={{ fontWeight: 'bold' }}>{item.displayName}</p>
+                                                            <p style={{ fontWeight: 'bold' }} onClick={() => handleClickProfileUser(item.id)}>{item.displayName}</p>
                                                             <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
                                                         </div>
                                                     </div>
                                                     <div className="header-down">
                                                         <div className="header-down-content">
-                                                            <p style={{ fontWeight: 'bold' }}>0</p>
+                                                            <p style={{ fontWeight: 'bold' }}>{post}</p>
                                                             <p>bài viết</p>
                                                         </div>
                                                         <div className="header-down-content">
-                                                            <p style={{ fontWeight: 'bold' }}>63</p>
+                                                            <p style={{ fontWeight: 'bold' }}>{follower}</p>
                                                             <p>người theo dõi</p>
                                                         </div>
                                                         <div className="header-down-content">
-                                                            <p style={{ fontWeight: 'bold' }}>30</p>
+                                                            <p style={{ fontWeight: 'bold' }}>{following}</p>
                                                             <p>đang theo dõi</p>
                                                         </div>
                                                     </div>
@@ -104,7 +108,7 @@ const SeeAll = () => {
 
                                                 </div>
                                                 <div className="profile-footer">
-                                                    {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
+                                                    {!isfollow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}><i className="fa-solid fa-user-plus" style={{ color: 'white' }}></i> Theo dõi</button>)
                                                         : (<div className='profile-footer-container'>
                                                             <button className='button2'>Nhắn tin</button>
                                                             <button className='button3' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
@@ -120,7 +124,7 @@ const SeeAll = () => {
                                 <p style={{ fontSize: '15px', color: 'gray' }}>{item.status}</p>
                             </div>
                             <div className="sgt-ct-right">
-                                {!follow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}>Theo dõi</button>)
+                                {!isfollow[item.id] ? (<button className='button1' onClick={() => handleFollowClick(item.id)}>Theo dõi</button>)
                                     : (
                                         <button className='button2' onClick={() => handleFollowClick(item.id)}>Đang theo dõi</button>
                                     )
