@@ -76,7 +76,7 @@ export const SuggestionsProvider = ({ children }) => {
 
             //log ra mảng gồm info user của suggestion
             console.log("suggestUser", suggestUser);
-                
+
         };
 
         fetchSuggestions();
