@@ -24,17 +24,17 @@ const SeeAll = () => {
                 {suggestions.map((item, index) => (
                     <div className='suggestions' key={index}>
                         <div className='sgt-image'>
-                            <img src={item.avatar} alt="" onMouseEnter={() => handleMouseEnter(item.id, 'img')} onMouseLeave={handleMouseLeave} />
+                            <img src={item.avatarUrl} alt="" onMouseEnter={() => handleMouseEnter(item.id, 'img')} onMouseLeave={handleMouseLeave} />
                             {(hoveredItem.id === item.id && hoveredItem.type === 'img') || (hoveredProfile.id === item.id && hoveredProfile.type === 'img') ? (
                                 <div className='profile' onMouseEnter={() => handleMouseProfileEnter(item.id, 'img')} onMouseLeave={handleMouseProfileLeave}>
                                     <div className="profile-container">
                                         <div className="profile-header">
                                             <div className="header-up">
                                                 <div className="header-up-image">
-                                                    <img src={item.avatar} alt="" />
+                                                    <img src={item.avatarUrl} alt="" />
                                                 </div>
                                                 <div className="header-up-right">
-                                                    <p style={{ fontWeight: 'bold' }}>{item.username}</p>
+                                                    <p style={{ fontWeight: 'bold' }}>{item.displayName}</p>
                                                     <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
                                                 </div>
                                             </div>
@@ -71,17 +71,17 @@ const SeeAll = () => {
                         <div className="sgt-ct">
                             <div className="sgt-ct-left">
                                 <div className="p-hover">
-                                    <p style={{ fontWeight: 'bold', cursor: 'pointer' }} onMouseEnter={() => handleMouseEnter(item.id, 'username')} onMouseLeave={handleMouseLeave}>{item.username}</p>
+                                    <p style={{ fontWeight: 'bold', cursor: 'pointer' }} onMouseEnter={() => handleMouseEnter(item.id, 'username')} onMouseLeave={handleMouseLeave}>{item.displayName}</p>
                                     {(hoveredItem.id === item.id && hoveredItem.type === 'username') || (hoveredProfile.id === item.id && hoveredProfile.type === 'username') ? (
                                         <div className='profile' onMouseEnter={() => handleMouseProfileEnter(item.id, 'username')} onMouseLeave={handleMouseProfileLeave}>
                                             <div className="profile-container">
                                                 <div className="profile-header">
                                                     <div className="header-up">
                                                         <div className="header-up-image">
-                                                            <img src={item.avatar} alt="" />
+                                                            <img src={item.avatarUrl} alt="" />
                                                         </div>
                                                         <div className="header-up-right">
-                                                            <p style={{ fontWeight: 'bold' }}>{item.username}</p>
+                                                            <p style={{ fontWeight: 'bold' }}>{item.displayName}</p>
                                                             <p style={{ fontSize: '15px', color: 'gray' }}>{item.name}</p>
                                                         </div>
                                                     </div>

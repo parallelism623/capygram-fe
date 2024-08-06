@@ -65,14 +65,14 @@ export const SuggestionsProvider = ({ children }) => {
 
             const allSussgestions = await fetchFollowingUsers();
 
+
             const uniqueSuggestions = Array.from(new Set(allSussgestions.map(user => user.id)))
                 .map(id => {
                     return allSussgestions.find(user => (user.id === id));
                 })
                 .filter(user => user.id !== localStorage.getItem('userId'));
-
             setSuggestions(uniqueSuggestions);
-
+          
             console.log("suggestions", uniqueSuggestions);
         };
 
