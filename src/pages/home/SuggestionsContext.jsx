@@ -52,12 +52,12 @@ export const SuggestionsProvider = ({ children }) => {
 
             //folowing: những người mk follow
             //follower: những người follow mk
-            const id = localStorage.getItem('userId');
-            const followingUsers = await getFollowing(id);
+            const Id = localStorage.getItem('userId');
+            const followingUsers = await getFollowing(Id);
             setFollowingUsers(followingUsers);
-            followingUsers.forEach(userId => {
-                const getFollowingUsers = async () => {
-                    const followingOfFollowing = await getFollowing(userId);
+            followingUsers.forEach(Id => {
+                const getFollowingUsers = async (Id) => {
+                    const followingOfFollowing = await getFollowing(Id);
                     return followingOfFollowing;
                 };
                 setSuggestions([...suggestions, ...getFollowingUsers()]);
@@ -66,9 +66,9 @@ export const SuggestionsProvider = ({ children }) => {
             //log ra mảng gồm id của susggestion
             console.log("suggestions", suggestions);
 
-            suggestions.forEach(suggestion => {
-                const getInfoUserSuggestions = async () => {
-                    const user = await getUserById(suggestion);
+            suggestions.forEach(id => {
+                const getInfoUserSuggestions = async (id) => {
+                    const user = await getUserById(id);
                     return user;
                 };
                 setSuggestUser([...suggestUser, getInfoUserSuggestions()]);

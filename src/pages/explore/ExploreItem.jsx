@@ -76,20 +76,14 @@ const ExploreItem = ({ explore, onCancel, id }) => {
 
       const res = await getUserById(explore.userId);
       setUser(res);
-      console.log(user);
 
       const userId = localStorage.getItem('userId');
 
       //những người mình follow
       const followings = await getFollowing(userId);
 
-      console.log("followings:", followings);
-      console.log("explore.userId:", explore.userId);
-
       //kiểm tra xem mk đã follow người này chưa
       const isFollow = followings.some(followingId => followingId.id === explore.userId);
-
-      console.log("isFollow:", isFollow);
 
       setIsFollow(isFollow ? true : false);
     }
@@ -168,7 +162,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
         <div className='content-explore'>
           <div className='top-content-explore'>
             <div className='info-user'>
-              <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
+              <img src={user?.profile?.avatarUrl !== ('string' && '') ? user?.profile?.avatarUrl : account} className='avatar-info' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
               <p onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => handleClickProfileUser(user.id)}><b>{user.userName}</b></p>
               <p className={`fl ${isFollow ? 'isFollow' : ''}`} onClick={handleClickFollow}>
                 {explore.userId === localStorage.getItem('userId') ? '' :

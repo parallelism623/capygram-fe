@@ -31,13 +31,16 @@ const Post = () => {
     const [limit, setLimit] = useState(3);
     const [total, setTotal] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const getPost = async () => {
             const id = localStorage.getItem('userId');
             try {
                 const posts = await newsFeed(id, limit);
+                // const followingUsers = await getFollowing(id);
+                // console.log("following", followingUsers);
+
                 console.log("newfeed", posts.data); // Đảm bảo post chứa dữ liệu đúng
                 if (posts.data.length > 0) {
                     setPost(prev => page ===  1 ? posts.data :  [...prev, ...posts.data]);
