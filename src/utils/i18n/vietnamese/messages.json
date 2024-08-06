@@ -9,5 +9,9 @@
   "SwitchAccount": "Chuyển tài khoản",
   "logInto": "Đăng nhập vào tài khoản hiện có",
   "message": "Nhắn tin...",
-  "viewProfile": "Xem trang cá nhân"
+  "viewProfile": "Xem trang cá nhân",
+  "newMessage": "Tin nhắn mới",
+  "to": "Tới",
+  "chat": "Nhắn tin",
+  "search": "Tìm kiếm..."
 }
