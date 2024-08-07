@@ -24,6 +24,7 @@ import addFriend from '@/assets/images/addFriend.png';
 import more from '@/assets/images/more.png';
 
 import './ProfileUser.scss';
+import ListFollowingUser from './ListFollowingUser';
 
 const ProfileUser = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ const ProfileUser = () => {
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
   const [showListFollower, setShowListFollower] = useState(false);
+  const [showListFollowing, setShowListFollowing] = useState(false);
 
   const { t } = useTranslation('profile');
 
@@ -70,6 +72,10 @@ const ProfileUser = () => {
 
   const handleCancelListFollower = () => {
     setShowListFollower(false);
+  };
+
+  const handleCancelListFollowing = () => {
+    setShowListFollowing(false);
   };
 
   const hotStory = [
@@ -149,7 +155,7 @@ const ProfileUser = () => {
             >
               <b>{follower}</b> {t('followers')}
             </p>
-            <p><b>{following}</b> {t('following')}</p>
+            <p onClick={() => setShowListFollowing(true)}><b>{following}</b> {t('following')}</p>
           </div>
 
         </div>
@@ -220,6 +226,22 @@ const ProfileUser = () => {
               transition={{ duration: 0.3 }}
             >
               <ListFollowerUser onCancel={handleCancelListFollower} Id={id} />
+            </motion.div>
+          </div>
+        )
+      }
+
+      {
+        showListFollowing && (
+          <div className='overlay' onClick={handleCancelListFollowing}>
+            <motion.div
+              className='option-container'
+              onClick={(e) => e.stopPropagation()}
+              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ListFollowingUser onCancel={handleCancelListFollowing} Id={id} />
             </motion.div>
           </div>
         )
