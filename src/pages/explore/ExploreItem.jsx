@@ -199,7 +199,7 @@ const ExploreItem = ({ explore, onCancel, id }) => {
               Array.isArray(comments) && comments.map((comment, index) => (
                 <div className='comment-item' key={index}>
                   <div className='info-user-comment'>
-                    <img src={comment.user.avatarUrl} alt='avatar-info-user-comment' />
+                    <img src={comment.user.avatarUrl !== ('string' && '') ? comment.user.avatarUrl : account} alt='avatar-info-user-comment' />
                   </div>
                   <div className='content-comment'>
                     <p><b>{comment.user.username}</b></p>

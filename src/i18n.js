@@ -62,6 +62,9 @@ import explore_vi from '@/utils/i18n/vietnamese/explore.json';
 import postItem_en from '@/utils/i18n/english/postItem.json';
 import postItem_vi from '@/utils/i18n/vietnamese/postItem.json';
 
+import listFollow_en from '@/utils/i18n/english/listFollow.json';
+import listFollow_vi from '@/utils/i18n/vietnamese/listFollow.json';
+
 const resources = {
   en: {
     step1Register: step1Register_en,
@@ -84,6 +87,7 @@ const resources = {
     messages: messages_en,
     explore: explore_en,
     postItem: postItem_en,
+    listFollow: listFollow_en,
 
   },
   vi: {
@@ -107,6 +111,7 @@ const resources = {
     messages: messages_vi,
     explore: explore_vi,
     postItem: postItem_vi,
+    listFollow: listFollow_vi,
     
   }
 };

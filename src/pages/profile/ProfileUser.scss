@@ -129,6 +129,10 @@
         display: flex;
         justify-content: start;
         gap: 25px;
+
+        &:hover{
+          color: rgb(59, 59, 59);
+        }
       }
 
     }
