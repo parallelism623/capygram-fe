@@ -66,6 +66,7 @@ const ListFollowerUser = ({ Id, onCancel }) => {
       setIsRender(!isRender);
     }
   }
+
   return (
     <div className='list-follower-container'>
       <div className='top-list'>
@@ -86,10 +87,15 @@ const ListFollowerUser = ({ Id, onCancel }) => {
             <div className='followr-user' key={follower.id}>
               <div className='user-info'>
                 <div className='avatar'>
-                  <img src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account} alt='avatar' />
+                  <img
+                    src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account}
+                    alt='avatar'
+                  />
                 </div>
                 <div className='name'>
-                  <p className='fullname'><b>{follower.fullname}</b></p>
+                  <p
+                    className='fullname'
+                  ><b>{follower.fullname}</b></p>
                 </div>
               </div>
 
@@ -110,11 +116,13 @@ const ListFollowerUser = ({ Id, onCancel }) => {
             <div className='followr-user' key={follower.id}>
               <div className='user-info'>
                 <div className='avatar'>
-                  <img src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account} alt='avatar' />
+                  <img
+                    src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account}
+                    alt='avatar'
+                  />
                 </div>
                 <div className='name'>
-                  <p className='fullname'><b>{follower.fullname}</b></p>
-                  <p className='username'>{follower.username}</p>
+                  <p className='fullname' ><b>{follower.fullname}</b></p>
                 </div>
               </div>
 

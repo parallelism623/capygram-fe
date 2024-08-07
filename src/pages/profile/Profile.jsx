@@ -5,7 +5,7 @@ import '@/i18n';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setStep} from '@/store/formSlice';
+import { setStep } from '@/store/formSlice';
 
 import setting from '@/assets/images/setting.png';
 import Add from '@/assets/images/Add.png';
@@ -25,6 +25,8 @@ import { getCountFollower, getCountFollowing } from '@/api/authApi/graph';
 import './Profile.scss';
 import { getPostByUserId } from '@/api/authApi/post';
 import { setUser } from '@/store/userSlice';
+import ListFollowerUser from './ListFollowerUser';
+import ListFollowingUser from './ListFollowingUser';
 
 const Profile = () => {
   const [activeItem, setActiveItem] = useState(null);
@@ -34,6 +36,9 @@ const Profile = () => {
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
   const [post, setPost] = useState(0);
+  const [showListFollower, setShowListFollower] = useState(false);
+  const [showListFollowing, setShowListFollowing] = useState(false);
+
   const note = useSelector((state) => state.form.note);
   const hotStory = useSelector((state) => state.form.hotStory);
   const me = useSelector((state) => state.user);
@@ -50,7 +55,7 @@ const Profile = () => {
         username: me.userName,
         avatarUrl: me.profile.avatarUrl
       }));
-      
+
       const follower = await getCountFollower(localStorage.getItem('userId'));
       setFollower(follower);
       const following = await getCountFollowing(localStorage.getItem('userId'));
@@ -92,6 +97,14 @@ const Profile = () => {
     dispatch(setStep(1));
   };
 
+
+  const handleCancelListFollower = () => {
+    setShowListFollower(false);
+  };
+
+  const handleCancelListFollowing = () => {
+    setShowListFollowing(false);
+  };
 
   return (
 
@@ -137,8 +150,8 @@ const Profile = () => {
 
           <div className='data'>
             <p><b>{post}</b> {t('posts')}</p>
-            <p><b>{follower}</b> {t('followers')}</p>
-            <p><b>{following}</b> {t('following')}</p>
+            <p onClick={() => setShowListFollower(true)}><b>{follower}</b> {t('followers')}</p>
+            <p onClick={() => setShowListFollowing(true)}><b>{following}</b> {t('following')}</p>
           </div>
 
         </div>
@@ -211,6 +224,37 @@ const Profile = () => {
           </motion.div>
         </div>
       )}
+      {
+        showListFollower && (
+          <div className='overlay' onClick={handleCancelListFollower}>
+            <motion.div
+              className='option-container'
+              onClick={(e) => e.stopPropagation()}
+              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ListFollowerUser onCancel={handleCancelListFollower} Id={localStorage.getItem('userId')} />
+            </motion.div>
+          </div>
+        )
+      }
+
+      {
+        showListFollowing && (
+          <div className='overlay' onClick={handleCancelListFollowing}>
+            <motion.div
+              className='option-container'
+              onClick={(e) => e.stopPropagation()}
+              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ListFollowingUser onCancel={handleCancelListFollowing} Id={localStorage.getItem('userId')} />
+            </motion.div>
+          </div>
+        )
+      }
 
 
       <LayoutFooter />
