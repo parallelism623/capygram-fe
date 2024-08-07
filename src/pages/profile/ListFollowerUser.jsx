@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import '@/i18n';
 
-import { getFollowers } from '@/api/authApi/graph';
+import { follow, getFollowers, getFollowing, unFollow } from '@/api/authApi/graph';
 
 import exit from '@/assets/images/exit.png';
 import account from '@/assets/images/account.png';
@@ -16,20 +16,21 @@ const ListFollowerUser = ({ Id, onCancel }) => {
   const [isRender, setIsRender] = useState(false);
   const [listFollowers, setListFollowers] = useState([]);
   const [result, setResult] = useState([]);
+  const [input, setInput] = useState('');
 
   useEffect(() => {
-    const getFollowers = async () => {
+    const getListFollowers = async () => {
       try {
         const followers = await getFollowers(Id);
-        const followerOfMe = await getFollowers(localStorage.getItem('userId'));
+        const followingOfMe = await getFollowing(localStorage.getItem('userId'));
 
         console.log("followers", followers);
+        console.log("followingOfMe", followingOfMe);
         const listFollowers = followers.map((follower) => ({
           id: follower.id,
-          fullname: follower.profile.fullName,
-          username: follower.userName,
-          avatarUrl: follower.profile.avatarUrl,
-          isFollow: followerOfMe.some((item) => item.id === follower.id)
+          fullname: follower.fullName,
+          avatarUrl: follower.avatarUrl,
+          isFollow: followingOfMe.some((item) => item.id === follower.id) ? true : false
         }));
 
         setListFollowers(listFollowers);
@@ -39,9 +40,34 @@ const ListFollowerUser = ({ Id, onCancel }) => {
       }
     };
 
-    getFollowers();
-  }, [isRender]);
+    getListFollowers();
+  }, [isRender, Id]);
 
+
+  useEffect(() => {
+    const searchUser = () => {
+      const resultUser = listFollowers.filter((follower) => {
+        return follower.fullname.toLowerCase().includes(input.toLowerCase());
+      });
+      setResult(resultUser);
+    };
+
+    searchUser();
+  }, [input]);
+
+  const handlclickbtn = async (follower) => {
+    const id = localStorage.getItem('userId');
+    const did = follower.id;
+    if (follower.isFollow === true) {
+      await unFollow(id, did);
+      follower.isFollow = false;
+      setIsRender(!isRender);
+    } else {
+      await follow(id, did);
+      follower.isFollow = true;
+      setIsRender(!isRender);
+    }
+  }
   return (
     <div className='list-follower-container'>
       <div className='top-list'>
@@ -54,7 +80,7 @@ const ListFollowerUser = ({ Id, onCancel }) => {
         </div>
       </div>
       <div className='box-search'>
-        <input type='text' placeholder={t('search')} />
+        <input type='text' placeholder={t('search')} onChange={(e) => setInput(e.target.value)} />
       </div>
       <div className='list-follower'>
         {
@@ -66,12 +92,20 @@ const ListFollowerUser = ({ Id, onCancel }) => {
                 </div>
                 <div className='name'>
                   <p className='fullname'><b>{follower.fullname}</b></p>
-                  <p className='username'>{follower.username}</p>
                 </div>
               </div>
 
               <div className='btn-status'>
-                <button>{follower.isFollow}</button>
+                {
+                  localStorage.getItem('userId') !== follower.id && (
+                    <button
+                      className={follower.isFollow === true ? 'following' : 'follow'}
+                      onClick={() => handlclickbtn(follower)}
+                    >
+                      <b>{follower.isFollow === true ? t('following') : t('follow')}</b>
+                    </button>
+                  )
+                }
               </div>
             </div>
           )) : result.map((follower) => (
@@ -87,7 +121,16 @@ const ListFollowerUser = ({ Id, onCancel }) => {
               </div>
 
               <div className='btn-status'>
-                <button>{follower.isFollow}</button>
+                {
+                  localStorage.getItem('userId') !== follower.id && (
+                    <button
+                      className={follower.isFollow === true ? 'following' : 'follow'}
+                      onClick={() => handlclickbtn(follower)}
+                    >
+                      <b>{follower.isFollow === true ? t('following') : t('follow')}</b>
+                    </button>
+                  )
+                }
               </div>
             </div>
           ))
