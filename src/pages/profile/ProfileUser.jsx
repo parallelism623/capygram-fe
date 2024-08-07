@@ -15,6 +15,8 @@ import FollowUserOption from '@/components/followUserOption/FollowUserOption';
 import MoreOption from '@/components/followUserOption/MoreOption';
 import { getCountFollower, getCountFollowing } from '@/api/authApi/graph';
 import { getPostByUserId } from '@/api/authApi/post';
+import PostInProfileUser from './PostInProfileUser';
+import ListFollowerUser from './ListFollowerUser';
 
 import cute from '@/assets/images/cute.gif';
 import down from '@/assets/images/down.png';
@@ -22,7 +24,6 @@ import addFriend from '@/assets/images/addFriend.png';
 import more from '@/assets/images/more.png';
 
 import './ProfileUser.scss';
-import PostInProfileUser from './PostInProfileUser';
 
 const ProfileUser = () => {
   const { id } = useParams();
@@ -34,6 +35,7 @@ const ProfileUser = () => {
   const [posts, setPosts] = useState([]);
   const [follower, setFollower] = useState(0);
   const [following, setFollowing] = useState(0);
+  const [showListFollower, setShowListFollower] = useState(false);
 
   const { t } = useTranslation('profile');
 
@@ -64,6 +66,10 @@ const ProfileUser = () => {
 
   const handleCancel2 = () => {
     setShowMore(false);
+  };
+
+  const handleCancelListFollower = () => {
+    setShowListFollower(false);
   };
 
   const hotStory = [
@@ -101,7 +107,7 @@ const ProfileUser = () => {
       <div className='content-top'>
         <div className='group-avata'>
           <div className='avata'>
-            <img src={user?.profile?.avatarUrl !== 'string' ? user?.profile?.avatarUrl : account} alt='avata' />
+            <img src={user?.profile?.avatarUrl !== ('string' && '') ? user?.profile?.avatarUrl : account} alt='avata' />
           </div>
 
           <div className='hot-story'>
@@ -138,7 +144,11 @@ const ProfileUser = () => {
 
           <div className='data'>
             <p><b>{post}</b> {t('posts')}</p>
-            <p><b>{follower}</b> {t('followers')}</p>
+            <p
+              onClick={() => setShowListFollower(true)}
+            >
+              <b>{follower}</b> {t('followers')}
+            </p>
             <p><b>{following}</b> {t('following')}</p>
           </div>
 
@@ -194,6 +204,22 @@ const ProfileUser = () => {
               transition={{ duration: 0.3 }}
             >
               <MoreOption onCancel={handleCancel2} />
+            </motion.div>
+          </div>
+        )
+      }
+
+      {
+        showListFollower && (
+          <div className='overlay' onClick={handleCancelListFollower}>
+            <motion.div
+              className='option-container'
+              onClick={(e) => e.stopPropagation()}
+              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ListFollowerUser onCancel={handleCancelListFollower} Id={id} />
             </motion.div>
           </div>
         )
