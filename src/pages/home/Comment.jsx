@@ -84,7 +84,7 @@ const Comment = ({ post }) => {
                         </div>
                         <div className="comment-header-right">
                             <div className="comment-header-username">
-                                <p onClick={() => handleClickProfileUser(post.id)}>{post.userName}</p>
+                                <p onClick={() => handleClickProfileUser(post.userId)}>{post.userName}</p>
                             </div>
                             <div className="comment-header-option">
                                 <span>
