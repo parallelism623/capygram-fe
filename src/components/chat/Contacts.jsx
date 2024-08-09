@@ -52,7 +52,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
               </div>
               <div className='current-avatar'>
                 <div className='avatar'>
-                  <img src={currentUser.avatarUrl} alt='avatar' />
+                  <img src={currentUser.avatarUrl !== ('string' && '') ? currentUser.avatarUrl : account} alt='avatar' />
                   <p>{t('yourNote')}</p>
                 </div>
                 <div className='note'>

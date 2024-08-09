@@ -6,7 +6,6 @@ import ChatContainer from '@/components/chat/ChatContainer';
 import Contacts from '@/components/chat/Contacts';
 import Welcome from '@/components/chat/Welcome';
 import { getFollowers, getFollowing } from '@/api/authApi/graph';
-import { useSignalR } from '@/hooks/useSignalR';
 
 import './Messages.scss';
 
@@ -16,8 +15,7 @@ const Messages = () => {
   const [currentChat, setCurrentChat] = useState(undefined);
 
   const user = useSelector((state) => state.user);
-  // const { connectedUsers, chatUser, setChatUser, fetchMessages, sendDirectMessage, displayMessages } = useSignalR(user, currentChat);
-
+  
   useEffect(() => {
     const fetchUser = async () => {
       try {

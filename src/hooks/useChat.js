@@ -1,19 +1,37 @@
-import { useEffect, useState } from "react";
-import { HubConnectionBuilder } from "@microsoft/signalr";
-import { v4 as uuidv4 } from 'uuid';
+/* eslint-disable */
 import { getMessages } from "@/api/authApi/chat";
+import { HubConnectionBuilder } from "@microsoft/signalr";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-export const useSignalR = (loggedInUser, currentChat) => {
+export const useChat = ({currentChat, currentUser}) => {
   const [hubConnection, setHubConnection] = useState(null);
   const [users, setUsers] = useState([]);
   const [connectedUsers, setConnectedUsers] = useState([]);
   const [messages, setMessages] = useState([]);
   const [displayMessages, setDisplayMessages] = useState([]);
-  const [chatUser, setChatUser] = useState(currentChat);
-  const [error, setError] = useState(null);
-
 
   useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const receivedMessages = await getMessages(currentUser.id);
+        if (receivedMessages) {
+          const listReceivedMessages = receivedMessages.map(msg => ({
+            ...msg,
+            type: msg.receiver === currentUser.id ? 'received' : 'sent',
+          }));
+          setMessages(listReceivedMessages);
+          console.log("fetchMessage", listReceivedMessages);
+
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchMessages();
+
     const connection = new HubConnectionBuilder()
       .withUrl(`${import.meta.env.VITE_APP_URL_BE_CHAT}/chathub`)
       .withAutomaticReconnect()
@@ -22,8 +40,8 @@ export const useSignalR = (loggedInUser, currentChat) => {
     connection.start()
       .then(() => {
         connection.invoke('PublishUserOnConnect',
-          loggedInUser.id,
-          loggedInUser.fullname,
+          currentUser.id,
+          currentUser.fullname,
           // loggedInUser.avatarUrl
         )
           .then(() => console.log('User connected'))
@@ -50,8 +68,8 @@ export const useSignalR = (loggedInUser, currentChat) => {
               deletedMessage.isReCeiverDeleted = message.isReCeiverDeleted;
               deletedMessage.isSenderDeleted = message.isSenderDeleted;
               if (deletedMessage.isReCeiverDeleted && (
-                deletedMessage.receiver = loggedInUser.id ||
-                deletedMessage.sender === loggedInUser.id
+                deletedMessage.receiver = currentUser.id ||
+                deletedMessage.sender === currentUser.id
               )) {
                 setDisplayMessages(
                   updatedMessages.filter(m => m.id !== message.id)
@@ -66,12 +84,12 @@ export const useSignalR = (loggedInUser, currentChat) => {
           message.type = 'received';
           setMessages(prevMessages => {
             const updatedMessages = [...prevMessages, message];
-            if (chatUser) {
+            if (currentChat) {
               setDisplayMessages(
                 updatedMessages.filter(
                   m =>
-                    (m.type === 'sent' && m.receiver === chatUser.id) ||
-                    (m.type === 'received' && m.sender === chatUser.id)
+                    (m.type === 'sent' && m.receiver === currentChat.id) ||
+                    (m.type === 'received' && m.sender === currentChat.id)
                 )
               );
             }
@@ -80,7 +98,6 @@ export const useSignalR = (loggedInUser, currentChat) => {
 
           setUsers(prevUsers => {
             const currentUser = prevUsers.find(user => user.id === message.sender);
-            setChatUser(currentUser);
             return prevUsers.map(user => ({
               ...user,
               isActive: user.id === currentUser.id,
@@ -90,15 +107,32 @@ export const useSignalR = (loggedInUser, currentChat) => {
       })
       .catch(e => {
         console.log(e);
-        setError(e)
       });
 
     setHubConnection(connection);
 
+
+
     return () => {
       connection.stop();
     };
-  }, [loggedInUser, chatUser]);
+
+
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentChat) {
+      setDisplayMessages(
+        messages.filter(
+          m =>
+            ((m.type === 'sent' && m.receiver === currentChat.id) ||
+              (m.type === 'received' && m.sender === currentChat.id)) &&
+            m.isReCeiverDeleted !== true &&
+            m.isSenderDeleted !== true
+        )
+      );
+    }
+  }, [currentChat, messages]);
 
   const makeItOnline = (userList) => {
     if (userList.length > 0) {
@@ -111,32 +145,12 @@ export const useSignalR = (loggedInUser, currentChat) => {
     }
   };
 
-  const fetchMessages = async () => {
-    try {
-      const receivedMessages = await getMessages(loggedInUser.id);
-      if (receivedMessages) {
-        const listReceivedMessages = receivedMessages.map(msg => ({
-          ...msg,
-          type: msg.received === loggedInUser.id ? 'received' : 'sent',
-        }));
-        setMessages(listReceivedMessages);
-        console.log("fetchMessage", listReceivedMessages);
-
-        return listReceivedMessages;
-      }
-
-      return [];
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const sendDirectMessage = async (messageContent) => {
     if (messageContent.trim()) {
       const msg = {
         id: uuidv4(),
-        sender: loggedInUser.id,
-        receiver: chatUser.id,
+        sender: currentUser.id,
+        receiver: currentChat.id,
         CreatedAt: new Date().toISOString(),
         type: 'sent',
         content: messageContent,
@@ -147,8 +161,8 @@ export const useSignalR = (loggedInUser, currentChat) => {
         setDisplayMessages(
           updatedMessages.filter(
             m =>
-              (m.type === 'sent' && m.receiver === chatUser.id) ||
-              (m.type === 'received' && m.sender === chatUser.id)
+              (m.type === 'sent' && m.receiver === currentChat.id) ||
+              (m.type === 'received' && m.sender === currentChat.id)
           )
         );
         return updatedMessages;
@@ -167,7 +181,7 @@ export const useSignalR = (loggedInUser, currentChat) => {
     const deleteMessage = {
       Type: deleteType,
       message,
-      UserRequest: loggedInUser.id,
+      UserRequest: currentUser.id,
     };
 
     try {
@@ -188,7 +202,7 @@ export const useSignalR = (loggedInUser, currentChat) => {
 
   const onLogout = async () => {
     try {
-      await hubConnection.invoke('RemoveOnlineUser', loggedInUser.id);
+      await hubConnection.invoke('RemoveOnlineUser', currentUser.id);
       setMessages(prevMessages => [
         ...prevMessages,
         'User Disconnected Successfully',
@@ -199,18 +213,5 @@ export const useSignalR = (loggedInUser, currentChat) => {
     }
   };
 
-  return {
-    users,
-    hubConnection,
-    connectedUsers,
-    messages,
-    displayMessages,
-    chatUser,
-    setChatUser,
-    error,
-    fetchMessages,
-    sendDirectMessage,
-    deleteMessage,
-    onLogout,
-  };
+  return { users, connectedUsers, messages, displayMessages, sendDirectMessage, deleteMessage, onLogout };
 };
