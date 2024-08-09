@@ -11,8 +11,9 @@ import '@/i18n';
 import { useTranslation } from 'react-i18next';
 import { getUserById, login } from '@/api/authApi/auth';
 import { useDispatch } from 'react-redux';
-import { setUser } from '@/store/formSlice';
+// import { setUser } from '@/store/formSlice';
 import { toast } from 'react-toastify';
+import { setUser } from '@/store/userSlice';
 
 
 const Login = () => {

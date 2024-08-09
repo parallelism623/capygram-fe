@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux';
 import ChatContainer from '@/components/chat/ChatContainer';
 import Contacts from '@/components/chat/Contacts';
 import Welcome from '@/components/chat/Welcome';
-import { getFollowing } from '@/api/authApi/graph';
+import { getFollowers, getFollowing } from '@/api/authApi/graph';
+import { useSignalR } from '@/hooks/useSignalR';
 
 import './Messages.scss';
 
@@ -15,6 +16,7 @@ const Messages = () => {
   const [currentChat, setCurrentChat] = useState(undefined);
 
   const user = useSelector((state) => state.user);
+  // const { connectedUsers, chatUser, setChatUser, fetchMessages, sendDirectMessage, displayMessages } = useSignalR(user, currentChat);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -32,8 +34,15 @@ const Messages = () => {
     const fetchContacts = async () => {
       try {
         const folowingUsers = await getFollowing(user.id);
-        // console.log("folowingUsers", folowingUsers);
-        const contacts = folowingUsers.map((user) => ({
+        const followerUsers = await getFollowers(user.id);
+        const contactList = [...folowingUsers, ...followerUsers];
+        const uniqueContacts = Array.from(new Set(contactList.map(user => user.id)))
+          .map(id => {
+            return contactList.find(user => (user.id === id));
+          })
+          .filter(user => user.id !== localStorage.getItem('userId'));
+
+        const contacts = uniqueContacts.map((user) => ({
           id: user.id,
           fullname: user.fullName,
           avatarUrl: user.avatarUrl,
@@ -79,7 +88,7 @@ const Messages = () => {
         {
           currentChat === undefined ?
             (<Welcome setCurrentChat={setCurrentChat} />) :
-            (<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
+            (<ChatContainer currentChat={currentChat} currentUser={currentUser}/>)
         }
       </div>
     </div>
