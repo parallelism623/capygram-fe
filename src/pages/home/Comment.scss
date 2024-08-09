@@ -112,50 +112,34 @@
             overflow-y: auto;
             border-bottom: 1px solid #d5d4d4;
 
-            .list-comment {
+            .comment-item {
+                width: 100%;
                 display: flex;
-                justify-content: space-between;
+                gap: 10px;
+                padding: 10px;
 
-                .cmt-right {
+                .info-user-comment {
                     display: flex;
+                    align-items: center;
+                    height: 50px;
+                    gap: 10px;
 
-                    .cmt-image {
-                        padding: 10px 5px;
-                    }
-
-                    .cmt {
-                        .cmt-up {
-                            display: flex;
-                            align-items: center;
-                            padding: 10px 10px 5px 10px;
-
-                            p {
-                                margin-left: 10px;
-                            }
-                        }
-
-                        .cmt-down {
-                            display: flex;
-                            padding: 0px 10px;
-
-                            p {
-                                font-size: 15px;
-                                color: gray;
-                                margin-right: 10px;
-                            }
-                        }
-                    }
-
-                }
-
-                .cmt-left {
-                    padding: 18px 10px;
-
-                    i {
-                        width: 20px;
+                    img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        border: 1px solid rgb(24, 24, 24);
                     }
                 }
 
+                .content-comment {
+                    padding: 5px 10px;
+                    display: flex;
+                    align-items: center;
+                    max-width: 100%;
+                    background-color: rgb(243, 238, 238);
+                    border-radius: 12px;
+                }
             }
         }
 
@@ -240,7 +224,7 @@
                         border: none;
                     }
 
-                    button {
+                    .btn-post-comment {
                         background-color: transparent;
                         color: #52b3f4;
                         font-weight: 600;
@@ -249,7 +233,7 @@
 
                     }
 
-                    button:hover {
+                    .btn-post-comment:hover {
                         color: #095f98;
                     }
                 }

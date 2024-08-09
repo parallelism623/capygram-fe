@@ -8,38 +8,74 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import EmojiPicker from 'emoji-picker-react';
-import { setPost, addComments } from '@/store/formSlice';
+import React from 'react';
+
 
 
 const Comment = ({ post }) => {
     const [icons, setIcons] = useState(false);
     const [bookmark, setBookmark] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
-    const [describe, setDescribe] = useState('');
-    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showShare, setShowShare] = useState(false);
-    const dispatch = useDispatch();
+    const [input, setInput] = useState('');
+    const [showEmoji, setShowEmoji] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [like, setLike] = useState(false);
+    const [loved, setLoved] = useState(false);
+    const [user, setUser] = useState({});
+    const [isRender, setIsRender] = useState(false)
 
-    const comments = useSelector((state) => state.form.comments);
 
-    const handleChange = (e) => {
-        setDescribe(e.target.value);
-    };
-
+    const inputRef = React.createRef();
+    const me = useSelector((state) => state.user);
     const addEmoji = (event, emojiObject) => {
         const emoji = event.emoji;
-        const newDescribe = describe + emoji;
-        setDescribe(newDescribe);
-        dispatch(setPost({ description: newDescribe }));
+        const { selectionStart, selectionEnd } = inputRef.current;
+        const start = input.substring(0, selectionStart);
+        const end = input.substring(selectionEnd, input.length);
+        const updateInput = start + emoji + end;
+        setInput(updateInput);
+        inputRef.current.focus();
     };
+    useEffect(() => {
+        const getData = async () => {
+            const getComments = JSON.parse(localStorage.getItem('comments')) || [];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (describe.trim()) {
-            dispatch(addComments(describe));
-            setDescribe('');
+            const postComments = getComments.filter(comment => comment.postId === post.id);
+
+            setComments(postComments);
+
+            const res = await getUserById(post.userId);
+            setUser(res);
+        }
+
+        getData();
+    }, [post.id, isRender]);
+
+    const handleSend = () => {
+        if (input.trim() !== '') {
+            const newComment = {
+                user: me,
+                comment: input.trim(),
+                postId: post.id,
+            };
+
+            const storedComments = JSON.parse(localStorage.getItem('comments')) || [];
+
+            storedComments.push(newComment);
+
+            const commentsPost = storedComments.filter(comment => comment.postId === post.id);
+
+            localStorage.setItem('comments', JSON.stringify(storedComments));
+
+            setComments(commentsPost);
+            setInput('');
         }
     };
+
+
+
+
     const navigate = useNavigate();
 
     const handleshowOptions = () => {
@@ -94,29 +130,19 @@ const Comment = ({ post }) => {
                         </div>
                     </div>
                     <div className="comment">
-                        {comments.map((comment, index) => (
-                            <div className="list-comment" key={index}>
-                                <div className="cmt-right">
-                                    <div className="cmt-image">
-                                        <img src={avt} alt="" />
+                        {
+                            Array.isArray(comments) && comments.map((comment, index) => (
+                                <div className='comment-item' key={index}>
+                                    <div className='info-user-comment'>
+                                        <img src={comment.user.avatarUrl !== ('string' && '') ? comment.user.avatarUrl : account} alt='avatar-info-user-comment' />
                                     </div>
-                                    <div className="cmt">
-                                        <div className="cmt-up">
-                                            <h5>Hongquan_1103</h5>
-                                            <p>{comment}</p>
-                                        </div>
-                                        <div className="cmt-down">
-                                            <p>52 phút</p>
-                                            <p>365 lượt thích</p>
-                                            <p style={{ cursor: 'pointer' }}>Trả lời</p>
-                                        </div>
+                                    <div className='content-comment'>
+                                        <p><b>{comment.user.username}</b></p>
+                                        <p style={{ padding: '0px 10px' }}>{comment.comment}</p>
                                     </div>
                                 </div>
-                                <div className="cmt-left">
-                                    <i className="fa-regular fa-heart"></i>
-                                </div>
-                            </div>
-                        ))}
+                            ))
+                        }
                     </div>
                     <div className="comment-content-footer">
                         <div className="comment-group-bottom">
@@ -155,17 +181,20 @@ const Comment = ({ post }) => {
                             </p>
                         </div>
                         <div className="comment-post">
-                            <form onSubmit={handleSubmit}>
+                            <form >
                                 <span style={{ position: 'relative' }}>
-                                    <i className="fa-regular fa-face-smile" onClick={() => setShowEmojiPicker(!showEmojiPicker)}></i>
-                                    {showEmojiPicker && (
-                                        <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
-                                    )}
+                                    <i className="fa-regular fa-face-smile" onClick={() => setShowEmoji(!showEmoji)}></i>
+                                    {
+                                        showEmoji && (
+                                            <EmojiPicker onEmojiClick={addEmoji} className='emoj' />
+                                        )
+                                    }
                                 </span>
-                                <input type="text" value={describe} placeholder="Thêm bình luận..." onChange={handleChange} />
-                                <button type='submit' className="btn-post-comment">Đăng</button>
+                                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onClick={() => setShowEmoji(false)} ref={inputRef} placeholder="Thêm bình luận..." />
+                                <p className="btn-post-comment" onClick={handleSend}>Đăng</p>
                             </form>
                         </div>
+
                     </div>
                 </div>
                 {showOptions && (
