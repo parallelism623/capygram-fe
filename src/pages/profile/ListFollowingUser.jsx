@@ -8,46 +8,44 @@ import { follow, getFollowers, getFollowing, unFollow } from '@/api/authApi/grap
 import exit from '@/assets/images/exit.png';
 import account from '@/assets/images/account.png';
 
-import './ListFollowerUser.scss';
+import './ListFollowingUser.scss';
 
-const ListFollowerUser = ({ Id, onCancel }) => {
+const ListFollowingUser = ({ Id, onCancel }) => {
   const { t } = useTranslation('listFollow');
 
   const [isRender, setIsRender] = useState(false);
-  const [listFollowers, setListFollowers] = useState([]);
+  const [listFollowings, setListFollowings] = useState([]);
   const [result, setResult] = useState([]);
   const [input, setInput] = useState('');
 
   useEffect(() => {
-
-    const getListFollowers = async () => {
- 
+    const getListFollowings = async () => {
       try {
-        const followers = await getFollowers(Id);
+        const followings = await getFollowing(Id);
         const followingOfMe = await getFollowing(localStorage.getItem('userId'));
 
-        const listFollowers = followers.map((follower) => ({
-          id: follower.id,
-          fullname: follower.fullName,
-          avatarUrl: follower.avatarUrl,
-          isFollow: followingOfMe.some((item) => item.id === follower.id) ? true : false
+        const listFollowings = followings.map((following) => ({
+          id: following.id,
+          fullname: following.fullName,
+          avatarUrl: following.avatarUrl,
+          isFollow: followingOfMe.some((item) => item.id === following.id) ? true : false
         }));
 
-        setListFollowers(listFollowers);
+        setListFollowings(listFollowings);
+
       } catch (error) {
         console.log(error);
       }
     };
 
-
-    getListFollowers();
+    getListFollowings();
   }, [isRender, Id]);
 
 
   useEffect(() => {
     const searchUser = () => {
-      const resultUser = listFollowers.filter((follower) => {
-        return follower.fullname.toLowerCase().includes(input.toLowerCase());
+      const resultUser = listFollowings.filter((following) => {
+        return following.fullname.toLowerCase().includes(input.toLowerCase());
       });
       setResult(resultUser);
     };
@@ -55,23 +53,19 @@ const ListFollowerUser = ({ Id, onCancel }) => {
     searchUser();
   }, [input]);
 
-  const handlclickbtn = async (follower) => {
+  const handlclickbtn = async (following) => {
     const id = localStorage.getItem('userId');
-    const did = follower.id;
-    if (follower.isFollow === true) {
+    const did = following.id;
+    if (following.isFollow === true) {
       await unFollow(id, did);
-      follower.isFollow = false;
+      following.isFollow = false;
       setIsRender(!isRender);
     } else {
       await follow(id, did);
-      follower.isFollow = true;
+      following.isFollow = true;
       setIsRender(!isRender);
     }
   }
-
-    getFollower();
-  }, [isRender]);
-
   return (
     <div className='list-follower-container'>
       <div className='top-list'>
@@ -88,57 +82,50 @@ const ListFollowerUser = ({ Id, onCancel }) => {
       </div>
       <div className='list-follower'>
         {
-          result.length === 0 ? listFollowers.map((follower) => (
-            <div className='followr-user' key={follower.id}>
+          result.length === 0 ? listFollowings.map((following) => (
+            <div className='followr-user' key={following.id}>
               <div className='user-info'>
                 <div className='avatar'>
-                  <img
-                    src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account}
-                    alt='avatar'
-                  />
+                  <img src={following.avatarUrl !== ('string' && '') ? following.avatarUrl : account} alt='avatar' />
                 </div>
                 <div className='name'>
-                  <p
-                    className='fullname'
-                  ><b>{follower.fullname}</b></p>
+                  <p className='fullname'><b>{following.fullname}</b></p>
                 </div>
               </div>
 
               <div className='btn-status'>
                 {
-                  localStorage.getItem('userId') !== follower.id && (
+                  localStorage.getItem('userId') !== following.id && (
                     <button
-                      className={follower.isFollow === true ? 'following' : 'follow'}
-                      onClick={() => handlclickbtn(follower)}
+                      className={following.isFollow === true ? 'following' : 'follow'}
+                      onClick={() => handlclickbtn(following)}
                     >
-                      <b>{follower.isFollow === true ? t('following') : t('follow')}</b>
+                      <b>{following.isFollow === true ? t('following') : t('follow')}</b>
                     </button>
                   )
                 }
               </div>
             </div>
-          )) : result.map((follower) => (
-            <div className='followr-user' key={follower.id}>
+          )) : result.map((following) => (
+            <div className='followr-user' key={following.id}>
               <div className='user-info'>
                 <div className='avatar'>
-                  <img
-                    src={follower.avatarUrl !== ('string' && '') ? follower.avatarUrl : account}
-                    alt='avatar'
-                  />
+                  <img src={following.avatarUrl !== ('string' && '') ? following.avatarUrl : account} alt='avatar' />
                 </div>
                 <div className='name'>
-                  <p className='fullname' ><b>{follower.fullname}</b></p>
+                  <p className='fullname'><b>{following.fullname}</b></p>
+                  <p className='username'>{following.username}</p>
                 </div>
               </div>
 
               <div className='btn-status'>
                 {
-                  localStorage.getItem('userId') !== follower.id && (
+                  localStorage.getItem('userId') !== following.id && (
                     <button
-                      className={follower.isFollow === true ? 'following' : 'follow'}
-                      onClick={() => handlclickbtn(follower)}
+                      className={following.isFollow === true ? 'following' : 'follow'}
+                      onClick={() => handlclickbtn(following)}
                     >
-                      <b>{follower.isFollow === true ? t('following') : t('follow')}</b>
+                      <b>{following.isFollow === true ? t('following') : t('follow')}</b>
                     </button>
                   )
                 }
@@ -152,4 +139,4 @@ const ListFollowerUser = ({ Id, onCancel }) => {
   )
 }
 
-export default ListFollowerUser;
+export default ListFollowingUser;

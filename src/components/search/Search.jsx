@@ -125,7 +125,7 @@ const Search = () => {
               >
                 <div className='result'>
                   <div className='gr1'>
-                    <img src={searchResults?.profile?.avatarUrl !== 'string' ? searchResults?.profile?.avatarUrl : account} alt='avatar-user' />
+                    <img src={searchResults?.profile?.avatarUrl !== ('string' && '') ? searchResults?.profile?.avatarUrl : account} alt='avatar-user' />
                   </div>
                   <div className='gr2'>
                     <p><b>{searchResults?.userName}</b></p>

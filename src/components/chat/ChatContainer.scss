@@ -123,6 +123,7 @@
               overflow-wrap: break-word;
               padding: 10px;
               border-radius: 12px;
+              background-color: rgb(228, 227, 227);
             }
 
             img{
@@ -137,46 +138,24 @@
           }
 
           &.sent{
-            justify-content: flex-end ;
-            .message-content{
-              p{
-                background-color: rgb(228, 227, 227);
-                order: 1;
-              }
-
-              video{
-                order: 1;
-              }
-
-              img{
-                order: 1;
-              }
-            }
+            justify-content: flex-end;            
 
             .avatar{
               display: none;
             }
           }
 
-          &.received{
+          & .received{
             justify-content: flex-start;
             .message-content{
               p{
                 background-color: rgb(228, 227, 227);
                 order: 2;
               }
-
-              video{
-                order: 2;
-              }
-
-              img{
-                order: 2;
-              }
             }
 
             .avatar{
-              order: 1;
+              order: 1 ;
             }
           }
           
