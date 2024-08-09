@@ -20,7 +20,7 @@ const EditPost = ({ postEdit, onCancel, setIscall, onCancelItem, onCancelMore })
   const { t } = useTranslation('postItem');
   const inputRef = React.createRef();
 
-  const user = useSelector(state => state.form.user);
+  const user = useSelector(state => state.user);
 
   const handleChange = (e) => {
     setDescribe(e.target.value);
