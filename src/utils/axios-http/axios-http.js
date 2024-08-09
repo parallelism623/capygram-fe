@@ -33,8 +33,8 @@ const createAuthInstance = (baseURL) => {
         } catch (error) {
           console.error(error);
           //truong hop khong refresh duoc token
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          // localStorage.removeItem('accessToken');
+          // localStorage.removeItem('refreshToken');
           return Promise.reject(error);
         }
       }
@@ -50,6 +50,7 @@ const authInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE);
 const postInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_POST);
 const graphInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_GRAPH);
 const newsFeedInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_NEWSFEED);
+const chatInstance = createAuthInstance(import.meta.env.VITE_APP_URL_BE_CHAT);
 
 const request = (instance, config) => {
   return instance({ ...config });
@@ -63,4 +64,4 @@ const requestWithToken = (instance, config) => {
   return instance({ ...config, headers: { Authorization: `Bearer ${accessToken}` } });
 };
 
-export { request, requestWithToken, authInstance, publicInstance, postInstance, graphInstance, newsFeedInstance };
+export { request, requestWithToken, authInstance, publicInstance, postInstance, graphInstance, newsFeedInstance, chatInstance };
