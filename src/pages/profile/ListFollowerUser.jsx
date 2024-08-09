@@ -19,7 +19,9 @@ const ListFollowerUser = ({ Id, onCancel }) => {
   const [input, setInput] = useState('');
 
   useEffect(() => {
+
     const getListFollowers = async () => {
+ 
       try {
         const followers = await getFollowers(Id);
         const followingOfMe = await getFollowing(localStorage.getItem('userId'));
@@ -32,11 +34,11 @@ const ListFollowerUser = ({ Id, onCancel }) => {
         }));
 
         setListFollowers(listFollowers);
-
       } catch (error) {
         console.log(error);
       }
     };
+
 
     getListFollowers();
   }, [isRender, Id]);
@@ -66,6 +68,9 @@ const ListFollowerUser = ({ Id, onCancel }) => {
       setIsRender(!isRender);
     }
   }
+
+    getFollower();
+  }, [isRender]);
 
   return (
     <div className='list-follower-container'>

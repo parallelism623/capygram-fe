@@ -34,6 +34,7 @@ const Post = () => {
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
 
+
     useEffect(() => {
         const getPost = async () => {
             const id = localStorage.getItem('userId');
@@ -42,12 +43,15 @@ const Post = () => {
                 // const followingUsers = await getFollowing(id);
                 // console.log("following", followingUsers);
 
+
                 console.log("newfeed", posts.data); // Đảm bảo post chứa dữ liệu đúng
                 if (posts.data.length > 0) {
                     setPost(prev => page === 1 ? posts.data : [...prev, ...posts.data]);
                     setTotal(posts.total);
                     setHasMore(posts.data.length + post.length < posts.total);
                 }
+                console.log("post:", post)
+
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu bài đăng", error);
             }
@@ -140,7 +144,8 @@ const Post = () => {
                             </div>
                             <div className="post-header-right">
                                 <div className="post-header-username">
-                                    <p onClick={() => handleClickProfileUser(post.id)}>{item.userName}</p>
+                                    <p onClick={() => handleClickProfileUser(item.userId)}>{item.userName}</p>
+
                                 </div>
                                 <div className="post-header-option">
                                     <span>
